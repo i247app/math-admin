@@ -762,7 +762,46 @@
         "unmarking": "Đang bỏ xác minh…",
         "unmarked": "Đã bỏ xác minh đề #{{id}}",
         "unmarkTitle": "Bỏ xác minh đề #{{id}}?",
-        "unmarkDescription": "Số lần xác minh (hiện {{n}}) sẽ về 0. Nội dung câu hỏi giữ nguyên."
+        "unmarkDescription": "Số lần xác minh (hiện {{n}}) sẽ về 0. Nội dung câu hỏi giữ nguyên.",
+        "edit": "Sửa đề",
+        "editBlocked": "Bộ đề không có câu hỏi hoặc có câu không có phương án, nên không sửa được."
+      },
+      "edit": {
+        "bar": "Đang sửa đề #{{id}}",
+        "changed_other": "{{count}} câu đã sửa",
+        "errorCount_other": "{{count}} câu có lỗi",
+        "save": "Lưu & xác minh",
+        "saving": "Đang lưu…",
+        "saved": "Đã lưu và xác minh đề #{{id}}",
+        "banner": "Chỉ sửa được nội dung: đề bài, nội dung các đáp án, đáp án đúng và chủ đề. Số câu, thứ tự và nhãn A–D giữ nguyên.",
+        "changedPill": "Đã sửa",
+        "name": "Đề bài",
+        "preview": "Xem trước:",
+        "answers": "Đáp án — chọn nút tròn ở đáp án đúng",
+        "answer": "Nội dung đáp án {{label}}",
+        "rightAnswer": "Chọn {{label}} là đáp án đúng",
+        "topic": "Chủ đề",
+        "errors": {
+          "nameRequired": "Nhập đề bài.",
+          "answer": {
+            "required": "Đáp án {{label}} đang trống.",
+            "tooLong": "Đáp án {{label}} dài quá {{max}} ký tự.",
+            "duplicate": "Đáp án {{label}} trùng nội dung với đáp án khác."
+          },
+          "topicTooLong": "Chủ đề dài quá {{max}} ký tự.",
+          "rightMissing": "Chọn đáp án đúng."
+        },
+        "confirmTitle": "Lưu bản sửa và xác minh đề #{{id}}?",
+        "confirmChanged": "Câu thay đổi: {{list}}.",
+        "confirmLive": "Đáp án mới áp dụng cho cả các lượt đang làm dở khi trẻ nộp bài.",
+        "confirmHistory": "Bài đã nộp giữ nguyên điểm và câu hỏi cũ.",
+        "confirmCount": "Lần xác minh: {{from}} → {{to}}.",
+        "discardTitle": "Bỏ các thay đổi?",
+        "discardDescription": "Các câu đã sửa sẽ quay về như trong kho.",
+        "discard": "Bỏ thay đổi",
+        "leaveTitle": "Rời trang khi chưa lưu?",
+        "leaveDescription": "Các thay đổi trong đề #{{id}} sẽ mất.",
+        "leave": "Rời trang"
       }
     }
   },

@@ -774,7 +774,48 @@
         "unmarking": "Removing…",
         "unmarked": "Verification removed from set #{{id}}",
         "unmarkTitle": "Remove verification from set #{{id}}?",
-        "unmarkDescription": "The verification count (now {{n}}) goes back to 0. The questions stay as they are."
+        "unmarkDescription": "The verification count (now {{n}}) goes back to 0. The questions stay as they are.",
+        "edit": "Edit set",
+        "editBlocked": "This set has no questions, or a question has no options, so it cannot be edited."
+      },
+      "edit": {
+        "bar": "Editing set #{{id}}",
+        "changed_one": "{{count}} question changed",
+        "changed_other": "{{count}} questions changed",
+        "errorCount_one": "{{count}} question with errors",
+        "errorCount_other": "{{count}} questions with errors",
+        "save": "Save & verify",
+        "saving": "Saving…",
+        "saved": "Set #{{id}} saved and verified",
+        "banner": "Only content can change: question text, option contents, the right answer and the topic. Question count, order and A–D labels stay as they are.",
+        "changedPill": "Changed",
+        "name": "Question",
+        "preview": "Preview:",
+        "answers": "Options — pick the right one with the radio button",
+        "answer": "Option {{label}} content",
+        "rightAnswer": "Make {{label}} the right answer",
+        "topic": "Topic",
+        "errors": {
+          "nameRequired": "Enter the question text.",
+          "answer": {
+            "required": "Option {{label}} is empty.",
+            "tooLong": "Option {{label}} is longer than {{max}} characters.",
+            "duplicate": "Option {{label}} has the same content as another option."
+          },
+          "topicTooLong": "The topic is longer than {{max}} characters.",
+          "rightMissing": "Pick the right answer."
+        },
+        "confirmTitle": "Save the changes and verify set #{{id}}?",
+        "confirmChanged": "Changed: {{list}}.",
+        "confirmLive": "The new key also grades sittings still in progress when the child submits.",
+        "confirmHistory": "Submitted sittings keep their score and their old questions.",
+        "confirmCount": "Verifications: {{from}} → {{to}}.",
+        "discardTitle": "Discard your changes?",
+        "discardDescription": "The edited questions go back to the stored version.",
+        "discard": "Discard changes",
+        "leaveTitle": "Leave without saving?",
+        "leaveDescription": "Your changes to set #{{id}} will be lost.",
+        "leave": "Leave"
       }
     }
   },
