@@ -1,5 +1,5 @@
 import type { TFunction } from 'i18next'
-import type { AnswerChoice, ExamAnswerDetail, ExamSession, ExamSitting, JourneyType } from '@/types/Exam'
+import type { AnswerChoice, ExamAnswerDetail, ExamQuestion, ExamSession, ExamSitting, JourneyType } from '@/types/Exam'
 import { JOURNEY_TYPES } from '@/types/Exam'
 import type { Profile } from '@/types/Profile'
 
@@ -36,8 +36,8 @@ export function profileLabel(profile: Profile | undefined, profileId: number): s
   return `${profile.name || profile.profile_code} · ${profile.profile_code}`
 }
 
-/** `unanswered` = the sitting is not submitted, so nothing can be marked. */
-export type QuestionOutcome = 'correct' | 'wrong' | 'skipped' | 'unanswered'
+/** `unanswered` = the sitting is not submitted, so nothing can be marked; `key` = a pool question (answer key only). */
+export type QuestionOutcome = 'correct' | 'wrong' | 'skipped' | 'unanswered' | 'key'
 
 export type SittingQuestion = {
   number: number
@@ -114,4 +114,19 @@ export function topicBreakdown(details: ExamAnswerDetail[]): TopicStat[] {
     stats.set(topic, stat)
   }
   return [...stats.values()].sort((a, b) => a.correct / a.answered - b.correct / b.answered)
+}
+
+/** A pool question for QuestionCard: the answer key, no child's pick. */
+export function poolQuestion(question: ExamQuestion): SittingQuestion {
+  return {
+    number: question.question_number,
+    type: question.question_type,
+    name: question.question_name,
+    topic: question.question_topic,
+    grade: question.question_grade,
+    answers: question.answers ?? [],
+    rightLabel: question.right_answer_label,
+    rightContent: question.right_answer_content,
+    outcome: 'key',
+  }
 }

@@ -12,6 +12,7 @@ import DashboardLayout from './(dashboard)/layout'
 import DevicesPage from './(dashboard)/devices/page'
 import JourneyPage from './(dashboard)/exams/journey/page'
 import ExamsPage from './(dashboard)/exams/page'
+import ExamPoolDetailPage from './(dashboard)/exams/pools/detail/page'
 import ExamPoolsPage from './(dashboard)/exams/pools/page'
 import SittingPage from './(dashboard)/exams/sitting/page'
 import RolesPage from './(dashboard)/permissions/roles/page'
@@ -54,7 +55,14 @@ export const router = createBrowserRouter([
           {
             path: 'pools',
             handle: { titleKey: 'nav.examPools' } satisfies RouteHandle,
-            children: [{ index: true, Component: ExamPoolsPage }],
+            children: [
+              { index: true, Component: ExamPoolsPage },
+              {
+                path: 'detail',
+                Component: ExamPoolDetailPage,
+                handle: { titleKey: 'exams.pools.detail.title' } satisfies RouteHandle,
+              },
+            ],
           },
         ],
       },

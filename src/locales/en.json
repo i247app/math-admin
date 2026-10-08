@@ -749,6 +749,32 @@
           "verified": "Verification",
           "created": "Created"
         }
+      },
+      "detail": {
+        "title": "Set detail",
+        "heading": "Set #{{id}}",
+        "missing": "The link is missing a set id or has a wrong one.",
+        "loadFailed": "Could not load the question set",
+        "backToPools": "Back to the exam pool",
+        "meta": {
+          "gradeLevel": "Grade · Level",
+          "questions": "Questions",
+          "questionsValue": "{{actual}} / {{requested}} requested",
+          "semester": "Semester",
+          "program": "Program",
+          "verifiedCount": "Verifications",
+          "created": "Created",
+          "cacheTag": "Cache tag"
+        },
+        "storedOrder": "Question order and A–D labels are the stored originals, not shuffled.",
+        "empty": "This set has no questions.",
+        "mark": "Mark as verified",
+        "marked": "Set #{{id}} marked as verified",
+        "unmark": "Remove verification",
+        "unmarking": "Removing…",
+        "unmarked": "Verification removed from set #{{id}}",
+        "unmarkTitle": "Remove verification from set #{{id}}?",
+        "unmarkDescription": "The verification count (now {{n}}) goes back to 0. The questions stay as they are."
       }
     }
   },

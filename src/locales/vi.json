@@ -737,6 +737,32 @@
           "verified": "Xác minh",
           "created": "Ngày tạo"
         }
+      },
+      "detail": {
+        "title": "Chi tiết đề",
+        "heading": "Đề #{{id}}",
+        "missing": "Đường dẫn thiếu hoặc sai mã đề.",
+        "loadFailed": "Không tải được bộ đề",
+        "backToPools": "Về Kho đề",
+        "meta": {
+          "gradeLevel": "Lớp · Mức",
+          "questions": "Số câu",
+          "questionsValue": "{{actual}} / {{requested}} yêu cầu",
+          "semester": "Học kỳ",
+          "program": "Chương trình",
+          "verifiedCount": "Lần xác minh",
+          "created": "Ngày tạo",
+          "cacheTag": "Cache tag"
+        },
+        "storedOrder": "Thứ tự câu và nhãn A–D là bản gốc trong kho, chưa xáo.",
+        "empty": "Bộ đề này không có câu hỏi nào.",
+        "mark": "Đánh dấu đã xác minh",
+        "marked": "Đã đánh dấu đề #{{id}} là đã xác minh",
+        "unmark": "Bỏ xác minh",
+        "unmarking": "Đang bỏ xác minh…",
+        "unmarked": "Đã bỏ xác minh đề #{{id}}",
+        "unmarkTitle": "Bỏ xác minh đề #{{id}}?",
+        "unmarkDescription": "Số lần xác minh (hiện {{n}}) sẽ về 0. Nội dung câu hỏi giữ nguyên."
       }
     }
   },
