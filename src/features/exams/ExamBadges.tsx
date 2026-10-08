@@ -67,3 +67,13 @@ export function ScoreSummary({ correct, total, skipped, percent }: ScoreSummaryP
     </div>
   )
 }
+
+/** verified_count: 0 = not verified; every verify (questions re-sent) adds 1. */
+export function VerifiedPill({ count }: { count: number }) {
+  const { t } = useTranslation()
+  return count > 0 ? (
+    <StatusPill tone="success">{t('exams.pools.verified', { count })}</StatusPill>
+  ) : (
+    <StatusPill tone="warning">{t('exams.pools.unverified')}</StatusPill>
+  )
+}

@@ -24,6 +24,8 @@
     "banners": "Banners",
     "devices": "Devices",
     "exams": "Exams",
+    "examSittings": "Student work",
+    "examPools": "Exam pool",
     "curriculum": {
       "group": "Curriculum",
       "programs": "Programs",
@@ -717,6 +719,37 @@
       "noOptions": "The original paper is gone, so the options can't be shown.",
       "pickedAnswer": "Child's pick: {{answer}}",
       "rightAnswer": "Right answer: {{answer}}"
+    },
+    "pools": {
+      "title": "Exam pool",
+      "description": "Question sets the AI generated and hands out again. Open a set to check its answer key, fix it and verify it.",
+      "verified_one": "Verified · once",
+      "verified_other": "Verified · {{count}} times",
+      "unverified": "Not verified",
+      "list": {
+        "loadFailed": "Could not load the exam pool",
+        "count_one": "{{count}} set",
+        "count_other": "{{count}} sets",
+        "filterType": "Filter by type",
+        "allTypes": "All types",
+        "filterGrade": "Filter by grade",
+        "allGrades": "All grades",
+        "filterVerified": "Filter by verification",
+        "verifiedOptions": { "all": "All", "no": "Not verified", "yes": "Verified" },
+        "emptyTitle": "The pool has no question sets yet",
+        "filterEmptyTitle": "No sets match the filters",
+        "clearFilters": "Clear filters",
+        "open": "Open set #{{id}}",
+        "columns": {
+          "id": "Set",
+          "title": "Title",
+          "type": "Type",
+          "gradeLevel": "Grade · Level",
+          "questions": "Questions",
+          "verified": "Verification",
+          "created": "Created"
+        }
+      }
     }
   },
   "system": {

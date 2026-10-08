@@ -12,6 +12,7 @@ import DashboardLayout from './(dashboard)/layout'
 import DevicesPage from './(dashboard)/devices/page'
 import JourneyPage from './(dashboard)/exams/journey/page'
 import ExamsPage from './(dashboard)/exams/page'
+import ExamPoolsPage from './(dashboard)/exams/pools/page'
 import SittingPage from './(dashboard)/exams/sitting/page'
 import RolesPage from './(dashboard)/permissions/roles/page'
 import ProfilesPage from './(dashboard)/profiles/page'
@@ -43,13 +44,18 @@ export const router = createBrowserRouter([
       { path: '/banners', Component: BannersPage, handle: { titleKey: 'nav.banners' } satisfies RouteHandle },
       { path: '/devices', Component: DevicesPage, handle: { titleKey: 'nav.devices' } satisfies RouteHandle },
       {
-        // Admin-only reads of exam data (math-svr /admin/exams/*): list → journey → sitting.
+        // Admin-only exam screens: a child's work (list → journey → sitting) and the question pool.
         path: '/exams',
         handle: { titleKey: 'nav.exams' } satisfies RouteHandle,
         children: [
           { index: true, Component: ExamsPage },
           { path: 'journey', Component: JourneyPage, handle: { titleKey: 'exams.journey.title' } satisfies RouteHandle },
           { path: 'sitting', Component: SittingPage, handle: { titleKey: 'exams.sitting.title' } satisfies RouteHandle },
+          {
+            path: 'pools',
+            handle: { titleKey: 'nav.examPools' } satisfies RouteHandle,
+            children: [{ index: true, Component: ExamPoolsPage }],
+          },
         ],
       },
       {

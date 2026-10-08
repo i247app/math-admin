@@ -1,10 +1,12 @@
 import type { LucideIcon } from 'lucide-react'
 import {
+  ArchiveIcon,
   BookOpenIcon,
   CalendarClockIcon,
   CalendarRangeIcon,
   ChevronDownIcon,
   ClipboardCheckIcon,
+  ClipboardListIcon,
   DatabaseIcon,
   GraduationCapIcon,
   IdCardIcon,
@@ -21,7 +23,7 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { NavLink, useLocation } from 'react-router'
+import { Link, NavLink, useLocation } from 'react-router'
 import { Logo } from '@/components/Logo'
 import { useSessionUser } from '@/features/auth/AuthApi'
 import type { TranslationKey } from '@/types/Route'
@@ -32,6 +34,8 @@ type NavItem = {
   to: string
   labelKey: TranslationKey
   icon: LucideIcon
+  /** Custom match when the default prefix match is wrong (a parent path of another item). */
+  isActive?: (pathname: string) => boolean
 }
 
 const navItems: NavItem[] = [
@@ -42,7 +46,16 @@ const navItems: NavItem[] = [
 ]
 
 /** Admins only: math-svr answers 403 to anyone else. */
-const examsItem: NavItem = { to: '/exams', labelKey: 'nav.exams', icon: ClipboardCheckIcon }
+const examItems: NavItem[] = [
+  {
+    to: '/exams',
+    labelKey: 'nav.examSittings',
+    icon: ClipboardListIcon,
+    // A child's work lives at /exams, /exams/journey, /exams/sitting — not the pool.
+    isActive: (pathname) => pathname.startsWith('/exams') && !pathname.startsWith('/exams/pools'),
+  },
+  { to: '/exams/pools', labelKey: 'nav.examPools', icon: ArchiveIcon },
+]
 
 const curriculumItems: NavItem[] = [
   { to: '/curriculum/programs', labelKey: 'nav.curriculum.programs', icon: LibraryIcon },
@@ -68,20 +81,28 @@ const linkActive = 'bg-sidebar-primary text-sidebar-primary-foreground'
 
 export function Sidebar() {
   const { t } = useTranslation()
-  // Exams and the system group are admin-only: math-svr refuses everyone else with 403.
+  // The exams and system groups are admin-only: math-svr refuses everyone else with 403.
   const isAdmin = useSessionUser().role === 'ADMIN'
-  const topItems = isAdmin ? [...navItems, examsItem] : navItems
 
   return (
     <aside className="bg-grid-paper hidden w-62 shrink-0 flex-col gap-8 bg-sidebar px-4 py-6 text-sidebar-foreground md:flex">
       <Logo className="px-2" />
       <nav aria-label={t('nav.main')} className="flex flex-col gap-1">
-        {topItems.map(({ to, labelKey, icon: Icon }) => (
+        {navItems.map(({ to, labelKey, icon: Icon }) => (
           <NavLink key={to} to={to} className={({ isActive }) => cn(linkBase, 'h-11', isActive ? linkActive : linkIdle)}>
             <Icon className="size-5" aria-hidden />
             {t(labelKey)}
           </NavLink>
         ))}
+        {isAdmin && (
+          <NavGroup
+            id="nav-exams"
+            basePath="/exams"
+            labelKey="nav.exams"
+            icon={ClipboardCheckIcon}
+            items={examItems}
+          />
+        )}
         <NavGroup
           id="nav-curriculum"
           basePath="/curriculum"
@@ -123,7 +144,8 @@ type NavGroupProps = {
 /** Collapsible sidebar section with indented links. */
 function NavGroup({ id, basePath, labelKey, icon: Icon, items }: NavGroupProps) {
   const { t } = useTranslation()
-  const inGroup = useLocation().pathname.startsWith(basePath)
+  const { pathname } = useLocation()
+  const inGroup = pathname.startsWith(basePath)
   // Starts open when the app loads on one of the group's pages.
   const [open, setOpen] = useState(inGroup)
 
@@ -142,16 +164,29 @@ function NavGroup({ id, basePath, labelKey, icon: Icon, items }: NavGroupProps) 
       </button>
       {open && (
         <div id={id} className="ml-5 flex flex-col gap-1 border-l border-sidebar-border pl-2">
-          {items.map(({ to, labelKey: itemLabelKey, icon: ItemIcon }) => (
-            <NavLink
-              key={to}
-              to={to}
-              className={({ isActive }) => cn(linkBase, 'h-10 text-sm', isActive ? linkActive : linkIdle)}
-            >
-              <ItemIcon className="size-4" aria-hidden />
-              {t(itemLabelKey)}
-            </NavLink>
-          ))}
+          {items.map(({ to, labelKey: itemLabelKey, icon: ItemIcon, isActive: matches }) => {
+            const linkClass = (active: boolean) => cn(linkBase, 'h-10 text-sm', active ? linkActive : linkIdle)
+            const body = (
+              <>
+                <ItemIcon className="size-4" aria-hidden />
+                {t(itemLabelKey)}
+              </>
+            )
+            if (!matches) {
+              return (
+                <NavLink key={to} to={to} className={({ isActive }) => linkClass(isActive)}>
+                  {body}
+                </NavLink>
+              )
+            }
+            // NavLink would also mark /exams active on /exams/pools (prefix match).
+            const active = matches(pathname)
+            return (
+              <Link key={to} to={to} aria-current={active ? 'page' : undefined} className={linkClass(active)}>
+                {body}
+              </Link>
+            )
+          })}
         </div>
       )}
     </div>

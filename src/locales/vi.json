@@ -24,6 +24,8 @@
     "banners": "Banner",
     "devices": "Thiết bị",
     "exams": "Bài kiểm tra",
+    "examSittings": "Bài làm học sinh",
+    "examPools": "Kho đề",
     "curriculum": {
       "group": "Chương trình học",
       "programs": "Chương trình",
@@ -707,6 +709,35 @@
       "noOptions": "Không còn đề gốc để hiện các phương án.",
       "pickedAnswer": "Con chọn: {{answer}}",
       "rightAnswer": "Đáp án đúng: {{answer}}"
+    },
+    "pools": {
+      "title": "Kho đề",
+      "description": "Bộ đề AI đã sinh và được phát lại cho trẻ. Mở một bộ để soát đáp án, sửa và xác minh.",
+      "verified_other": "Đã xác minh · {{count}} lần",
+      "unverified": "Chưa xác minh",
+      "list": {
+        "loadFailed": "Không tải được kho đề",
+        "count_other": "{{count}} bộ đề",
+        "filterType": "Lọc theo loại",
+        "allTypes": "Mọi loại",
+        "filterGrade": "Lọc theo lớp",
+        "allGrades": "Mọi lớp",
+        "filterVerified": "Lọc theo xác minh",
+        "verifiedOptions": { "all": "Tất cả", "no": "Chưa xác minh", "yes": "Đã xác minh" },
+        "emptyTitle": "Kho đề chưa có bộ đề nào",
+        "filterEmptyTitle": "Không có bộ đề nào khớp bộ lọc",
+        "clearFilters": "Xoá bộ lọc",
+        "open": "Mở đề #{{id}}",
+        "columns": {
+          "id": "Mã đề",
+          "title": "Tên đề",
+          "type": "Loại",
+          "gradeLevel": "Lớp · Mức",
+          "questions": "Số câu",
+          "verified": "Xác minh",
+          "created": "Ngày tạo"
+        }
+      }
     }
   },
   "system": {
