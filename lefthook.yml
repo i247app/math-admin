@@ -1,0 +1,17 @@
+# Git hooks — installed by `npm install` (the "prepare" script). Docs: https://lefthook.dev/configuration/
+
+# Validate commit messages (Conventional Commits, see commitlint.config.ts)
+commit-msg:
+  jobs:
+    - name: commitlint
+      run: npx --no -- commitlint --edit {1}
+
+# Validate content before committing
+pre-commit:
+  jobs:
+    - name: lint
+      run: npx --no -- oxlint {staged_files}
+      glob: '*.{ts,tsx}'
+    - name: check-types
+      run: npm run check:types
+      glob: '*.{ts,tsx}'

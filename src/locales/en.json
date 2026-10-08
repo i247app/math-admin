@@ -1,0 +1,961 @@
+{
+  "common": {
+    "appSubtitle": "Admin console",
+    "logout": "Sign out",
+    "language": "Language",
+    "comingSoon": "This screen will be built in a later step.",
+    "retry": "Try again",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "cancel": "Cancel",
+    "saving": "Saving…",
+    "deleting": "Deleting…"
+  },
+  "errors": {
+    "network": "Can't reach the server. Check your connection and try again.",
+    "sessionExpired": "Your session has expired. Please sign in again.",
+    "unknown": "Something went wrong. Please try again."
+  },
+  "nav": {
+    "main": "Main navigation",
+    "breadcrumbRoot": "Admin",
+    "users": "Users",
+    "profiles": "Profiles",
+    "banners": "Banners",
+    "devices": "Devices",
+    "exams": "Exams",
+    "curriculum": {
+      "group": "Curriculum",
+      "programs": "Programs",
+      "grades": "Grades",
+      "semesters": "Semesters",
+      "schools": "Schools"
+    },
+    "permissions": {
+      "group": "Permissions",
+      "roles": "Roles"
+    },
+    "system": {
+      "group": "System",
+      "sessions": "Sessions",
+      "server": "Server",
+      "data": "Data",
+      "jobs": "Scheduled jobs"
+    }
+  },
+  "auth": {
+    "heroTitle": "Manage users and content for NUMI.",
+    "heroDescription": "For the operations team. Every action changes live data.",
+    "mascotAlt": "Numi the owl, NUMI's mascot",
+    "signIn": {
+      "title": "Sign in",
+      "description": "Use an account that has admin access.",
+      "loginName": "Phone number or email",
+      "loginNamePlaceholder": "e.g. 0901234567",
+      "password": "Password",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "otpHint": "A browser that isn't trusted yet also needs a one-time code sent to your phone or email."
+    },
+    "verifyOtp": {
+      "title": "Enter verification code",
+      "description": "A {{digits}}-digit code was sent to",
+      "useAnotherAccount": "Use another account",
+      "codeLabel": "Verification code",
+      "expiresIn": "Code expires in",
+      "expired": "The code has expired. Request a new one.",
+      "submit": "Verify",
+      "submitting": "Verifying…",
+      "noCode": "Didn't get a code?",
+      "resend": "Send a new code",
+      "sending": "Sending…",
+      "devBadge": "DEV",
+      "devCode": "Code from the server:"
+    },
+    "restoringSession": "Restoring your session",
+    "restoreFailed": "Couldn't restore your session"
+  },
+  "users": {
+    "title": "Users",
+    "description": "Student, parent and teacher accounts on NUMI.",
+    "guestName": "Guest visitor",
+    "listLabel": "User list",
+    "loadFailed": "Couldn't load users",
+    "count_one": "{{count}} user",
+    "count_other": "{{count}} users",
+    "noContact": "No contact yet",
+    "selfDeleteBlocked": "You can't delete the account you are signed in with.",
+    "columns": {
+      "uid": "UID",
+      "name": "Name",
+      "contact": "Contact",
+      "role": "Role",
+      "identity": "Identity",
+      "created": "Created",
+      "actions": "Actions"
+    },
+    "roles": {
+      "STUDENT": "Student",
+      "TEACHER": "Teacher",
+      "PARENT": "Parent",
+      "ADMIN": "Admin",
+      "GUEST": "Guest"
+    },
+    "identity": {
+      "VERIFIED": "Verified",
+      "USER": "Registered",
+      "GUEST": "Guest"
+    },
+    "actions": {
+      "edit": "Edit {{name}}",
+      "profiles": "View profiles of {{name}}",
+      "devices": "View devices of {{name}}",
+      "softDelete": "Soft-delete {{name}}",
+      "forceDelete": "Permanently delete {{name}}"
+    },
+    "empty": {
+      "title": "No users yet",
+      "description": "Accounts registered in the NUMI app will show up here."
+    },
+    "edit": {
+      "title": "Edit user",
+      "description": "Edit the account of {{name}}",
+      "saved": "Changes saved.",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone number",
+      "role": "Role",
+      "rolePlaceholder": "No role",
+      "emailHint": "Changing the email resets its verified status.",
+      "noEmail": "This account has no email. The server can't add a new one yet.",
+      "noPhone": "This account has no phone number. The server can't add a new one yet.",
+      "adminRoleHint": "The Admin role can't be assigned here; picking another role removes admin access.",
+      "dangerZone": "Danger zone",
+      "softDeleteHint": "Soft delete: hides the account and permanently deletes its child profiles.",
+      "forceDeleteHint": "Permanent delete: can't be undone.",
+      "submit": "Save changes",
+      "errors": {
+        "nameRequired": "Enter a name.",
+        "emailInvalid": "Enter a valid email.",
+        "phoneInvalid": "Enter a valid phone number (e.g. 0912345678 or +84912345678)."
+      },
+      "devicesTitle": "Signed-in devices",
+      "devicesHint": "Platform and trust; revoke trust or remove a device.",
+      "devicesLink": "View devices"
+    },
+    "softDelete": {
+      "title": "Soft-delete this user?",
+      "confirm": "Soft delete",
+      "done": "{{name}} was soft-deleted.",
+      "description": "The account <strong>{{name}}</strong> (UID {{uid}}) will be hidden from the list. All of its child profiles will be <warn>permanently deleted</warn>, and there is no restore yet."
+    },
+    "forceDelete": {
+      "title": "Permanently delete this user?",
+      "confirm": "Delete permanently",
+      "done": "{{name}} was permanently deleted.",
+      "description": "The account <strong>{{name}}</strong> (UID {{uid}}) and all its data will be removed. This <warn>can't be undone</warn>. To only hide the account, use Soft delete.",
+      "typeToConfirm": "Type <code>{{uid}}</code> to confirm"
+    },
+    "filter": {
+      "label": "Role",
+      "all": "All",
+      "guestsHidden": "Guests have no role, so they are hidden while filtering by role.",
+      "emptyTitle": "No users match this filter",
+      "emptyDescription": "Try other roles or clear the filter.",
+      "clear": "Clear filter"
+    },
+    "create": {
+      "title": "Add user",
+      "description": "Create an account on someone's behalf.",
+      "submit": "Create user",
+      "done": "Created the account for {{name}}.",
+      "adminOnly": "Only Admin accounts can create users.",
+      "contactHint": "A phone number or an email (at least one) is needed to sign in.",
+      "emailHint": "The email is stored as unverified.",
+      "adminRoleHint": "This account will have full admin access.",
+      "passwordHint": "Optional, at least {{min}} characters. Leave empty and the user signs in with a one-time code.",
+      "errors": {
+        "contactRequired": "Enter a phone number or an email.",
+        "passwordLength": "The password needs at least {{min}} characters and can't be too long."
+      }
+    }
+  },
+  "profiles": {
+    "title": "Profiles",
+    "description": "Child profiles of each account: role, school, program, grade and semester.",
+    "create": "Add profile",
+    "editTitle": "Edit profile",
+    "loadFailed": "Couldn't load profiles",
+    "count_one": "{{count}} profile",
+    "count_other": "{{count}} profiles",
+    "emptyTitle": "No profiles yet",
+    "emptyDescription": "Profiles are created when people sign up or add a child in the NUMI app.",
+    "default": "Default profile",
+    "filterByOwner": "Show the profiles of UID {{uid}}",
+    "status": {
+      "OFFICIAL": "Official",
+      "INCOMPLETE": "Incomplete",
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "DELETED": "Deleted"
+    },
+    "filter": {
+      "search": "Search by name or profile code",
+      "uid": "Owner UID",
+      "role": "Filter by role",
+      "allRoles": "All roles",
+      "status": "Filter by status",
+      "allStatuses": "All statuses",
+      "emptyTitle": "No profiles match the filters",
+      "clear": "Clear filters"
+    },
+    "columns": {
+      "id": "Code / ID",
+      "profile": "Profile",
+      "owner": "Owner UID",
+      "role": "Role",
+      "learning": "Learning",
+      "status": "Status",
+      "created": "Created",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit {{name}}",
+      "softDelete": "Soft-delete {{name}}",
+      "forceDelete": "Permanently delete {{name}}",
+      "exams": "View {{name}}'s exams"
+    },
+    "form": {
+      "uid": "Owner account UID",
+      "uidHint": "The account this profile belongs to. Can't be changed later.",
+      "name": "Profile name",
+      "role": "Role",
+      "dob": "Date of birth",
+      "idType": "Teacher ID type",
+      "idTypeHint": "e.g. MOET, PUBLIC_ID",
+      "teacherId": "Teacher ID",
+      "studentId": "Student ID",
+      "officialHint": "A profile becomes Official once a student has a student ID, or a teacher has both an ID type and a teacher ID.",
+      "phone": "Phone",
+      "email": "Email",
+      "program": "Program",
+      "grade": "Grade",
+      "semester": "Semester",
+      "school": "School",
+      "none": "None",
+      "loadingOptions": "Loading…",
+      "curriculumHint": "The server can't clear a program, grade or semester once set — only change it. The school can be removed.",
+      "avatar": "Avatar",
+      "avatarReplace": "New avatar",
+      "avatarHint": "Optional, up to 10 MB.",
+      "isDefault": "Make this the default profile",
+      "isDefaultHint": "The account's previous default is unset.",
+      "isDefaultLocked": "This is the default profile. To change it, make another of the account's profiles the default.",
+      "create": "Create",
+      "save": "Save changes",
+      "created": "Profile created.",
+      "updated": "Changes saved.",
+      "errors": {
+        "required": "Required.",
+        "uid": "Enter a positive whole number.",
+        "email": "Invalid email.",
+        "tooLong": "Too long: at most {{max}} characters.",
+        "avatarType": "The file must be an image.",
+        "avatarSize": "The image is larger than 10 MB."
+      }
+    },
+    "softDelete": {
+      "title": "Soft-delete profile?",
+      "confirm": "Soft-delete",
+      "done": "{{name}} soft-deleted.",
+      "description": "<strong>{{name}}</strong> ({{code}}, UID {{uid}}) will be hidden from every list. There is <warn>no restore yet</warn>."
+    },
+    "forceDelete": {
+      "title": "Permanently delete profile?",
+      "confirm": "Delete permanently",
+      "done": "{{name}} permanently deleted.",
+      "description": "<strong>{{name}}</strong> ({{code}}, UID {{uid}}) and its avatar will be removed from the system. This <warn>can't be undone</warn>. To only hide it, use Soft-delete.",
+      "typeToConfirm": "Type <code>{{code}}</code> to confirm"
+    }
+  },
+  "banners": {
+    "title": "Banners",
+    "description": "Banners shown in the NUMI app."
+  },
+  "curriculum": {
+    "program": {
+      "title": "Programs",
+      "description": "Study programs students pick when creating a profile.",
+      "create": "Add program",
+      "editTitle": "Edit program",
+      "titleField": "Program name",
+      "loadFailed": "Couldn't load programs",
+      "emptyTitle": "No programs yet"
+    },
+    "grade": {
+      "title": "Grades",
+      "description": "Grade levels (grade 1, grade 2…) used by profiles and exams.",
+      "create": "Add grade",
+      "editTitle": "Edit grade",
+      "titleField": "Grade name",
+      "loadFailed": "Couldn't load grades",
+      "emptyTitle": "No grades yet"
+    },
+    "semester": {
+      "title": "Semesters",
+      "description": "Semesters of the school year.",
+      "create": "Add semester",
+      "editTitle": "Edit semester",
+      "titleField": "Semester name",
+      "loadFailed": "Couldn't load semesters",
+      "emptyTitle": "No semesters yet"
+    },
+    "school": {
+      "title": "Schools",
+      "description": "Schools that students attach to their profiles and classrooms.",
+      "create": "Add school",
+      "editTitle": "Edit school",
+      "titleField": "School name",
+      "loadFailed": "Couldn't load schools",
+      "emptyTitle": "No schools yet"
+    },
+    "count_one": "{{count}} item",
+    "count_other": "{{count}} items",
+    "emptyDescription": "Use the Add button above to create the first one.",
+    "search": {
+      "placeholder": "Search by name, district or province…",
+      "emptyTitle": "Nothing matches “{{search}}”",
+      "emptyDescription": "Try another keyword or clear the search.",
+      "clear": "Clear search"
+    },
+    "columns": {
+      "order": "Order",
+      "id": "ID",
+      "location": "Location",
+      "description": "Description",
+      "created": "Created",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit {{name}}",
+      "softDelete": "Soft-delete {{name}}",
+      "forceDelete": "Delete {{name}} permanently"
+    },
+    "form": {
+      "description": "Description",
+      "displayOrder": "Display order",
+      "displayOrderHint": "Lower numbers come first (0–127).",
+      "district": "District",
+      "province": "Province / city",
+      "image": "New image",
+      "imageHint": "Pick an image to replace the current one (max 10 MB). Leave empty to keep it.",
+      "imageKey": "Image key (S3)",
+      "imageKeyHint": "Optional. Key of an image already in S3; it can be replaced but not removed.",
+      "note": "Note",
+      "optional": "Optional.",
+      "create": "Create",
+      "save": "Save changes",
+      "created": "Created.",
+      "updated": "Changes saved.",
+      "errors": {
+        "required": "Required.",
+        "tooLong": "Too long: at most {{max}} bytes (accented letters count 2–3).",
+        "displayOrder": "Enter a whole number from 0 to {{max}}.",
+        "imageType": "The file must be an image.",
+        "imageSize": "The image is larger than 10 MB."
+      }
+    },
+    "softDelete": {
+      "title": "Soft-delete?",
+      "confirm": "Soft-delete",
+      "done": "{{name}} soft-deleted.",
+      "description": "<strong>{{name}}</strong> (ID {{id}}) will be hidden from every list and from the app. There is <warn>no restore yet</warn>."
+    },
+    "forceDelete": {
+      "title": "Delete permanently?",
+      "confirm": "Delete permanently",
+      "done": "{{name}} deleted permanently.",
+      "description": "<strong>{{name}}</strong> (ID {{id}}) will be removed from the database. This <warn>cannot be undone</warn>; profiles, classrooms or exams that use it may be affected. To only hide it, use Soft-delete.",
+      "typeToConfirm": "Type <code>{{id}}</code> to confirm"
+    }
+  },
+  "roles": {
+    "title": "Roles",
+    "description": "Role registry of the permission module. Nothing on the server uses it yet.",
+    "create": "Add role",
+    "editTitle": "Edit role",
+    "loadFailed": "Couldn't load roles",
+    "count_one": "{{count}} role",
+    "count_other": "{{count}} roles",
+    "emptyTitle": "No roles yet",
+    "emptyDescription": "Use Add role at the top to create the first one.",
+    "status": {
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "DELETED": "Deleted"
+    },
+    "filter": {
+      "search": "Search by code or name",
+      "status": "Filter by status",
+      "allStatuses": "All statuses",
+      "emptyTitle": "No roles match the filters",
+      "clear": "Clear filters"
+    },
+    "columns": {
+      "id": "ID",
+      "role": "Role",
+      "description": "Description",
+      "status": "Status",
+      "created": "Created",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit {{name}}",
+      "softDelete": "Soft-delete {{name}}",
+      "forceDelete": "Delete {{name}} permanently"
+    },
+    "form": {
+      "code": "Role code",
+      "codeHint": "Upper-case letters, digits and _, starting with a letter, up to 64 characters. Can't be changed later.",
+      "name": "Role name",
+      "description": "Description",
+      "status": "Status",
+      "image": "Image",
+      "imageReplace": "New image",
+      "imageHint": "Optional, up to 10 MB.",
+      "removeImage": "Remove the current image",
+      "note": "Note",
+      "optional": "Optional.",
+      "create": "Create",
+      "save": "Save changes",
+      "created": "Role created.",
+      "updated": "Changes saved.",
+      "errors": {
+        "required": "Required.",
+        "code": "Upper-case letters, digits and _ only, starting with a letter, up to 64 characters.",
+        "tooLong": "Too long: at most {{max}} characters.",
+        "imageType": "The file must be an image.",
+        "imageSize": "The image is larger than 10 MB."
+      }
+    },
+    "softDelete": {
+      "title": "Soft-delete role?",
+      "confirm": "Soft-delete",
+      "done": "{{name}} soft-deleted.",
+      "description": "<strong>{{name}}</strong> ({{code}}) will be hidden from every list and the code <strong>{{code}}</strong> freed for reuse. There is <warn>no restore yet</warn>."
+    },
+    "forceDelete": {
+      "title": "Delete role permanently?",
+      "confirm": "Delete permanently",
+      "done": "{{name}} deleted permanently.",
+      "description": "<strong>{{name}}</strong> ({{code}}) will be removed from the database. This <warn>can't be undone</warn>. To only hide it, use Soft-delete.",
+      "typeToConfirm": "Type <code>{{code}}</code> to confirm"
+    }
+  },
+  "devices": {
+    "title": "Devices",
+    "description": "Devices users have signed in from. A trusted device skips the OTP step at sign-in.",
+    "loadFailed": "Couldn't load the devices",
+    "count_one": "{{count}} device of UID {{uid}}",
+    "count_other": "{{count}} devices of UID {{uid}}",
+    "unnamed": "Unnamed device",
+    "thisBrowser": "This browser",
+    "thisBrowserWarning": "This is the device you are using. After this, your next sign-in will ask for an OTP again.",
+    "trusted": "Trusted",
+    "untrusted": "Not trusted",
+    "working": "Working…",
+    "pickTitle": "Pick a user to see their devices",
+    "pickDescription": "Enter a user's UID, or a device ID to find its owner. You can also open this from View devices on the Users screen.",
+    "emptyTitle": "This user has no devices",
+    "lookup": {
+      "label": "Device lookup",
+      "mode": "Look up by",
+      "byUid": "User UID",
+      "byDevice": "Device ID",
+      "uidPlaceholder": "Enter a UID",
+      "devicePlaceholder": "Enter a device ID",
+      "submit": "Look up",
+      "invalid": "Enter a positive whole number.",
+      "noOwner": "This device isn't linked to a user."
+    },
+    "filter": {
+      "label": "Filter by trust",
+      "all": "All devices",
+      "true": "Trusted only",
+      "false": "Not trusted only",
+      "emptyTitle": "No devices match the filter",
+      "clear": "Clear filter"
+    },
+    "columns": {
+      "id": "ID",
+      "device": "Device",
+      "platform": "Platform",
+      "trust": "Trust",
+      "note": "Note",
+      "updated": "Updated",
+      "actions": "Actions"
+    },
+    "actions": {
+      "edit": "Edit {{name}}",
+      "revoke": "Revoke trust for {{name}}",
+      "revokeNotTrusted": "The device isn't trusted",
+      "softDelete": "Soft-delete {{name}}",
+      "forceDelete": "Delete {{name}} permanently",
+      "adminOnly": "Only ADMIN accounts can delete permanently"
+    },
+    "edit": {
+      "title": "Edit device",
+      "name": "Device name",
+      "note": "Note",
+      "optional": "Optional.",
+      "save": "Save changes",
+      "saved": "Changes saved.",
+      "errors": {
+        "required": "Required.",
+        "tooLong": "Too long: at most {{max}} characters."
+      }
+    },
+    "revoke": {
+      "title": "Revoke trust for this device?",
+      "confirm": "Revoke",
+      "done": "Revoked {{name}}.",
+      "description": "<strong>{{name}}</strong> (ID {{id}}, UID {{uid}}) will no longer be trusted: the next sign-in from it asks for an OTP, and its sign-in history is marked revoked."
+    },
+    "softDelete": {
+      "title": "Soft-delete this device?",
+      "confirm": "Soft-delete",
+      "done": "Soft-deleted {{name}}.",
+      "description": "<strong>{{name}}</strong> (ID {{id}}, UID {{uid}}) will be hidden from the list and its sign-in history marked revoked. There is <warn>no restore yet</warn>."
+    },
+    "forceDelete": {
+      "title": "Delete this device permanently?",
+      "confirm": "Delete permanently",
+      "done": "Deleted {{name}} permanently.",
+      "description": "<strong>{{name}}</strong> (ID {{id}}, UID {{uid}}) will be removed from the database. This <warn>can't be undone</warn>. To only hide it, use Soft-delete.",
+      "typeToConfirm": "Type <code>{{id}}</code> to confirm"
+    }
+  },
+  "exams": {
+    "title": "Exams",
+    "description": "A student profile's exam journeys, each sitting and every answer.",
+    "types": { "ASSESSMENT": "Assessment", "GRADE": "Grade review", "PRACTICE": "Practice" },
+    "journeyStatus": { "ACTIVE": "In progress", "COMPLETE": "Completed", "CANCEL": "Cancelled", "DELETED": "Deleted" },
+    "sittingStatus": { "IN_PROGRESS": "Not submitted", "SUBMITTED": "Submitted", "DELETED": "Deleted" },
+    "verdict": { "passed": "Passed", "failed": "Not passed" },
+    "kindergarten": "Kindergarten",
+    "grade": "Grade {{grade}}",
+    "level": "Level {{level}}",
+    "score": "{{correct}}/{{total}}",
+    "skipped_one": "{{count}} skipped",
+    "skipped_other": "{{count}} skipped",
+    "picker": {
+      "label": "Find a profile",
+      "mode": "Lookup by",
+      "bySearch": "Name / code",
+      "byId": "Profile ID",
+      "searchPlaceholder": "Profile name or code (e.g. BA-4821)",
+      "idPlaceholder": "Profile ID",
+      "submit": "Find",
+      "required": "Enter a profile name or code.",
+      "invalidId": "Enter a positive whole number.",
+      "searching": "Searching…",
+      "matches_one": "{{count}} profile matches “{{search}}” (showing up to 8)",
+      "matches_other": "{{count}} profiles match “{{search}}” (showing up to 8)",
+      "noMatch": "No profile matches “{{search}}”.",
+      "profileId": "Profile #{{id}}",
+      "account": "Account #{{uid}}",
+      "noGrade": "no grade yet",
+      "pick": "Select",
+      "pickName": "Select {{name}}",
+      "pickTitle": "Pick a profile to see its exams",
+      "pickDescription": "Search by profile name or code, enter a profile ID, or open it from “View exams” on the Profiles screen."
+    },
+    "profile": {
+      "code": "Profile code",
+      "account": "Account",
+      "learning": "Studying",
+      "school": "School",
+      "change": "Change profile"
+    },
+    "list": {
+      "loadFailed": "Couldn't load the journeys",
+      "count_one": "{{count}} journey",
+      "count_other": "{{count}} journeys",
+      "filterType": "Filter by type",
+      "allTypes": "All types",
+      "filterStatus": "Filter by status",
+      "allStatuses": "All statuses",
+      "emptyTitle": "This profile has no journeys yet",
+      "filterEmptyTitle": "No journey matches the filters",
+      "clearFilters": "Clear filters",
+      "inProgress_one": "{{count}} unsubmitted sitting",
+      "inProgress_other": "{{count}} unsubmitted sittings",
+      "inProgressItem": "Sitting #{{id}} · {{type}} · {{time}}",
+      "open": "Open journey #{{id}}",
+      "columns": {
+        "id": "ID",
+        "journey": "Journey",
+        "gradeLevel": "Grade · Level",
+        "status": "Status",
+        "result": "Result",
+        "practice": "Practice",
+        "lastSubmitted": "Last submitted",
+        "started": "Started"
+      }
+    },
+    "backToExams": "Back to Exams",
+    "journey": {
+      "title": "Journey",
+      "heading": "Journey #{{id}}",
+      "loadFailed": "Couldn't load the journey",
+      "missing": "The link is missing or has a wrong profile, journey or journey type.",
+      "backToList": "Back to the journeys",
+      "tabsLabel": "Journey parts",
+      "tabJourney": "Journey · {{type}}",
+      "tabPractice": "Practice · {{score}}",
+      "tiles": {
+        "score": "Score",
+        "correct": "Correct",
+        "answered": "Answered",
+        "skipped": "Skipped",
+        "grade": "Current grade",
+        "level": "Current level"
+      },
+      "meta": {
+        "started": "Started",
+        "lastSubmitted": "Last submitted",
+        "ended": "Ended",
+        "verdict": "Verdict",
+        "noVerdict": "None yet"
+      },
+      "review": {
+        "title": "AI review",
+        "empty": "No review yet: the app has not asked the AI to review this journey.",
+        "showMore": "Show all",
+        "showLess": "Show less"
+      },
+      "preview": {
+        "title": "The next practice round will…",
+        "modes": { "RETRY_WEAK": "Retry weak spots", "ADVANCE": "Push further" },
+        "weak": "Weak topics (wrong / answered)",
+        "noWeak": "No weak topics.",
+        "strong": "Strong topics",
+        "base": "Based on sitting #{{id}}"
+      },
+      "sittings": {
+        "title": "Sittings ({{n}})",
+        "note": "Submitted sittings only. Open unsubmitted ones from the journeys list.",
+        "empty": "No sitting submitted yet.",
+        "open": "Open sitting #{{id}}",
+        "columns": {
+          "id": "Sitting",
+          "title": "Paper title",
+          "gradeLevel": "Grade · Level",
+          "questions": "Questions",
+          "result": "Result",
+          "started": "Started",
+          "submitted": "Submitted"
+        }
+      },
+      "topics": {
+        "title": "By topic",
+        "note": "Correct / answered across the journey, weakest topic first.",
+        "unknown": "No topic"
+      }
+    },
+    "sitting": {
+      "title": "Sitting",
+      "heading": "Sitting #{{id}}",
+      "loadFailed": "Couldn't load the sitting",
+      "missing": "The link is missing or has a wrong profile or sitting.",
+      "backToJourney": "Journey #{{id}}",
+      "backToList": "Back to the journeys",
+      "inProgressBanner": "This sitting is not submitted: the server sends no answer key and has saved no answers yet. This is the paper as the child sees it.",
+      "tiles": {
+        "score": "Score",
+        "correct": "Correct",
+        "answered": "Answered",
+        "skipped": "Skipped",
+        "questions": "Questions on the paper",
+        "gradeLevel": "Grade · Level"
+      },
+      "meta": {
+        "issued": "Issued",
+        "started": "Started",
+        "submitted": "Submitted",
+        "duration": "Time taken",
+        "examId": "Paper (exam_id)"
+      },
+      "duration_one": "{{count}} minute",
+      "duration_other": "{{count}} minutes",
+      "durationUnderMinute": "under a minute",
+      "filtersLabel": "Filter questions",
+      "filters": {
+        "all": "All · {{n}}",
+        "wrong": "Wrong · {{n}}",
+        "skipped": "Skipped · {{n}}",
+        "correct": "Correct · {{n}}"
+      },
+      "servedOrder": "Question order and A/B/C/D labels are exactly as the child saw them.",
+      "empty": "This sitting has no questions to show.",
+      "filterEmpty": "No question in this group."
+    },
+    "question": {
+      "number": "Question {{number}}",
+      "outcomes": { "correct": "Correct", "wrong": "Wrong", "skipped": "Skipped" },
+      "types": {
+        "ARITHMETIC": "Arithmetic",
+        "COUNT": "Counting",
+        "PICK_BY_ICON": "Pick by picture",
+        "IDENTIFY_SHAPE": "Identify the shape"
+      },
+      "probe": "{{grade}} ↑ probe question",
+      "right": "Right answer",
+      "picked": "Child's pick",
+      "rightAndPicked": "Right answer · Child's pick",
+      "noOptions": "The original paper is gone, so the options can't be shown.",
+      "pickedAnswer": "Child's pick: {{answer}}",
+      "rightAnswer": "Right answer: {{answer}}"
+    }
+  },
+  "system": {
+    "refresh": "Refresh",
+    "working": "Working…",
+    "typeToConfirm": "Type <code>{{phrase}}</code> to confirm",
+    "sessions": {
+      "title": "Sessions",
+      "description": "Sessions held in math-svr's memory.",
+      "listLabel": "Session list",
+      "loadFailed": "Couldn't load the sessions",
+      "count_one": "{{count}} session · {{secure}} verified",
+      "count_other": "{{count}} sessions · {{secure}} verified",
+      "empty": "No sessions.",
+      "anonymous": "Not signed in",
+      "columns": {
+        "token": "Token",
+        "uid": "UID",
+        "account": "Account",
+        "source": "Source",
+        "state": "State",
+        "expiresAt": "Expires",
+        "actions": "Actions"
+      },
+      "current": "Your session",
+      "selfSignOutWarning": "This is the session you are using: you will be signed out right away.",
+      "markSecure": {
+        "action": "Mark session {{token}} verified",
+        "noUser": "Nobody is signed into this session, so it can't be marked verified.",
+        "title": "Mark this session verified?",
+        "description": "The session of <strong>{{account}}</strong> (UID {{uid}}, token <code>{{token}}</code>) counts as fully signed in, <warn>skipping the OTP step</warn>. Only do this when you are sure the device belongs to the account owner.",
+        "confirm": "Mark verified",
+        "done": "Session {{token}} marked verified."
+      },
+      "markUnsecure": {
+        "action": "Unverify session {{token}}",
+        "title": "Unverify this session?",
+        "description": "The session of <strong>{{account}}</strong> (UID {{uid}}, token <code>{{token}}</code>) is kept, but every sign-in-only feature refuses it until the user signs in again (or it is marked verified again).",
+        "confirm": "Unverify",
+        "done": "Session {{token}} unverified."
+      },
+      "deleteOne": {
+        "action": "Sign out session {{token}}",
+        "title": "Sign out this session?",
+        "description": "The session of <strong>{{account}}</strong> (UID {{uid}}, token <code>{{token}}</code>) is deleted. On its next request that device has to sign in again.",
+        "confirm": "Sign out session",
+        "done": "Session {{token}} deleted."
+      },
+      "state": {
+        "secure": "Verified",
+        "unsecure": "Not verified",
+        "expired": "Expired",
+        "deleting": "Pending delete"
+      },
+      "deleteUnsecure": {
+        "button": "Delete unverified sessions",
+        "title": "Delete unverified sessions?",
+        "description": "Every session that never finished login/OTP, or was signed out, is deleted. Your own session is not affected.",
+        "confirm": "Delete sessions",
+        "done": "Unverified sessions deleted."
+      },
+      "deleteAll": {
+        "button": "Delete all sessions",
+        "title": "Delete all sessions?",
+        "description": "Every user is signed out, <warn>you included</warn>: you will be sent to the sign-in page right after.",
+        "confirm": "Delete all",
+        "done": "All sessions deleted. Please sign in again."
+      }
+    },
+    "server": {
+      "title": "Server",
+      "description": "Restart or stop the math-svr process.",
+      "reload": {
+        "title": "Reload",
+        "summary": "Validates the .env file, then restarts the process in place so new settings apply. If .env is invalid, the server keeps running and reports the error.",
+        "button": "Reload",
+        "confirmTitle": "Reload the server?",
+        "confirmDescription": "The server is <warn>down for a few seconds</warn>: running requests and socket connections are cut. Sessions survive only when the server has SERIALIZED_SESSION_FILE set.",
+        "doneTitle": "The server is restarting",
+        "doneDescription": "Wait a few seconds, then reload this page. If it still can't connect, check the server log."
+      },
+      "shutdown": {
+        "title": "Shut down",
+        "summary": "Stops the math-svr process once in-flight work has drained. It can only be started again on the host.",
+        "button": "Shut down",
+        "confirmTitle": "Shut down the server?",
+        "confirmDescription": "The whole NUMI app and this dashboard <warn>stop working</warn> until someone starts the server again on the host.",
+        "doneTitle": "The server accepted the shutdown",
+        "doneDescription": "Every request will fail until the server is started again on the host."
+      }
+    },
+    "data": {
+      "title": "Data",
+      "description": "Watch database connections and wipe test data.",
+      "stats": {
+        "title": "MySQL connections",
+        "loadFailed": "Couldn't load connection stats",
+        "capturedAt": "Captured at {{time}}",
+        "inUse": "Connections in use",
+        "inUseOf": "{{inUse}} / {{max}} ({{percent}}%)",
+        "inUseUnlimited": "{{inUse}} (no connection limit)",
+        "open": "Open",
+        "idle": "Idle",
+        "waitCount": "Waits",
+        "waitDuration": "Total wait time",
+        "avgWait": "Average wait",
+        "maxIdleClosed": "Closed: max idle",
+        "maxIdleTimeClosed": "Closed: idle too long",
+        "maxLifetimeClosed": "Closed: max lifetime",
+        "isolation": "Isolation level",
+        "autocommit": "Autocommit",
+        "on": "On",
+        "off": "Off",
+        "cumulativeHint": "Waits, wait time and closed connections add up from when the server started."
+      },
+      "clearTables": {
+        "title": "Clear tables",
+        "summary": "Pick tables to empty (TRUNCATE). Each table's id counter is also reset to 0.",
+        "selectAll": "Select all",
+        "selectNone": "Clear selection",
+        "button_one": "Clear {{count}} table",
+        "button_other": "Clear {{count}} tables",
+        "confirmTitle": "Clear the selected tables?",
+        "confirmDescription": "Every row in the tables below is deleted. This <warn>cannot be undone</warn>.",
+        "usersWarning": "ma_users is selected: every account is deleted, including the one you are using.",
+        "confirm": "Clear data"
+      },
+      "clearAll": {
+        "title": "Clear all data",
+        "summary": "Wipes every table above, keeping only the whitelisted users (and all their data). Reference data (programs, grades, semesters, schools) and the exam pool are kept.",
+        "button": "Clear all data",
+        "confirmTitle": "Clear all data?",
+        "confirmDescription": "All user, classroom, submission, notification, banner and chat data is deleted. This <warn>cannot be undone</warn>.",
+        "whitelistLabel": "UIDs to keep",
+        "whitelistHint": "Comma-separated UIDs. Leave empty to delete everyone.",
+        "whitelistInvalid": "Enter UID numbers only, separated by commas.",
+        "selfWarning": "Your account (UID {{uid}}) is not in the list and will be deleted.",
+        "confirm": "Clear everything"
+      },
+      "result": {
+        "summary": "Cleared {{tables}} tables, reset {{seqs}} id counters.",
+        "kept": "Kept UIDs: {{uids}}"
+      }
+    },
+    "jobs": {
+      "title": "Scheduled jobs",
+      "description": "Cron jobs running inside math-svr: run now, pause, or change their schedule.",
+      "listLabel": "Scheduled job list",
+      "loadFailed": "Couldn't load the jobs",
+      "count_one": "{{count}} scheduled job",
+      "count_other": "{{count}} scheduled jobs",
+      "empty": "No scheduled jobs are registered.",
+      "runtime": "Job runtime",
+      "started": "Running",
+      "stopped": "Not started",
+      "queue": "Queue",
+      "queueValue": "{{depth}} / {{capacity}}",
+      "workers": "Workers",
+      "overridden": "Rescheduled",
+      "defaultSchedule": "Default: {{schedule}}",
+      "inFlight": "Running",
+      "columns": {
+        "name": "Name",
+        "schedule": "Schedule",
+        "status": "Status",
+        "lastRun": "Last run",
+        "nextRun": "Next run",
+        "actions": "Actions"
+      },
+      "status": {
+        "running": "Active",
+        "paused": "Paused"
+      },
+      "runStatus": {
+        "succeeded": "Succeeded",
+        "failed": "Failed",
+        "panicked": "Panicked",
+        "timed_out": "Timed out"
+      },
+      "actions": {
+        "trigger": "Run {{name}} now",
+        "pause": "Pause {{name}}",
+        "resume": "Resume {{name}}",
+        "editSchedule": "Change {{name}}'s schedule",
+        "resetSchedule": "Restore {{name}}'s default schedule",
+        "resetScheduleNone": "Already on the default schedule"
+      },
+      "done": {
+        "trigger": "{{name}} triggered.",
+        "pause": "{{name}} paused.",
+        "resume": "{{name}} resumed.",
+        "resetSchedule": "{{name}} is back on its default schedule."
+      },
+      "tasks": {
+        "title": "Registered tasks",
+        "description": "Task types that can be queued."
+      },
+      "schedule": {
+        "title": "Change schedule",
+        "current": "Current: {{schedule}}",
+        "kind": "Schedule type",
+        "kinds": {
+          "every": "Repeat at an interval",
+          "daily": "Daily",
+          "weekly": "Weekly"
+        },
+        "interval": "Interval",
+        "unit": "Unit",
+        "units": {
+          "minutes": "minutes",
+          "hours": "hours",
+          "days": "days"
+        },
+        "intervalHint": "From 1 minute to 30 days.",
+        "weekday": "Day",
+        "time": "Time",
+        "timezone": "Timezone",
+        "timezoneHint": "IANA timezone name. Empty = UTC.",
+        "inMemoryNote": "The new schedule applies now but lives in memory only: when the server restarts, the job goes back to its default ({{schedule}}).",
+        "submit": "Save schedule",
+        "saved": "{{name}} rescheduled: {{schedule}}.",
+        "errors": {
+          "everyRange": "The interval must be a whole number between 1 minute and 30 days.",
+          "timeRequired": "Pick a time."
+        }
+      }
+    }
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "This link does not exist or has changed.",
+    "backHome": "Back to home"
+  },
+  "pagination": {
+    "label": "Pagination",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page {{page}}",
+    "show": "Show",
+    "perPage": "{{size}} / page",
+    "range": "Showing {{first}}–{{last}} of {{total}}"
+  }
+}

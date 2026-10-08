@@ -1,0 +1,948 @@
+{
+  "common": {
+    "appSubtitle": "Bảng quản trị",
+    "logout": "Đăng xuất",
+    "language": "Ngôn ngữ",
+    "comingSoon": "Màn hình này sẽ được xây dựng ở bước tiếp theo.",
+    "retry": "Thử lại",
+    "showPassword": "Hiện mật khẩu",
+    "hidePassword": "Ẩn mật khẩu",
+    "cancel": "Huỷ",
+    "saving": "Đang lưu…",
+    "deleting": "Đang xoá…"
+  },
+  "errors": {
+    "network": "Không kết nối được máy chủ. Kiểm tra mạng rồi thử lại.",
+    "sessionExpired": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+    "unknown": "Đã có lỗi xảy ra. Vui lòng thử lại."
+  },
+  "nav": {
+    "main": "Điều hướng chính",
+    "breadcrumbRoot": "Quản trị",
+    "users": "Người dùng",
+    "profiles": "Hồ sơ",
+    "banners": "Banner",
+    "devices": "Thiết bị",
+    "exams": "Bài kiểm tra",
+    "curriculum": {
+      "group": "Chương trình học",
+      "programs": "Chương trình",
+      "grades": "Khối lớp",
+      "semesters": "Học kỳ",
+      "schools": "Trường học"
+    },
+    "permissions": {
+      "group": "Phân quyền",
+      "roles": "Vai trò"
+    },
+    "system": {
+      "group": "Hệ thống",
+      "sessions": "Phiên đăng nhập",
+      "server": "Máy chủ",
+      "data": "Dữ liệu",
+      "jobs": "Tác vụ định kỳ"
+    }
+  },
+  "auth": {
+    "heroTitle": "Quản lý người dùng và nội dung cho NUMI.",
+    "heroDescription": "Dành cho đội ngũ vận hành. Mọi thao tác đều tác động trực tiếp lên dữ liệu thật.",
+    "mascotAlt": "Cú Numi, linh vật của NUMI",
+    "signIn": {
+      "title": "Đăng nhập",
+      "description": "Dùng tài khoản đã được cấp quyền quản trị.",
+      "loginName": "Số điện thoại hoặc email",
+      "loginNamePlaceholder": "VD: 0901234567",
+      "password": "Mật khẩu",
+      "submit": "Đăng nhập",
+      "submitting": "Đang đăng nhập…",
+      "otpHint": "Trình duyệt chưa được tin cậy sẽ cần thêm mã OTP gửi về số điện thoại hoặc email."
+    },
+    "verifyOtp": {
+      "title": "Nhập mã xác thực",
+      "description": "Mã gồm {{digits}} chữ số đã được gửi tới",
+      "useAnotherAccount": "Dùng tài khoản khác",
+      "codeLabel": "Mã OTP",
+      "expiresIn": "Mã hết hạn sau",
+      "expired": "Mã đã hết hạn. Hãy gửi lại mã mới.",
+      "submit": "Xác nhận",
+      "submitting": "Đang xác nhận…",
+      "noCode": "Chưa nhận được mã?",
+      "resend": "Gửi lại mã",
+      "sending": "Đang gửi…",
+      "devBadge": "DEV",
+      "devCode": "Mã từ server:"
+    },
+    "restoringSession": "Đang khôi phục phiên đăng nhập",
+    "restoreFailed": "Không khôi phục được phiên đăng nhập"
+  },
+  "users": {
+    "title": "Người dùng",
+    "description": "Tài khoản học sinh, phụ huynh và giáo viên trên NUMI.",
+    "guestName": "Khách vãng lai",
+    "listLabel": "Danh sách người dùng",
+    "loadFailed": "Không tải được danh sách người dùng",
+    "count_other": "{{count}} người dùng",
+    "noContact": "Chưa có liên hệ",
+    "selfDeleteBlocked": "Không thể xoá tài khoản bạn đang đăng nhập.",
+    "columns": {
+      "uid": "UID",
+      "name": "Họ tên",
+      "contact": "Liên hệ",
+      "role": "Vai trò",
+      "identity": "Định danh",
+      "created": "Ngày tạo",
+      "actions": "Thao tác"
+    },
+    "roles": {
+      "STUDENT": "Học sinh",
+      "TEACHER": "Giáo viên",
+      "PARENT": "Phụ huynh",
+      "ADMIN": "Quản trị viên",
+      "GUEST": "Khách"
+    },
+    "identity": {
+      "VERIFIED": "Đã xác minh",
+      "USER": "Đã đăng ký",
+      "GUEST": "Khách"
+    },
+    "actions": {
+      "edit": "Sửa {{name}}",
+      "profiles": "Xem hồ sơ của {{name}}",
+      "devices": "Xem thiết bị của {{name}}",
+      "softDelete": "Xoá mềm {{name}}",
+      "forceDelete": "Xoá vĩnh viễn {{name}}"
+    },
+    "empty": {
+      "title": "Chưa có người dùng nào",
+      "description": "Tài khoản đăng ký trên ứng dụng NUMI sẽ xuất hiện ở đây."
+    },
+    "edit": {
+      "title": "Sửa người dùng",
+      "description": "Sửa thông tin tài khoản {{name}}",
+      "saved": "Đã lưu thay đổi.",
+      "name": "Họ tên",
+      "email": "Email",
+      "phone": "Số điện thoại",
+      "role": "Vai trò",
+      "rolePlaceholder": "Chưa có vai trò",
+      "emailHint": "Đổi email sẽ đặt lại trạng thái đã xác minh email.",
+      "noEmail": "Tài khoản chưa có email. Máy chủ chưa hỗ trợ thêm email mới.",
+      "noPhone": "Tài khoản chưa có số điện thoại. Máy chủ chưa hỗ trợ thêm số mới.",
+      "adminRoleHint": "Không thể gán vai trò Quản trị viên từ đây; chọn vai trò khác sẽ gỡ quyền quản trị.",
+      "dangerZone": "Vùng nguy hiểm",
+      "softDeleteHint": "Xoá mềm: ẩn tài khoản và xoá vĩnh viễn hồ sơ con.",
+      "forceDeleteHint": "Xoá vĩnh viễn: không thể hoàn tác.",
+      "submit": "Lưu thay đổi",
+      "errors": {
+        "nameRequired": "Vui lòng nhập họ tên.",
+        "emailInvalid": "Email không hợp lệ.",
+        "phoneInvalid": "Số điện thoại không hợp lệ (VD: 0912345678 hoặc +84912345678)."
+      },
+      "devicesTitle": "Thiết bị đăng nhập",
+      "devicesHint": "Nền tảng, độ tin cậy; thu hồi tin cậy hoặc xoá thiết bị.",
+      "devicesLink": "Xem thiết bị"
+    },
+    "softDelete": {
+      "title": "Xoá mềm người dùng?",
+      "confirm": "Xoá mềm",
+      "done": "Đã xoá mềm {{name}}.",
+      "description": "Tài khoản <strong>{{name}}</strong> (UID {{uid}}) sẽ bị ẩn khỏi danh sách. Toàn bộ hồ sơ con của tài khoản sẽ bị <warn>xoá vĩnh viễn</warn>, và hiện chưa có chức năng khôi phục."
+    },
+    "forceDelete": {
+      "title": "Xoá vĩnh viễn người dùng?",
+      "confirm": "Xoá vĩnh viễn",
+      "done": "Đã xoá vĩnh viễn {{name}}.",
+      "description": "Tài khoản <strong>{{name}}</strong> (UID {{uid}}) cùng mọi dữ liệu liên quan sẽ bị xoá khỏi hệ thống. Thao tác này <warn>không thể hoàn tác</warn>. Nếu chỉ muốn ẩn tài khoản, hãy dùng Xoá mềm.",
+      "typeToConfirm": "Nhập <code>{{uid}}</code> để xác nhận"
+    },
+    "filter": {
+      "label": "Vai trò",
+      "all": "Tất cả",
+      "guestsHidden": "Khách chưa có vai trò nên không hiện khi lọc theo vai trò.",
+      "emptyTitle": "Không có người dùng nào khớp bộ lọc",
+      "emptyDescription": "Thử chọn vai trò khác hoặc bỏ bộ lọc.",
+      "clear": "Bỏ bộ lọc"
+    },
+    "create": {
+      "title": "Thêm người dùng",
+      "description": "Tạo tài khoản mới thay cho người dùng.",
+      "submit": "Tạo người dùng",
+      "done": "Đã tạo tài khoản {{name}}.",
+      "adminOnly": "Chỉ tài khoản Quản trị viên mới tạo được người dùng.",
+      "contactHint": "Cần số điện thoại hoặc email (ít nhất một) để đăng nhập.",
+      "emailHint": "Email được lưu ở trạng thái chưa xác minh.",
+      "adminRoleHint": "Tài khoản này sẽ có toàn quyền quản trị.",
+      "passwordHint": "Không bắt buộc, tối thiểu {{min}} ký tự. Bỏ trống thì người dùng đăng nhập bằng mã OTP.",
+      "errors": {
+        "contactRequired": "Nhập số điện thoại hoặc email.",
+        "passwordLength": "Mật khẩu cần ít nhất {{min}} ký tự và không quá dài."
+      }
+    }
+  },
+  "profiles": {
+    "title": "Hồ sơ",
+    "description": "Hồ sơ con của các tài khoản: vai trò, trường, chương trình, khối lớp và học kỳ.",
+    "create": "Thêm hồ sơ",
+    "editTitle": "Sửa hồ sơ",
+    "loadFailed": "Không tải được danh sách hồ sơ",
+    "count_other": "{{count}} hồ sơ",
+    "emptyTitle": "Chưa có hồ sơ nào",
+    "emptyDescription": "Hồ sơ được tạo khi người dùng đăng ký hoặc thêm con trên ứng dụng NUMI.",
+    "default": "Hồ sơ mặc định",
+    "filterByOwner": "Xem các hồ sơ của UID {{uid}}",
+    "status": {
+      "OFFICIAL": "Chính thức",
+      "INCOMPLETE": "Chưa đủ",
+      "ACTIVE": "Hoạt động",
+      "INACTIVE": "Tạm ngưng",
+      "DELETED": "Đã xoá"
+    },
+    "filter": {
+      "search": "Tìm theo tên hoặc mã hồ sơ",
+      "uid": "UID chủ",
+      "role": "Lọc theo vai trò",
+      "allRoles": "Mọi vai trò",
+      "status": "Lọc theo trạng thái",
+      "allStatuses": "Mọi trạng thái",
+      "emptyTitle": "Không có hồ sơ nào khớp bộ lọc",
+      "clear": "Xoá bộ lọc"
+    },
+    "columns": {
+      "id": "Mã / ID",
+      "profile": "Hồ sơ",
+      "owner": "UID chủ",
+      "role": "Vai trò",
+      "learning": "Học tập",
+      "status": "Trạng thái",
+      "created": "Ngày tạo",
+      "actions": "Thao tác"
+    },
+    "actions": {
+      "edit": "Sửa {{name}}",
+      "softDelete": "Xoá mềm {{name}}",
+      "forceDelete": "Xoá vĩnh viễn {{name}}",
+      "exams": "Xem bài làm của {{name}}"
+    },
+    "form": {
+      "uid": "UID tài khoản chủ",
+      "uidHint": "Hồ sơ thuộc về tài khoản này. Không đổi được sau khi tạo.",
+      "name": "Tên hồ sơ",
+      "role": "Vai trò",
+      "dob": "Ngày sinh",
+      "idType": "Loại mã giáo viên",
+      "idTypeHint": "VD: MOET, PUBLIC_ID",
+      "teacherId": "Mã giáo viên",
+      "studentId": "Mã học sinh",
+      "officialHint": "Hồ sơ thành Chính thức khi học sinh có mã học sinh, hoặc giáo viên có đủ loại mã và mã giáo viên.",
+      "phone": "Số điện thoại",
+      "email": "Email",
+      "program": "Chương trình",
+      "grade": "Khối lớp",
+      "semester": "Học kỳ",
+      "school": "Trường học",
+      "none": "Chưa chọn",
+      "loadingOptions": "Đang tải…",
+      "curriculumHint": "Máy chủ chưa hỗ trợ bỏ chương trình, khối lớp hay học kỳ đã chọn — chỉ đổi sang giá trị khác. Trường học thì bỏ được.",
+      "avatar": "Ảnh đại diện",
+      "avatarReplace": "Ảnh đại diện mới",
+      "avatarHint": "Không bắt buộc, tối đa 10 MB.",
+      "isDefault": "Đặt làm hồ sơ mặc định",
+      "isDefaultHint": "Hồ sơ mặc định cũ của tài khoản sẽ bị bỏ chọn.",
+      "isDefaultLocked": "Đây là hồ sơ mặc định. Muốn đổi, hãy đặt hồ sơ khác của tài khoản làm mặc định.",
+      "create": "Tạo",
+      "save": "Lưu thay đổi",
+      "created": "Đã tạo hồ sơ.",
+      "updated": "Đã lưu thay đổi.",
+      "errors": {
+        "required": "Không được để trống.",
+        "uid": "Nhập UID là số nguyên dương.",
+        "email": "Email không hợp lệ.",
+        "tooLong": "Quá dài: tối đa {{max}} ký tự.",
+        "avatarType": "Tệp phải là ảnh.",
+        "avatarSize": "Ảnh vượt quá 10 MB."
+      }
+    },
+    "softDelete": {
+      "title": "Xoá mềm hồ sơ?",
+      "confirm": "Xoá mềm",
+      "done": "Đã xoá mềm {{name}}.",
+      "description": "Hồ sơ <strong>{{name}}</strong> ({{code}}, UID {{uid}}) sẽ bị ẩn khỏi mọi danh sách. Hiện <warn>chưa có chức năng khôi phục</warn>."
+    },
+    "forceDelete": {
+      "title": "Xoá vĩnh viễn hồ sơ?",
+      "confirm": "Xoá vĩnh viễn",
+      "done": "Đã xoá vĩnh viễn {{name}}.",
+      "description": "Hồ sơ <strong>{{name}}</strong> ({{code}}, UID {{uid}}) cùng ảnh đại diện sẽ bị xoá khỏi hệ thống. Thao tác này <warn>không thể hoàn tác</warn>. Nếu chỉ muốn ẩn, hãy dùng Xoá mềm.",
+      "typeToConfirm": "Nhập <code>{{code}}</code> để xác nhận"
+    }
+  },
+  "banners": {
+    "title": "Banner",
+    "description": "Banner hiển thị trong ứng dụng NUMI."
+  },
+  "curriculum": {
+    "program": {
+      "title": "Chương trình",
+      "description": "Các chương trình học mà học sinh chọn khi tạo hồ sơ.",
+      "create": "Thêm chương trình",
+      "editTitle": "Sửa chương trình",
+      "titleField": "Tên chương trình",
+      "loadFailed": "Không tải được danh sách chương trình",
+      "emptyTitle": "Chưa có chương trình nào"
+    },
+    "grade": {
+      "title": "Khối lớp",
+      "description": "Các khối lớp (lớp 1, lớp 2…) dùng cho hồ sơ và bài kiểm tra.",
+      "create": "Thêm khối lớp",
+      "editTitle": "Sửa khối lớp",
+      "titleField": "Tên khối lớp",
+      "loadFailed": "Không tải được danh sách khối lớp",
+      "emptyTitle": "Chưa có khối lớp nào"
+    },
+    "semester": {
+      "title": "Học kỳ",
+      "description": "Các học kỳ trong năm học.",
+      "create": "Thêm học kỳ",
+      "editTitle": "Sửa học kỳ",
+      "titleField": "Tên học kỳ",
+      "loadFailed": "Không tải được danh sách học kỳ",
+      "emptyTitle": "Chưa có học kỳ nào"
+    },
+    "school": {
+      "title": "Trường học",
+      "description": "Các trường mà học sinh gắn vào hồ sơ và lớp học.",
+      "create": "Thêm trường",
+      "editTitle": "Sửa trường",
+      "titleField": "Tên trường",
+      "loadFailed": "Không tải được danh sách trường",
+      "emptyTitle": "Chưa có trường nào"
+    },
+    "count_other": "{{count}} mục",
+    "emptyDescription": "Bấm nút Thêm ở góc trên để tạo mục đầu tiên.",
+    "search": {
+      "placeholder": "Tìm theo tên, quận/huyện, tỉnh/thành…",
+      "emptyTitle": "Không tìm thấy kết quả cho “{{search}}”",
+      "emptyDescription": "Thử từ khoá khác hoặc xoá bộ lọc.",
+      "clear": "Xoá tìm kiếm"
+    },
+    "columns": {
+      "order": "Thứ tự",
+      "id": "ID",
+      "location": "Khu vực",
+      "description": "Mô tả",
+      "created": "Ngày tạo",
+      "actions": "Thao tác"
+    },
+    "actions": {
+      "edit": "Sửa {{name}}",
+      "softDelete": "Xoá mềm {{name}}",
+      "forceDelete": "Xoá vĩnh viễn {{name}}"
+    },
+    "form": {
+      "description": "Mô tả",
+      "displayOrder": "Thứ tự hiển thị",
+      "displayOrderHint": "Số nhỏ hiển thị trước (0–127).",
+      "district": "Quận/huyện",
+      "province": "Tỉnh/thành phố",
+      "image": "Ảnh mới",
+      "imageHint": "Chọn ảnh để thay ảnh hiện tại (tối đa 10 MB). Để trống nếu giữ nguyên.",
+      "imageKey": "Khoá ảnh (S3)",
+      "imageKeyHint": "Không bắt buộc. Khoá của ảnh đã có trên S3; chỉ thay được, không xoá được.",
+      "note": "Ghi chú",
+      "optional": "Không bắt buộc.",
+      "create": "Tạo",
+      "save": "Lưu thay đổi",
+      "created": "Đã tạo.",
+      "updated": "Đã lưu thay đổi.",
+      "errors": {
+        "required": "Không được để trống.",
+        "tooLong": "Quá dài: tối đa {{max}} byte (chữ có dấu tính 2–3 byte).",
+        "displayOrder": "Nhập số nguyên từ 0 đến {{max}}.",
+        "imageType": "Tệp phải là ảnh.",
+        "imageSize": "Ảnh vượt quá 10 MB."
+      }
+    },
+    "softDelete": {
+      "title": "Xoá mềm?",
+      "confirm": "Xoá mềm",
+      "done": "Đã xoá mềm {{name}}.",
+      "description": "<strong>{{name}}</strong> (ID {{id}}) sẽ bị ẩn khỏi mọi danh sách và ứng dụng. Hiện <warn>chưa có chức năng khôi phục</warn>."
+    },
+    "forceDelete": {
+      "title": "Xoá vĩnh viễn?",
+      "confirm": "Xoá vĩnh viễn",
+      "done": "Đã xoá vĩnh viễn {{name}}.",
+      "description": "<strong>{{name}}</strong> (ID {{id}}) sẽ bị xoá khỏi cơ sở dữ liệu. Thao tác này <warn>không thể hoàn tác</warn>; hồ sơ, lớp học hoặc bài kiểm tra đang dùng mục này có thể bị ảnh hưởng. Nếu chỉ muốn ẩn, hãy dùng Xoá mềm.",
+      "typeToConfirm": "Nhập <code>{{id}}</code> để xác nhận"
+    }
+  },
+  "roles": {
+    "title": "Vai trò",
+    "description": "Danh mục vai trò của mô-đun phân quyền. Hiện chưa có chức năng nào trên máy chủ dùng danh mục này.",
+    "create": "Thêm vai trò",
+    "editTitle": "Sửa vai trò",
+    "loadFailed": "Không tải được danh sách vai trò",
+    "count_other": "{{count}} vai trò",
+    "emptyTitle": "Chưa có vai trò nào",
+    "emptyDescription": "Bấm Thêm vai trò ở góc trên để tạo vai trò đầu tiên.",
+    "status": {
+      "ACTIVE": "Đang dùng",
+      "INACTIVE": "Tạm ngưng",
+      "DELETED": "Đã xoá"
+    },
+    "filter": {
+      "search": "Tìm theo mã hoặc tên",
+      "status": "Lọc theo trạng thái",
+      "allStatuses": "Mọi trạng thái",
+      "emptyTitle": "Không có vai trò nào khớp bộ lọc",
+      "clear": "Xoá bộ lọc"
+    },
+    "columns": {
+      "id": "ID",
+      "role": "Vai trò",
+      "description": "Mô tả",
+      "status": "Trạng thái",
+      "created": "Ngày tạo",
+      "actions": "Thao tác"
+    },
+    "actions": {
+      "edit": "Sửa {{name}}",
+      "softDelete": "Xoá mềm {{name}}",
+      "forceDelete": "Xoá vĩnh viễn {{name}}"
+    },
+    "form": {
+      "code": "Mã vai trò",
+      "codeHint": "Chữ in hoa, chữ số và dấu _, bắt đầu bằng chữ cái, tối đa 64 ký tự. Không đổi được sau khi tạo.",
+      "name": "Tên vai trò",
+      "description": "Mô tả",
+      "status": "Trạng thái",
+      "image": "Ảnh",
+      "imageReplace": "Ảnh mới",
+      "imageHint": "Không bắt buộc, tối đa 10 MB.",
+      "removeImage": "Xoá ảnh hiện tại",
+      "note": "Ghi chú",
+      "optional": "Không bắt buộc.",
+      "create": "Tạo",
+      "save": "Lưu thay đổi",
+      "created": "Đã tạo vai trò.",
+      "updated": "Đã lưu thay đổi.",
+      "errors": {
+        "required": "Không được để trống.",
+        "code": "Chỉ gồm chữ in hoa, chữ số và dấu _, bắt đầu bằng chữ cái, tối đa 64 ký tự.",
+        "tooLong": "Quá dài: tối đa {{max}} ký tự.",
+        "imageType": "Tệp phải là ảnh.",
+        "imageSize": "Ảnh vượt quá 10 MB."
+      }
+    },
+    "softDelete": {
+      "title": "Xoá mềm vai trò?",
+      "confirm": "Xoá mềm",
+      "done": "Đã xoá mềm {{name}}.",
+      "description": "<strong>{{name}}</strong> ({{code}}) sẽ bị ẩn khỏi mọi danh sách và mã <strong>{{code}}</strong> được giải phóng để tạo lại. Hiện <warn>chưa có chức năng khôi phục</warn>."
+    },
+    "forceDelete": {
+      "title": "Xoá vĩnh viễn vai trò?",
+      "confirm": "Xoá vĩnh viễn",
+      "done": "Đã xoá vĩnh viễn {{name}}.",
+      "description": "<strong>{{name}}</strong> ({{code}}) sẽ bị xoá khỏi cơ sở dữ liệu. Thao tác này <warn>không thể hoàn tác</warn>. Nếu chỉ muốn ẩn, hãy dùng Xoá mềm.",
+      "typeToConfirm": "Nhập <code>{{code}}</code> để xác nhận"
+    }
+  },
+  "devices": {
+    "title": "Thiết bị",
+    "description": "Thiết bị mà người dùng đã đăng nhập. Thiết bị tin cậy được bỏ qua bước OTP khi đăng nhập.",
+    "loadFailed": "Không tải được danh sách thiết bị",
+    "count_other": "{{count}} thiết bị của UID {{uid}}",
+    "unnamed": "Thiết bị chưa đặt tên",
+    "thisBrowser": "Trình duyệt này",
+    "thisBrowserWarning": "Đây là thiết bị bạn đang dùng. Sau thao tác này, lần đăng nhập tới sẽ phải nhập lại OTP.",
+    "trusted": "Tin cậy",
+    "untrusted": "Chưa tin cậy",
+    "working": "Đang xử lý…",
+    "pickTitle": "Chọn người dùng để xem thiết bị",
+    "pickDescription": "Nhập UID của người dùng, hoặc ID một thiết bị để tìm chủ của nó. Bạn cũng có thể mở từ nút Xem thiết bị ở màn hình Người dùng.",
+    "emptyTitle": "Người dùng này chưa có thiết bị nào",
+    "lookup": {
+      "label": "Tra cứu thiết bị",
+      "mode": "Tra cứu theo",
+      "byUid": "UID người dùng",
+      "byDevice": "ID thiết bị",
+      "uidPlaceholder": "Nhập UID",
+      "devicePlaceholder": "Nhập ID thiết bị",
+      "submit": "Tra cứu",
+      "invalid": "Hãy nhập một số nguyên dương.",
+      "noOwner": "Thiết bị này không gắn với người dùng nào."
+    },
+    "filter": {
+      "label": "Lọc theo độ tin cậy",
+      "all": "Mọi thiết bị",
+      "true": "Chỉ thiết bị tin cậy",
+      "false": "Chỉ chưa tin cậy",
+      "emptyTitle": "Không có thiết bị nào khớp bộ lọc",
+      "clear": "Xoá bộ lọc"
+    },
+    "columns": {
+      "id": "ID",
+      "device": "Thiết bị",
+      "platform": "Nền tảng",
+      "trust": "Độ tin cậy",
+      "note": "Ghi chú",
+      "updated": "Cập nhật",
+      "actions": "Thao tác"
+    },
+    "actions": {
+      "edit": "Sửa {{name}}",
+      "revoke": "Thu hồi tin cậy {{name}}",
+      "revokeNotTrusted": "Thiết bị chưa được tin cậy",
+      "softDelete": "Xoá mềm {{name}}",
+      "forceDelete": "Xoá vĩnh viễn {{name}}",
+      "adminOnly": "Chỉ tài khoản ADMIN được xoá vĩnh viễn"
+    },
+    "edit": {
+      "title": "Sửa thiết bị",
+      "name": "Tên thiết bị",
+      "note": "Ghi chú",
+      "optional": "Không bắt buộc.",
+      "save": "Lưu thay đổi",
+      "saved": "Đã lưu thay đổi.",
+      "errors": {
+        "required": "Không được để trống.",
+        "tooLong": "Quá dài: tối đa {{max}} ký tự."
+      }
+    },
+    "revoke": {
+      "title": "Thu hồi tin cậy thiết bị?",
+      "confirm": "Thu hồi",
+      "done": "Đã thu hồi {{name}}.",
+      "description": "<strong>{{name}}</strong> (ID {{id}}, UID {{uid}}) sẽ không còn được tin cậy: lần đăng nhập tới từ thiết bị này phải nhập OTP, và lịch sử đăng nhập của thiết bị bị đánh dấu thu hồi."
+    },
+    "softDelete": {
+      "title": "Xoá mềm thiết bị?",
+      "confirm": "Xoá mềm",
+      "done": "Đã xoá mềm {{name}}.",
+      "description": "<strong>{{name}}</strong> (ID {{id}}, UID {{uid}}) sẽ bị ẩn khỏi danh sách và lịch sử đăng nhập của nó bị đánh dấu thu hồi. Hiện <warn>chưa có chức năng khôi phục</warn>."
+    },
+    "forceDelete": {
+      "title": "Xoá vĩnh viễn thiết bị?",
+      "confirm": "Xoá vĩnh viễn",
+      "done": "Đã xoá vĩnh viễn {{name}}.",
+      "description": "<strong>{{name}}</strong> (ID {{id}}, UID {{uid}}) sẽ bị xoá khỏi cơ sở dữ liệu. Thao tác này <warn>không thể hoàn tác</warn>. Nếu chỉ muốn ẩn, hãy dùng Xoá mềm.",
+      "typeToConfirm": "Nhập <code>{{id}}</code> để xác nhận"
+    }
+  },
+  "exams": {
+    "title": "Bài kiểm tra",
+    "description": "Xem các hành trình làm bài, từng lượt làm và từng câu trả lời của một hồ sơ học sinh.",
+    "types": { "ASSESSMENT": "Đánh giá năng lực", "GRADE": "Ôn theo lớp", "PRACTICE": "Luyện tập" },
+    "journeyStatus": { "ACTIVE": "Đang diễn ra", "COMPLETE": "Hoàn thành", "CANCEL": "Đã hủy", "DELETED": "Đã xoá" },
+    "sittingStatus": { "IN_PROGRESS": "Đang làm dở", "SUBMITTED": "Đã nộp", "DELETED": "Đã xoá" },
+    "verdict": { "passed": "Đạt", "failed": "Chưa đạt" },
+    "kindergarten": "Mẫu giáo",
+    "grade": "Lớp {{grade}}",
+    "level": "Mức {{level}}",
+    "score": "{{correct}}/{{total}}",
+    "skipped_other": "bỏ qua {{count}}",
+    "picker": {
+      "label": "Tìm hồ sơ",
+      "mode": "Cách tìm",
+      "bySearch": "Tìm theo tên / mã",
+      "byId": "Profile ID",
+      "searchPlaceholder": "Tên hoặc mã hồ sơ (VD: BA-4821)",
+      "idPlaceholder": "Profile ID",
+      "submit": "Tìm",
+      "required": "Nhập tên hoặc mã hồ sơ.",
+      "invalidId": "Nhập Profile ID là số nguyên dương.",
+      "searching": "Đang tìm…",
+      "matches_other": "{{count}} hồ sơ khớp “{{search}}” (hiện tối đa 8)",
+      "noMatch": "Không tìm thấy hồ sơ nào khớp “{{search}}”.",
+      "profileId": "Hồ sơ #{{id}}",
+      "account": "Tài khoản #{{uid}}",
+      "noGrade": "chưa có lớp",
+      "pick": "Chọn",
+      "pickName": "Chọn {{name}}",
+      "pickTitle": "Chọn một hồ sơ để xem bài làm",
+      "pickDescription": "Tìm theo tên hoặc mã hồ sơ, nhập Profile ID, hoặc mở từ nút “Xem bài làm” trong màn hình Hồ sơ."
+    },
+    "profile": {
+      "code": "Mã hồ sơ",
+      "account": "Tài khoản",
+      "learning": "Đang học",
+      "school": "Trường",
+      "change": "Đổi hồ sơ"
+    },
+    "list": {
+      "loadFailed": "Không tải được danh sách hành trình",
+      "count_other": "{{count}} hành trình",
+      "filterType": "Lọc theo loại",
+      "allTypes": "Mọi loại",
+      "filterStatus": "Lọc theo trạng thái",
+      "allStatuses": "Mọi trạng thái",
+      "emptyTitle": "Hồ sơ này chưa có hành trình nào",
+      "filterEmptyTitle": "Không có hành trình nào khớp bộ lọc",
+      "clearFilters": "Xoá bộ lọc",
+      "inProgress_other": "{{count}} bài làm dở",
+      "inProgressItem": "Lượt #{{id}} · {{type}} · {{time}}",
+      "open": "Mở hành trình #{{id}}",
+      "columns": {
+        "id": "Mã",
+        "journey": "Hành trình",
+        "gradeLevel": "Lớp · Mức",
+        "status": "Trạng thái",
+        "result": "Kết quả",
+        "practice": "Luyện tập",
+        "lastSubmitted": "Nộp gần nhất",
+        "started": "Bắt đầu"
+      }
+    },
+    "backToExams": "Về Bài kiểm tra",
+    "journey": {
+      "title": "Hành trình",
+      "heading": "Hành trình #{{id}}",
+      "loadFailed": "Không tải được hành trình",
+      "missing": "Đường dẫn thiếu hoặc sai mã hồ sơ, mã hành trình hay loại hành trình.",
+      "backToList": "Về danh sách hành trình",
+      "tabsLabel": "Phần của hành trình",
+      "tabJourney": "Hành trình · {{type}}",
+      "tabPractice": "Luyện tập · {{score}}",
+      "tiles": {
+        "score": "Điểm",
+        "correct": "Câu đúng",
+        "answered": "Câu đã trả lời",
+        "skipped": "Câu bỏ qua",
+        "grade": "Lớp hiện tại",
+        "level": "Mức hiện tại"
+      },
+      "meta": {
+        "started": "Bắt đầu",
+        "lastSubmitted": "Nộp gần nhất",
+        "ended": "Kết thúc",
+        "verdict": "Kết luận",
+        "noVerdict": "Chưa có"
+      },
+      "review": {
+        "title": "Nhận xét của AI",
+        "empty": "Chưa có nhận xét: ứng dụng chưa yêu cầu AI nhận xét hành trình này.",
+        "showMore": "Xem toàn bộ",
+        "showLess": "Thu gọn"
+      },
+      "preview": {
+        "title": "Lượt luyện tập tiếp theo sẽ…",
+        "modes": { "RETRY_WEAK": "Ôn lại chỗ yếu", "ADVANCE": "Nâng cao" },
+        "weak": "Chủ đề yếu (sai / đã làm)",
+        "noWeak": "Không có chủ đề yếu.",
+        "strong": "Chủ đề vững",
+        "base": "Dựa trên lượt #{{id}}"
+      },
+      "sittings": {
+        "title": "Các lượt làm bài ({{n}})",
+        "note": "Chỉ lượt đã nộp. Lượt làm dở mở từ danh sách hành trình.",
+        "empty": "Chưa có lượt nào được nộp.",
+        "open": "Mở lượt #{{id}}",
+        "columns": {
+          "id": "Lượt",
+          "title": "Tiêu đề đề bài",
+          "gradeLevel": "Lớp · Mức",
+          "questions": "Số câu",
+          "result": "Kết quả",
+          "started": "Bắt đầu",
+          "submitted": "Nộp lúc"
+        }
+      },
+      "topics": {
+        "title": "Theo chủ đề",
+        "note": "Số câu đúng / đã làm trên cả hành trình, chủ đề yếu nhất ở trên.",
+        "unknown": "Không rõ chủ đề"
+      }
+    },
+    "sitting": {
+      "title": "Lượt làm bài",
+      "heading": "Lượt #{{id}}",
+      "loadFailed": "Không tải được lượt làm bài",
+      "missing": "Đường dẫn thiếu hoặc sai mã hồ sơ hay mã lượt làm bài.",
+      "backToJourney": "Hành trình #{{id}}",
+      "backToList": "Về danh sách hành trình",
+      "inProgressBanner": "Lượt này chưa nộp: máy chủ chưa gửi đáp án đúng và chưa lưu câu trả lời nào. Đây là đề như trẻ đang thấy.",
+      "tiles": {
+        "score": "Điểm",
+        "correct": "Câu đúng",
+        "answered": "Câu đã trả lời",
+        "skipped": "Câu bỏ qua",
+        "questions": "Số câu của đề",
+        "gradeLevel": "Lớp · Mức"
+      },
+      "meta": {
+        "issued": "Phát đề",
+        "started": "Bắt đầu",
+        "submitted": "Nộp",
+        "duration": "Thời gian làm",
+        "examId": "Mã đề (exam_id)"
+      },
+      "duration_other": "{{count}} phút",
+      "durationUnderMinute": "dưới 1 phút",
+      "filtersLabel": "Lọc câu hỏi",
+      "filters": {
+        "all": "Tất cả · {{n}}",
+        "wrong": "Sai · {{n}}",
+        "skipped": "Bỏ qua · {{n}}",
+        "correct": "Đúng · {{n}}"
+      },
+      "servedOrder": "Thứ tự câu và nhãn A/B/C/D đúng như trẻ đã thấy.",
+      "empty": "Lượt này không có câu hỏi nào để hiển thị.",
+      "filterEmpty": "Không có câu nào trong nhóm này."
+    },
+    "question": {
+      "number": "Câu {{number}}",
+      "outcomes": { "correct": "Đúng", "wrong": "Sai", "skipped": "Bỏ qua" },
+      "types": {
+        "ARITHMETIC": "Tính toán",
+        "COUNT": "Đếm hình",
+        "PICK_BY_ICON": "Chọn theo hình",
+        "IDENTIFY_SHAPE": "Nhận biết hình"
+      },
+      "probe": "{{grade}} ↑ câu thăm dò",
+      "right": "Đáp án đúng",
+      "picked": "Con chọn",
+      "rightAndPicked": "Đáp án đúng · Con chọn",
+      "noOptions": "Không còn đề gốc để hiện các phương án.",
+      "pickedAnswer": "Con chọn: {{answer}}",
+      "rightAnswer": "Đáp án đúng: {{answer}}"
+    }
+  },
+  "system": {
+    "refresh": "Làm mới",
+    "working": "Đang thực hiện…",
+    "typeToConfirm": "Nhập <code>{{phrase}}</code> để xác nhận",
+    "sessions": {
+      "title": "Phiên đăng nhập",
+      "description": "Các phiên đang lưu trong bộ nhớ của math-svr.",
+      "listLabel": "Danh sách phiên",
+      "loadFailed": "Không tải được danh sách phiên",
+      "count_other": "{{count}} phiên · {{secure}} đã xác thực",
+      "empty": "Không có phiên nào.",
+      "anonymous": "Chưa đăng nhập",
+      "columns": {
+        "token": "Token",
+        "uid": "UID",
+        "account": "Tài khoản",
+        "source": "Nguồn",
+        "state": "Trạng thái",
+        "expiresAt": "Hết hạn",
+        "actions": "Thao tác"
+      },
+      "current": "Phiên của bạn",
+      "selfSignOutWarning": "Đây là phiên bạn đang dùng: bạn sẽ bị đăng xuất ngay.",
+      "markSecure": {
+        "action": "Đánh dấu đã xác thực phiên {{token}}",
+        "noUser": "Phiên chưa có người dùng đăng nhập nên không thể đánh dấu đã xác thực.",
+        "title": "Đánh dấu phiên đã xác thực?",
+        "description": "Phiên của <strong>{{account}}</strong> (UID {{uid}}, token <code>{{token}}</code>) sẽ được coi là đã đăng nhập đầy đủ, <warn>bỏ qua bước OTP</warn>. Chỉ làm khi bạn chắc chắn thiết bị đó là của chủ tài khoản.",
+        "confirm": "Đánh dấu đã xác thực",
+        "done": "Phiên {{token}} đã được đánh dấu đã xác thực."
+      },
+      "markUnsecure": {
+        "action": "Bỏ xác thực phiên {{token}}",
+        "title": "Bỏ xác thực phiên này?",
+        "description": "Phiên của <strong>{{account}}</strong> (UID {{uid}}, token <code>{{token}}</code>) vẫn được giữ, nhưng mọi chức năng cần đăng nhập sẽ từ chối nó cho tới khi người dùng đăng nhập lại (hoặc được đánh dấu đã xác thực lại).",
+        "confirm": "Bỏ xác thực",
+        "done": "Đã bỏ xác thực phiên {{token}}."
+      },
+      "deleteOne": {
+        "action": "Đăng xuất phiên {{token}}",
+        "title": "Đăng xuất phiên này?",
+        "description": "Phiên của <strong>{{account}}</strong> (UID {{uid}}, token <code>{{token}}</code>) sẽ bị xoá. Lần gọi tiếp theo, thiết bị đó sẽ phải đăng nhập lại.",
+        "confirm": "Đăng xuất phiên",
+        "done": "Đã xoá phiên {{token}}."
+      },
+      "state": {
+        "secure": "Đã xác thực",
+        "unsecure": "Chưa xác thực",
+        "expired": "Hết hạn",
+        "deleting": "Chờ xoá"
+      },
+      "deleteUnsecure": {
+        "button": "Xoá phiên chưa xác thực",
+        "title": "Xoá phiên chưa xác thực?",
+        "description": "Mọi phiên chưa hoàn tất đăng nhập/OTP hoặc đã đăng xuất sẽ bị xoá. Phiên của bạn không bị ảnh hưởng.",
+        "confirm": "Xoá phiên",
+        "done": "Đã xoá các phiên chưa xác thực."
+      },
+      "deleteAll": {
+        "button": "Xoá tất cả phiên",
+        "title": "Xoá tất cả phiên?",
+        "description": "Mọi người dùng sẽ bị đăng xuất, <warn>kể cả bạn</warn>: ngay sau đó bạn sẽ được chuyển về trang đăng nhập.",
+        "confirm": "Xoá tất cả",
+        "done": "Đã xoá tất cả phiên. Vui lòng đăng nhập lại."
+      }
+    },
+    "server": {
+      "title": "Máy chủ",
+      "description": "Khởi động lại hoặc tắt tiến trình math-svr.",
+      "reload": {
+        "title": "Khởi động lại",
+        "summary": "Kiểm tra file .env, rồi khởi động lại tiến trình tại chỗ để áp dụng cấu hình mới. Nếu .env lỗi, server vẫn chạy tiếp và báo lỗi.",
+        "button": "Khởi động lại",
+        "confirmTitle": "Khởi động lại máy chủ?",
+        "confirmDescription": "Server sẽ <warn>gián đoạn vài giây</warn>: các yêu cầu đang chạy và kết nối socket bị ngắt. Phiên đăng nhập chỉ được giữ lại khi server có cấu hình SERIALIZED_SESSION_FILE.",
+        "doneTitle": "Server đang khởi động lại",
+        "doneDescription": "Đợi vài giây rồi tải lại trang. Nếu vẫn không kết nối được, hãy kiểm tra log trên máy chủ."
+      },
+      "shutdown": {
+        "title": "Tắt máy chủ",
+        "summary": "Dừng hẳn tiến trình math-svr sau khi xử lý xong các tác vụ dở dang. Chỉ có thể bật lại trực tiếp trên máy chủ.",
+        "button": "Tắt máy chủ",
+        "confirmTitle": "Tắt máy chủ?",
+        "confirmDescription": "Toàn bộ ứng dụng NUMI và trang quản trị sẽ <warn>ngừng hoạt động</warn> cho tới khi có người bật lại server trên máy chủ.",
+        "doneTitle": "Server đã nhận lệnh tắt",
+        "doneDescription": "Từ giờ mọi yêu cầu sẽ thất bại cho tới khi server được bật lại trên máy chủ."
+      }
+    },
+    "data": {
+      "title": "Dữ liệu",
+      "description": "Theo dõi kết nối cơ sở dữ liệu và xoá dữ liệu thử nghiệm.",
+      "stats": {
+        "title": "Kết nối MySQL",
+        "loadFailed": "Không tải được thống kê kết nối",
+        "capturedAt": "Đo lúc {{time}}",
+        "inUse": "Kết nối đang dùng",
+        "inUseOf": "{{inUse}} / {{max}} ({{percent}}%)",
+        "inUseUnlimited": "{{inUse}} (không giới hạn số kết nối)",
+        "open": "Đang mở",
+        "idle": "Rảnh",
+        "waitCount": "Số lần phải chờ",
+        "waitDuration": "Tổng thời gian chờ",
+        "avgWait": "Thời gian chờ TB",
+        "maxIdleClosed": "Đóng do vượt max idle",
+        "maxIdleTimeClosed": "Đóng do idle quá lâu",
+        "maxLifetimeClosed": "Đóng do hết vòng đời",
+        "isolation": "Mức cô lập",
+        "autocommit": "Autocommit",
+        "on": "Bật",
+        "off": "Tắt",
+        "cumulativeHint": "Số lần chờ, thời gian chờ và số kết nối bị đóng được cộng dồn từ lúc server khởi động."
+      },
+      "clearTables": {
+        "title": "Xoá dữ liệu theo bảng",
+        "summary": "Chọn bảng cần xoá sạch (TRUNCATE). Bộ đếm ID của từng bảng cũng được đặt lại về 0.",
+        "selectAll": "Chọn tất cả",
+        "selectNone": "Bỏ chọn",
+        "button_other": "Xoá {{count}} bảng",
+        "confirmTitle": "Xoá dữ liệu các bảng đã chọn?",
+        "confirmDescription": "Toàn bộ dòng trong các bảng dưới đây sẽ bị xoá. Thao tác này <warn>không thể hoàn tác</warn>.",
+        "usersWarning": "Có bảng ma_users: mọi tài khoản sẽ bị xoá, kể cả tài khoản bạn đang dùng.",
+        "confirm": "Xoá dữ liệu"
+      },
+      "clearAll": {
+        "title": "Xoá toàn bộ dữ liệu",
+        "summary": "Xoá dữ liệu của mọi bảng ở trên, chỉ giữ lại những người dùng trong danh sách giữ lại (cùng toàn bộ dữ liệu của họ). Dữ liệu tham chiếu (chương trình, khối lớp, học kỳ, trường) và ngân hàng đề không bị xoá.",
+        "button": "Xoá toàn bộ dữ liệu",
+        "confirmTitle": "Xoá toàn bộ dữ liệu?",
+        "confirmDescription": "Mọi dữ liệu người dùng, lớp học, bài làm, thông báo, banner và tin nhắn sẽ bị xoá. Thao tác này <warn>không thể hoàn tác</warn>.",
+        "whitelistLabel": "UID được giữ lại",
+        "whitelistHint": "Các UID cách nhau bởi dấu phẩy. Để trống để xoá tất cả.",
+        "whitelistInvalid": "Chỉ nhập số UID, cách nhau bởi dấu phẩy.",
+        "selfWarning": "Tài khoản của bạn (UID {{uid}}) không nằm trong danh sách và sẽ bị xoá.",
+        "confirm": "Xoá toàn bộ"
+      },
+      "result": {
+        "summary": "Đã xoá {{tables}} bảng, đặt lại {{seqs}} bộ đếm ID.",
+        "kept": "Đã giữ lại UID: {{uids}}"
+      }
+    },
+    "jobs": {
+      "title": "Tác vụ định kỳ",
+      "description": "Các cron job chạy trong math-svr: chạy ngay, tạm dừng, hoặc đổi lịch chạy.",
+      "listLabel": "Danh sách tác vụ định kỳ",
+      "loadFailed": "Không tải được danh sách tác vụ",
+      "count_other": "{{count}} tác vụ định kỳ",
+      "empty": "Chưa có tác vụ định kỳ nào được đăng ký.",
+      "runtime": "Bộ chạy tác vụ",
+      "started": "Đang chạy",
+      "stopped": "Chưa khởi động",
+      "queue": "Hàng đợi",
+      "queueValue": "{{depth}} / {{capacity}}",
+      "workers": "Số worker",
+      "overridden": "Đã đổi lịch",
+      "defaultSchedule": "Mặc định: {{schedule}}",
+      "inFlight": "Đang chạy",
+      "columns": {
+        "name": "Tên",
+        "schedule": "Lịch chạy",
+        "status": "Trạng thái",
+        "lastRun": "Lần chạy gần nhất",
+        "nextRun": "Lần chạy tới",
+        "actions": "Thao tác"
+      },
+      "status": {
+        "running": "Hoạt động",
+        "paused": "Tạm dừng"
+      },
+      "runStatus": {
+        "succeeded": "Thành công",
+        "failed": "Lỗi",
+        "panicked": "Panic",
+        "timed_out": "Quá thời gian"
+      },
+      "actions": {
+        "trigger": "Chạy ngay {{name}}",
+        "pause": "Tạm dừng {{name}}",
+        "resume": "Tiếp tục {{name}}",
+        "editSchedule": "Đổi lịch {{name}}",
+        "resetSchedule": "Khôi phục lịch mặc định của {{name}}",
+        "resetScheduleNone": "Đang dùng lịch mặc định"
+      },
+      "done": {
+        "trigger": "Đã chạy {{name}}.",
+        "pause": "Đã tạm dừng {{name}}.",
+        "resume": "Đã tiếp tục {{name}}.",
+        "resetSchedule": "Đã khôi phục lịch mặc định của {{name}}."
+      },
+      "tasks": {
+        "title": "Task đã đăng ký",
+        "description": "Các loại task có thể đưa vào hàng đợi."
+      },
+      "schedule": {
+        "title": "Đổi lịch chạy",
+        "current": "Hiện tại: {{schedule}}",
+        "kind": "Kiểu lịch",
+        "kinds": {
+          "every": "Lặp lại sau mỗi khoảng",
+          "daily": "Hằng ngày",
+          "weekly": "Hằng tuần"
+        },
+        "interval": "Khoảng cách",
+        "unit": "Đơn vị",
+        "units": {
+          "minutes": "phút",
+          "hours": "giờ",
+          "days": "ngày"
+        },
+        "intervalHint": "Từ 1 phút đến 30 ngày.",
+        "weekday": "Thứ",
+        "time": "Giờ chạy",
+        "timezone": "Múi giờ",
+        "timezoneHint": "Tên múi giờ IANA. Để trống = UTC.",
+        "inMemoryNote": "Lịch mới có hiệu lực ngay nhưng chỉ lưu trong bộ nhớ: khi server khởi động lại, job quay về lịch mặc định ({{schedule}}).",
+        "submit": "Lưu lịch",
+        "saved": "Đã đổi lịch {{name}}: {{schedule}}.",
+        "errors": {
+          "everyRange": "Khoảng cách phải là số nguyên từ 1 phút đến 30 ngày.",
+          "timeRequired": "Vui lòng chọn giờ chạy."
+        }
+      }
+    }
+  },
+  "notFound": {
+    "title": "Không tìm thấy trang",
+    "description": "Đường dẫn không tồn tại hoặc đã bị thay đổi.",
+    "backHome": "Về trang chủ"
+  },
+  "pagination": {
+    "label": "Phân trang",
+    "previous": "Trước",
+    "next": "Sau",
+    "page": "Trang {{page}}",
+    "show": "Hiển thị",
+    "perPage": "{{size}} / trang",
+    "range": "Hiển thị {{first}}–{{last}} trên {{total}}"
+  }
+}
