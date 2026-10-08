@@ -707,7 +707,8 @@
         "ARITHMETIC": "Arithmetic",
         "COUNT": "Counting",
         "PICK_BY_ICON": "Pick by picture",
-        "IDENTIFY_SHAPE": "Identify the shape"
+        "IDENTIFY_SHAPE": "Identify the shape",
+        "FRACTION": "Fraction"
       },
       "probe": "{{grade}} ↑ probe question",
       "right": "Right answer",

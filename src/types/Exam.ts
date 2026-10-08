@@ -17,20 +17,23 @@ export type JourneyStatus = (typeof JOURNEY_STATUSES)[number]
 /** "" when the row carries no status. */
 export type SittingStatus = 'IN_PROGRESS' | 'SUBMITTED' | 'DELETED' | ''
 
-/** How the app renders a question; grading ignores it. Unknown values render as plain text. */
-export const QUESTION_TYPES = ['ARITHMETIC', 'COUNT', 'PICK_BY_ICON', 'IDENTIFY_SHAPE'] as const
+/**
+ * How the app renders a question; grading ignores it. Unknown values render as plain text.
+ * FRACTION carries LaTeX \frac{a}{b} inside $…$; the admin shows it raw.
+ */
+export const QUESTION_TYPES = ['ARITHMETIC', 'COUNT', 'PICK_BY_ICON', 'IDENTIFY_SHAPE', 'FRACTION'] as const
 export type QuestionType = (typeof QUESTION_TYPES)[number]
 
 export type AnswerChoice = { label: string; content: string }
 
-/** One question as served to the child: their numbering and their A/B/C/D. */
+/** One question: on a sitting, the child's served numbering and A/B/C/D; on a pool set, the stored (canonical) ones. */
 export type ExamQuestion = {
   question_number: number
   question_type?: string
   /** May embed emoji and [icon:NAME] tokens. */
   question_name: string
   answers: AnswerChoice[]
-  /** Answer key: only on SUBMITTED sittings. */
+  /** Answer key: on SUBMITTED sittings and on pool sets. */
   right_answer_label?: string
   right_answer_content?: string
   question_topic?: string
@@ -138,3 +141,47 @@ export type JourneyDetailResponse = {
 
 /** POST /admin/exams/sessions/detail with elink_id. */
 export type SittingDetailResponse = { exam: ExamSitting; details?: ExamAnswerDetail[] }
+
+/** Every exam type; the pool list filters by these. */
+export const EXAM_TYPES = ['ASSESSMENT', 'GRADE', 'PRACTICE'] as const satisfies readonly ExamType[]
+
+/** 0 = kindergarten. */
+export const EXAM_GRADES = [0, 1, 2, 3, 4, 5] as const
+
+/**
+ * One stored question set (math-svr ExamPoolResponse). `questions` — stored order, answer key
+ * included — comes with detail, mark-verify and verify; the list leaves it out.
+ */
+export type ExamPool = {
+  exam_id: number
+  exam_type: ExamType
+  grade: number
+  level?: number
+  /** Questions REQUESTED; the stored set can be shorter. */
+  num_questions: number
+  semester?: string
+  program?: string
+  /** Cache tag; absent on PRACTICE sets (never reused). */
+  req_extras?: string
+  ai_title?: string
+  ai_short_text?: string
+  questions?: ExamQuestion[]
+  /** 0 = not verified; mark-verify sets 1, every verify adds 1. */
+  verified_count: number
+  status?: string
+  create_dt: string
+}
+
+export type ListExamPoolsRequest = {
+  exam_types?: ExamType[]
+  grade?: number
+  /** Requested from math-svr; ignored by the server until it lands. */
+  is_verified?: boolean
+  page: number
+  size: number
+}
+
+export type ListExamPoolsResponse = { exam_pools: ExamPool[] | null; pagination: OffsetPagination }
+
+/** detail, mark-verify and verify all answer with the set, questions included. */
+export type ExamPoolResponse = { exam_pool: ExamPool }

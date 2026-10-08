@@ -240,10 +240,39 @@ What the admin relies on (types in `src/types/Exam.ts`):
   no row. `answers` is omitted when the question set is gone.
 - `esess_flag`: GRADE pass verdict on a COMPLETE journey (`score_percentage >= 50`), `null` otherwise.
 - Grade 0–5 (0 = kindergarten); level 0–9 as stated by the app. Question types `ARITHMETIC, COUNT, PICK_BY_ICON,
-  IDENTIFY_SHAPE`; text may embed emoji and `[icon:NAME]` tokens.
+  IDENTIFY_SHAPE, FRACTION` (LaTeX `\frac{a}{b}` inside `$…$`); text may embed emoji and `[icon:NAME]` tokens.
 - Codes: `EXAM_ATTEMPT_NOT_FOUND` 13701, `EXAM_ATTEMPT_NOT_OWNED` 13702, `EXAM_INVALID_EXAM_TYPE` 13708,
   `EXAM_PROFILE_NOT_FOUND` 13715, `EXAM_MISSING_PROFILE_ID` 13717, `EXAM_JOURNEY_NOT_FOUND` 13721,
   `EXAM_JOURNEY_NOT_OWNED` 13722.
+
+### Exam pool — `internal/application/dto/exam/exam_dto.go`, `internal/application/command/exam/verify_exam_pool_command.go`
+
+The AI-generated question sets (`ma_exam_pools`) that `/exams/generate` hands out and reuses. All routes 🛡️
+(`adminOrApiKeyMiddleware`: ADMIN only, else `403`).
+
+| Route | Request | Response |
+|---|---|---|
+| `/exams/pools/list` 🛡️ | `{ exam_types?, grade?, is_verified?, page, size }` — OFFSET only, newest first | `{ exam_pools: ExamPool[] (no questions), pagination }` |
+| `/exams/pools/detail` 🛡️ | `{ exam_id }` | `{ exam_pool }` with `questions` |
+| `/exams/pools/mark-verify` 🛡️ | `{ exam_id, is_verify }` — true: `verified_count` 0 → 1 (kept when already > 0); false: → 0 | `{ exam_pool }` with `questions` |
+| `/exams/pools/verify` 🛡️ | `{ exam_id, questions }` — the whole corrected set; replaces the stored one, `verified_count` + 1 | `{ exam_pool }` with `questions` |
+| `/exams/pools/generate` 🛡️ | `{ exam_type (not PRACTICE), grade, level?, num_questions?, semester?, program? }` | `{ exam_pool }` — not used by the dashboard yet |
+
+`ExamPool`: `{ exam_id, exam_type, grade, level?, num_questions (requested; the set can be shorter), semester?, program?,
+req_extras? (cache tag), ai_title?, ai_short_text?, questions? (stored order, answer key included), verified_count
+(0 = not verified), status?, create_dt }`.
+
+- `is_verified` is requested from math-svr and not there yet: until it lands the server ignores it.
+- `verify` must keep the set's shape: same count, same `question_number`s, same answer labels per question,
+  `right_answer_label` one of them, non-empty `question_name` — else `EXAM_POOL_INVALID_QUESTIONS` 13742. Everything
+  else is stored as sent: the server does not recompute `right_answer_content` (the admin derives it from the chosen
+  answer) and does not check answer contents.
+- The new key grades every sitting submitted from then on, including sittings already handed out; submitted sittings
+  keep their snapshot. No version check: the last save wins.
+- At submit, `question_topic` goes into `VARCHAR(64)` and right/selected answer content into `VARCHAR(255)`
+  (`ma_exam_session_lines`), so the editor caps them.
+- Codes: `EXAM_NOT_FOUND` 13700, `EXAM_MISSING_EXAM_ID` 13740, `EXAM_MISSING_IS_VERIFY` 13741,
+  `EXAM_POOL_INVALID_QUESTIONS` 13742.
 
 ### Curriculum: programs, grades, semesters, schools — `internal/application/dto/{program,grade,semester,school}/`, `internal/module/{program,grade,semester,school}/`
 
@@ -399,6 +428,8 @@ Full route list: `grep -n 'reg("' internal/bootstrap/routes/routes.go` in math-s
 - Exam reads: the owner routes are per-caller; the admin reads one profile's journeys and sittings through
   `/admin/exams/sessions/{list,detail}` (§4). There is no list across profiles, and the progress routes
   (`/exams/analytics/progress`, `/exams/journey/progress`, `/exams/grade/*`) have no admin path.
+- **Verified pool sets are not preferred.** `/exams/generate` reuses any cached set; `verified_count` (§4 Exam pool)
+  does not change which set a child gets.
 - `/users/me` and `/profiles/list` are registered without auth middleware: anyone can list every profile.
   The profile writes use plain `authMiddleware` with no ownership check — any OTP-verified user can edit or delete any profile.
 - **`/auth/resume-session` re-secures any session that has a uid.** It only checks the session is

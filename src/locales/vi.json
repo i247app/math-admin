@@ -697,7 +697,8 @@
         "ARITHMETIC": "Tính toán",
         "COUNT": "Đếm hình",
         "PICK_BY_ICON": "Chọn theo hình",
-        "IDENTIFY_SHAPE": "Nhận biết hình"
+        "IDENTIFY_SHAPE": "Nhận biết hình",
+        "FRACTION": "Phân số"
       },
       "probe": "{{grade}} ↑ câu thăm dò",
       "right": "Đáp án đúng",
