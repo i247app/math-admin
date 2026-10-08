@@ -46,8 +46,8 @@ export function ExamPoolsTable({ pools }: { pools: ExamPool[] | undefined }) {
                   </TableCell>
                   <TableCell className="max-w-96">
                     <div className="flex flex-col gap-0.5">
-                      <span className="truncate font-semibold">{pool.ai_title || '—'}</span>
-                      {pool.ai_short_text && (
+                      <span className="truncate font-semibold">{pool.ai_title || pool.ai_short_text || '—'}</span>
+                      {pool.ai_title && pool.ai_short_text && (
                         <span className="truncate text-[13px] text-muted-foreground">{pool.ai_short_text}</span>
                       )}
                     </div>

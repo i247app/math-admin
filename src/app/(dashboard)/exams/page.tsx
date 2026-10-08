@@ -63,7 +63,7 @@ export default function ExamsPage() {
 
   // The server does not clamp: past the last page (an old link), show the last real page.
   useEffect(() => {
-    if (totalPages > 0 && page > totalPages) {
+    if (!list.isPlaceholderData && totalPages > 0 && page > totalPages) {
       setParams(
         (current) => {
           const updated = new URLSearchParams(current)
@@ -73,7 +73,7 @@ export default function ExamsPage() {
         { replace: true },
       )
     }
-  }, [page, totalPages, setParams])
+  }, [page, totalPages, list.isPlaceholderData, setParams])
 
   const filtered = type !== null || status !== null
   const first = pagination ? pagination.skip + 1 : 0
@@ -83,11 +83,11 @@ export default function ExamsPage() {
     <>
       <TitleBar title={t('exams.title')} description={t('exams.description')} />
 
-      {profileId === null || profile.isError ? (
+      {profileId === null || (profile.isError && !profile.data) ? (
         <>
           <ProfilePicker
             onPick={(id) => setParams({ profile: String(id) })}
-            error={profile.isError ? getErrorMessage(profile.error) : undefined}
+            error={profile.isError && !profile.data ? getErrorMessage(profile.error) : undefined}
           />
           {profileId === null && (
             <div className="flex flex-col items-center gap-3 rounded-2xl border bg-card px-6 py-12 text-center">

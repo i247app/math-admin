@@ -24,6 +24,13 @@ const draft = toDraft(stored)
 assert.equal(questionErrors(draft), null)
 assert.equal(isChanged(stored, draft), false)
 
+// Whitespace-only edits are no change; a real edit of an answer or the topic is.
+assert.equal(isChanged(stored, { ...draft, name: ` ${draft.name} ` }), false)
+assert.equal(isChanged(stored, { ...draft, topic: ' Đếm  ' }), false)
+assert.equal(isChanged(stored, { ...draft, answers: draft.answers.map((a) => ({ ...a, content: ` ${a.content} ` })) }), false)
+assert.equal(isChanged(stored, { ...draft, answers: draft.answers.map((a) => (a.label === 'B' ? { ...a, content: '7' } : a)) }), true)
+assert.equal(isChanged(stored, { ...draft, topic: 'Số đếm' }), true)
+
 // Fixing the key: right_answer_content follows the chosen label; number, type, grade, labels untouched.
 const fixed = { ...draft, rightLabel: 'D', name: '  Có bao nhiêu quả táo? ' }
 assert.equal(isChanged(stored, fixed), true)

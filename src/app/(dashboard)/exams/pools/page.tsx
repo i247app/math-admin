@@ -57,7 +57,7 @@ export default function ExamPoolsPage() {
 
   // The server does not clamp: past the last page (an old link), show the last real page.
   useEffect(() => {
-    if (totalPages > 0 && page > totalPages) {
+    if (!list.isPlaceholderData && totalPages > 0 && page > totalPages) {
       setParams(
         (current) => {
           const updated = new URLSearchParams(current)
@@ -67,7 +67,7 @@ export default function ExamPoolsPage() {
         { replace: true },
       )
     }
-  }, [page, totalPages, setParams])
+  }, [page, totalPages, list.isPlaceholderData, setParams])
 
   const filtered = type !== null || grade !== null || verified !== null
   const first = pagination ? pagination.skip + 1 : 0

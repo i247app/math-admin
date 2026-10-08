@@ -248,7 +248,7 @@ What the admin relies on (types in `src/types/Exam.ts`):
 ### Exam pool — `internal/application/dto/exam/exam_dto.go`, `internal/application/command/exam/verify_exam_pool_command.go`
 
 The AI-generated question sets (`ma_exam_pools`) that `/exams/generate` hands out and reuses. All routes 🛡️
-(`adminOrApiKeyMiddleware`: ADMIN only, else `403`).
+(`AdminOrApiKeyMiddleware`: ADMIN only, else `403`).
 
 | Route | Request | Response |
 |---|---|---|
@@ -419,7 +419,7 @@ Full route list: `grep -n 'reg("' internal/bootstrap/routes/routes.go` in math-s
 
 - **Admin gate exists but does not cover the admin's routes.** math-svr has `ADMIN` users and
   `AdminOrApiKeyMiddleware` (`internal/bootstrap/middleware/admin_required_middleware.go`), but it only
-  guards the ops routes of §6 and `/users/admin/create`. `/users/list|update|soft-delete|force-delete`,
+  guards the ops routes of §6, `/users/admin/create` and `/exams/pools/*` (§4 Exam pool). `/users/list|update|soft-delete|force-delete`,
   `/banners/*`, the curriculum writes (`/programs|grades|semesters|schools/*`) and `/roles/*` still use plain `authMiddleware`, so any OTP-verified user can call them. Hiding
   buttons in the UI is not security — switching those routes to the admin middleware belongs in math-svr.
 - **Device routes have no auth middleware** (except `/devices/force-delete`). `/devices/list|detail|update|revoke|soft-delete`

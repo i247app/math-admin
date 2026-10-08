@@ -67,10 +67,10 @@ export function questionErrors(draft: DraftQuestion): QuestionErrors | null {
 export function isChanged(original: ExamQuestion, draft: DraftQuestion): boolean {
   const before = toDraft(original)
   return (
-    before.name !== draft.name ||
-    before.topic !== draft.topic ||
+    before.name.trim() !== draft.name.trim() ||
+    before.topic.trim() !== draft.topic.trim() ||
     before.rightLabel !== draft.rightLabel ||
-    before.answers.some((answer, index) => answer.content !== draft.answers[index]?.content)
+    before.answers.some((answer, index) => answer.content.trim() !== draft.answers[index]?.content.trim())
   )
 }
 
