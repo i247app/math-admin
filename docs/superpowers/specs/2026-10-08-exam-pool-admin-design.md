@@ -54,9 +54,9 @@ Facts the UI relies on (`internal/application/dto/exam/exam_dto.go`, `command/ex
 | Part | File | Content |
 |---|---|---|
 | Wire types | `src/types/Exam.ts` | `ExamPool`, `ListExamPoolsRequest/Response`, `ExamPoolResponse`, `VerifyExamPoolRequest`; add `FRACTION` to `QUESTION_TYPES` |
-| API | `src/features/exams/ExamPoolsApi.ts` (new) | `examPoolsListQueryOptions(request)` (keepPreviousData), `examPoolDetailQueryOptions(examId)`, `useMarkExamPoolVerify()`, `useVerifyExamPool()`; `examPoolPath(examId)`. Mutations write the returned `exam_pool` into the detail cache and invalidate the list. |
-| Draft logic | `src/features/exams/ExamPoolDraft.ts` (new, pure) | `toDraft(questions)`, `draftErrors(draft)`, `changedNumbers(original, draft)`, `toVerifyQuestions(original, draft)` |
-| Components | `src/features/exams/` | `ExamPoolsTable`, `VerifiedPill`, `PoolQuestionEditor` (one question's form), reuse `ExamTypeBadge`, `QuestionCard`, `MetaRow`, `BackLink`, `InvalidLink` |
+| API | `src/features/exams/ExamPoolsApi.ts` (new) | `examPoolsListQueryOptions(request)` (keepPreviousData), `examPoolDetailQueryOptions(examId)`, `markExamPoolVerify(examId, isVerify)`, `verifyExamPool(examId, questions)`, `storeExamPool(queryClient, pool)` (detail cache ← response, list invalidated); `examPoolPath(examId)`. Pages wrap the writes in `useMutation`, as the other features do. |
+| Draft logic | `src/features/exams/ExamPoolDraft.ts` (new, pure, type-only imports) | `toDraft(question)`, `questionErrors(draft)`, `isChanged(original, draft)`, `toVerifyQuestions(originals, drafts)`; self-check `node scripts/check-exam-pool-draft.ts` (Node strips the types; no test runner added) |
+| Components | `src/features/exams/` | `ExamPoolsTable`, `VerifiedPill` (in `ExamBadges`), `PoolQuestionEditor` (one question's form), `RichText` (emoji + `[icon:NAME]` chips, moved out of `QuestionCard`); reuse `ExamTypeBadge`, `QuestionCard`, `MetaRow`, `BackLink`, `InvalidLink` (gains `to`/`label` props); confirm dialogs reuse `ConfirmActionDialog` (`src/features/system`) |
 | QuestionCard | `src/features/exams/QuestionCard.tsx` | new outcome `key`: neutral border, no result pill, right option green "Đáp án đúng" |
 | Pages | `src/app/(dashboard)/exams/pools/page.tsx`, `exams/pools/detail/page.tsx` | |
 | Router | `src/app/router.tsx` | under `/exams`: `pools` (index → list, `nav.examPools`) and `pools/detail` (`exams.pools.detail.title`) |
@@ -78,8 +78,8 @@ Mockups: `.superpowers/brainstorm/88645-1791454464/content/screen{4,5}-*.html` (
 URL state: `type` (ASSESSMENT|GRADE|PRACTICE), `grade` (0–5), `verified` (`yes`|`no`), `page`.
 
 - Title "Kho đề" + one-line description.
-- Filters: type segmented (Tất cả loại / Đánh giá năng lực / Ôn theo lớp / Luyện tập), grade `Select`
-  (Tất cả lớp / Mẫu giáo / Lớp 1–5), verified segmented (Tất cả / Chưa xác minh / Đã xác minh).
+- Filters, as `Select`s in the table card header like the journeys list: type (Mọi loại / Đánh giá năng lực /
+  Ôn theo lớp / Luyện tập), grade (Mọi lớp / Mẫu giáo / Lớp 1–5), verified (Tất cả / Chưa xác minh / Đã xác minh).
   Any filter change resets `page`.
 - `ExamPoolsTable` (`size` 20, `DataPagination`): Mã đề (`exam_id`, link) · Tên đề (`ai_title` bold +
   `ai_short_text` muted; "—" when both absent) · Loại · Lớp · Mức · Số câu (`num_questions`) ·
@@ -131,9 +131,9 @@ All HTTP through `apiPost`; 401 is global. Failed mutations toast `mmessage` aut
 | Network / 5xx on a read | `LoadError` with retry (`refetch`) |
 | Filter/page change | keepPreviousData, table dims while fetching |
 | Page past the end | jump to the last real page with `replace` (as on the other lists) |
-| `verify` fails (13742 or any error) | toast; stay in edit mode with the draft intact |
+| `verify` fails (13742 or any error) | message inline in the confirm dialog, which stays open; edit mode and the draft stay intact |
 | `verify` succeeds | toast "Đã lưu và xác minh đề #id"; detail cache ← response; list invalidated; back to view mode |
-| `mark-verify` fails / succeeds | toast; on success detail cache ← response, list invalidated |
+| `mark-verify` fails / succeeds | mark: toast on failure; unmark: message inline in its confirm dialog. On success toast, detail cache ← response, list invalidated |
 | Set has no questions or a question has no answers | view: cards as stored (no-options text); "Sửa đề" disabled with a tooltip |
 
 ## Verification
