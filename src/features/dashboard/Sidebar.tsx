@@ -17,6 +17,7 @@ import {
   ShieldCheckIcon,
   ShieldIcon,
   SchoolIcon,
+  ScrollTextIcon,
   ServerIcon,
   SmartphoneIcon,
   UsersIcon,
@@ -51,10 +52,12 @@ const examItems: NavItem[] = [
     to: '/exams',
     labelKey: 'nav.examSittings',
     icon: ClipboardListIcon,
-    // A child's work lives at /exams, /exams/journey, /exams/sitting — not the pool.
-    isActive: (pathname) => pathname.startsWith('/exams') && !pathname.startsWith('/exams/pools'),
+    // A child's work lives at /exams, /exams/journey, /exams/sitting — not the pool or the prompts.
+    isActive: (pathname) =>
+      pathname.startsWith('/exams') && !pathname.startsWith('/exams/pools') && !pathname.startsWith('/exams/prompts'),
   },
   { to: '/exams/pools', labelKey: 'nav.examPools', icon: ArchiveIcon },
+  { to: '/exams/prompts', labelKey: 'nav.examPrompts', icon: ScrollTextIcon },
 ]
 
 const curriculumItems: NavItem[] = [

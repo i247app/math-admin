@@ -14,6 +14,7 @@ import JourneyPage from './(dashboard)/exams/journey/page'
 import ExamsPage from './(dashboard)/exams/page'
 import ExamPoolDetailPage from './(dashboard)/exams/pools/detail/page'
 import ExamPoolsPage from './(dashboard)/exams/pools/page'
+import ExamPromptsPage from './(dashboard)/exams/prompts/page'
 import SittingPage from './(dashboard)/exams/sitting/page'
 import RolesPage from './(dashboard)/permissions/roles/page'
 import ProfilesPage from './(dashboard)/profiles/page'
@@ -45,7 +46,7 @@ export const router = createBrowserRouter([
       { path: '/banners', Component: BannersPage, handle: { titleKey: 'nav.banners' } satisfies RouteHandle },
       { path: '/devices', Component: DevicesPage, handle: { titleKey: 'nav.devices' } satisfies RouteHandle },
       {
-        // Admin-only exam screens: a child's work (list → journey → sitting) and the question pool.
+        // Admin-only exam screens: a child's work (list → journey → sitting), the question pool, the generation prompts.
         path: '/exams',
         handle: { titleKey: 'nav.exams' } satisfies RouteHandle,
         children: [
@@ -64,6 +65,7 @@ export const router = createBrowserRouter([
               },
             ],
           },
+          { path: 'prompts', Component: ExamPromptsPage, handle: { titleKey: 'nav.examPrompts' } satisfies RouteHandle },
         ],
       },
       {

@@ -185,3 +185,20 @@ export type ListExamPoolsResponse = { exam_pools: ExamPool[] | null; pagination:
 
 /** detail, mark-verify and verify all answer with the set, questions included. */
 export type ExamPoolResponse = { exam_pool: ExamPool }
+
+/** One grade's exam-generation system prompt (math-svr ExamPromptResponse). */
+export type ExamPrompt = {
+  prompt_id: number
+  grade: number
+  /** Sent to the model verbatim; nothing in it is filled in. */
+  system_prompt: string
+  /** +1 per rewrite (1 = the seed); part of the exam cache tag. */
+  prompt_version: number
+  /** Admin uid of the last rewrite; absent on the seed and on API-key rewrites. */
+  modify_id?: number
+  modify_dt: string
+}
+
+export type ListExamPromptsResponse = { exam_prompts: ExamPrompt[] | null }
+
+export type ExamPromptResponse = { exam_prompt: ExamPrompt }
