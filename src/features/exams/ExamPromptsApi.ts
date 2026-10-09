@@ -48,3 +48,12 @@ export const EXAM_PROMPT_JSON_KEYS = [
 export function missingPromptKeys(text: string) {
   return EXAM_PROMPT_JSON_KEYS.filter((key) => !text.includes(key))
 }
+
+/**
+ * Answer objects with a key deleted: innermost {…} blocks that name "label" or "content" but not both.
+ * Stricter than math-svr, which only checks each key appears somewhere — the four example answers
+ * (A–D) keep a key "present" after it is removed from one of them, and the model copies the example.
+ */
+export function brokenAnswerObjects(text: string) {
+  return (text.match(/\{[^{}]*\}/g) ?? []).filter((block) => block.includes('"label"') !== block.includes('"content"'))
+}

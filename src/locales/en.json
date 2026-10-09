@@ -770,6 +770,7 @@
       "keysTitle": "Required JSON keys",
       "keysOk": "The prompt names all {{n}} JSON keys the server needs to read the result.",
       "keysMissing": "{{n}} JSON key(s) missing — the server will refuse to save. Keys must be in double quotes, as in the output-structure block.",
+      "brokenAnswers": "{{n}} answer object(s) missing \"label\" or \"content\". Every answer needs both, or the AI may return answers without a label or content.",
       "present": "present",
       "absent": "missing",
       "confirmTitle": "Save the {{grade}} prompt?",

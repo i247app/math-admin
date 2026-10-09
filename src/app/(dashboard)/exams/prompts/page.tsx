@@ -14,6 +14,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { TitleBar } from '@/features/dashboard/TitleBar'
 import { gradeLabel } from '@/features/exams/ExamHelpers'
 import {
+  brokenAnswerObjects,
   EXAM_PROMPT_JSON_KEYS,
   examPromptsQueryOptions,
   missingPromptKeys,
@@ -69,7 +70,8 @@ export default function ExamPromptsPage() {
   const text = drafts[grade] ?? prompt?.system_prompt ?? ''
   const dirty = isDirty(grade)
   const missing = missingPromptKeys(text)
-  const canSave = dirty && text.trim() !== '' && missing.length === 0 && !save.isPending
+  const broken = brokenAnswerObjects(text)
+  const canSave = dirty && text.trim() !== '' && missing.length === 0 && broken.length === 0 && !save.isPending
   const gradeName = gradeLabel(t, grade)
 
   async function copySaved(saved: string) {
@@ -180,7 +182,7 @@ export default function ExamPromptsPage() {
                 id="exam-prompt"
                 value={text}
                 spellCheck={false}
-                aria-invalid={missing.length > 0 ? true : undefined}
+                aria-invalid={missing.length > 0 || broken.length > 0 ? true : undefined}
                 aria-describedby="exam-prompt-keys"
                 onChange={(event) => setDrafts((current) => ({ ...current, [grade]: event.target.value }))}
                 className="min-h-[60vh] font-mono text-[13px] leading-relaxed"
@@ -205,6 +207,22 @@ export default function ExamPromptsPage() {
                     )
                   })}
                 </ul>
+                {broken.length > 0 && (
+                  <div className="flex flex-col gap-1.5">
+                    <span className="text-sm font-semibold text-destructive">
+                      {t('exams.prompts.brokenAnswers', { n: broken.length })}
+                    </span>
+                    <ul className="flex flex-col gap-1">
+                      {broken.map((block, index) => (
+                        <li key={index}>
+                          <code className="rounded-md bg-destructive-surface px-1.5 py-0.5 font-mono text-xs text-destructive">
+                            {block.replace(/\s+/g, ' ')}
+                          </code>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             </section>
 
