@@ -26,7 +26,7 @@
     "exams": "Exams",
     "examSittings": "Student work",
     "examPools": "Exam pool",
-    "examPrompts": "Generation prompts",
+    "examPrompts": "Ge-Prompts",
     "curriculum": {
       "group": "Curriculum",
       "programs": "Programs",
@@ -541,9 +541,22 @@
   "exams": {
     "title": "Exams",
     "description": "A student profile's exam journeys, each sitting and every answer.",
-    "types": { "ASSESSMENT": "Assessment", "GRADE": "Grade review", "PRACTICE": "Practice" },
-    "journeyStatus": { "ACTIVE": "In progress", "COMPLETE": "Completed", "CANCEL": "Cancelled", "DELETED": "Deleted" },
-    "sittingStatus": { "IN_PROGRESS": "Not submitted", "SUBMITTED": "Submitted", "DELETED": "Deleted" },
+    "types": {
+      "ASSESSMENT": "Assessment",
+      "GRADE": "Grade review",
+      "PRACTICE": "Practice"
+    },
+    "journeyStatus": {
+      "ACTIVE": "In progress",
+      "COMPLETE": "Completed",
+      "CANCEL": "Cancelled",
+      "DELETED": "Deleted"
+    },
+    "sittingStatus": {
+      "IN_PROGRESS": "Not submitted",
+      "SUBMITTED": "Submitted",
+      "DELETED": "Deleted"
+    },
     "verdict": { "passed": "Passed", "failed": "Not passed" },
     "kindergarten": "Kindergarten",
     "grade": "Grade {{grade}}",
@@ -639,7 +652,10 @@
       },
       "preview": {
         "title": "The next practice round will…",
-        "modes": { "RETRY_WEAK": "Retry weak spots", "ADVANCE": "Push further" },
+        "modes": {
+          "RETRY_WEAK": "Retry weak spots",
+          "ADVANCE": "Push further"
+        },
         "weak": "Weak topics (wrong / answered)",
         "noWeak": "No weak topics.",
         "strong": "Strong topics",
@@ -705,7 +721,11 @@
     },
     "question": {
       "number": "Question {{number}}",
-      "outcomes": { "correct": "Correct", "wrong": "Wrong", "skipped": "Skipped" },
+      "outcomes": {
+        "correct": "Correct",
+        "wrong": "Wrong",
+        "skipped": "Skipped"
+      },
       "types": {
         "ARITHMETIC": "Arithmetic",
         "COUNT": "Counting",
@@ -772,7 +792,11 @@
         "filterGrade": "Filter by grade",
         "allGrades": "All grades",
         "filterVerified": "Filter by verification",
-        "verifiedOptions": { "all": "All", "no": "Not verified", "yes": "Verified" },
+        "verifiedOptions": {
+          "all": "All",
+          "no": "Not verified",
+          "yes": "Verified"
+        },
         "emptyTitle": "The pool has no question sets yet",
         "filterEmptyTitle": "No sets match the filters",
         "clearFilters": "Clear filters",

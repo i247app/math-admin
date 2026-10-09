@@ -23,6 +23,8 @@ export default defineConfig(({ mode }) => {
           target: env.VITE_API_PROXY_TARGET || 'http://localhost:8080',
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/go/, ''),
+          // Added by the proxy (Node), not the browser: a non-VITE_ var never reaches the client bundle.
+          headers: env.ADMIN_API_KEY ? { 'X-Api-Admin-Key': env.ADMIN_API_KEY } : undefined,
         },
       },
     },
