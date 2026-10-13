@@ -547,9 +547,9 @@
     "scopesLabel": "Scope",
     "codes": {
       "EXAM_ASSESSMENT": "Assessment exams",
-      "EXAM_GRADE": "Grade review exams",
-      "EXAM_PRACTICE": "Practice rounds",
-      "EXAM_JOURNEY_REVIEW": "Journey review"
+      "EXAM_GRADE": "Grade exams",
+      "EXAM_PRACTICE": "Practice exams",
+      "EXAM_REVIEW": "Review exams"
     },
     "allScopes": "General",
     "version": "v{{version}}",

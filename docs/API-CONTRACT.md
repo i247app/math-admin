@@ -290,7 +290,7 @@ else `403`).
 prompt_version, modify_id? (admin uid of the last rewrite; absent on the seed and on API-key rewrites), modify_dt }`.
 
 - **The catalog is code** (`catalog.go`): admins rewrite the text of existing rows, never create or delete one. Codes today:
-  `EXAM_ASSESSMENT`, `EXAM_GRADE`, `EXAM_PRACTICE` (one row per grade 0–5) and `EXAM_JOURNEY_REVIEW` (one row, no grade).
+  `EXAM_ASSESSMENT`, `EXAM_GRADE`, `EXAM_PRACTICE` (one row per grade 0–5) and `EXAM_REVIEW` (one row, no grade).
   `grade` / `language` are `null` when the code does not vary by them.
 - The text is sent to the model verbatim — no placeholder is filled server-side. The per-request brief (practice, level,
   curriculum) is still built in code as the user message.

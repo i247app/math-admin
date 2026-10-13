@@ -544,7 +544,7 @@
       "EXAM_ASSESSMENT": "Đề đánh giá năng lực",
       "EXAM_GRADE": "Đề ôn theo lớp",
       "EXAM_PRACTICE": "Đề luyện tập",
-      "EXAM_JOURNEY_REVIEW": "Nhận xét hành trình"
+      "EXAM_REVIEW": "Nhận xét hành trình"
     },
     "allScopes": "Chung",
     "version": "v{{version}}",
@@ -583,9 +583,22 @@
   "exams": {
     "title": "Bài kiểm tra",
     "description": "Xem các hành trình làm bài, từng lượt làm và từng câu trả lời của một hồ sơ học sinh.",
-    "types": { "ASSESSMENT": "Đánh giá năng lực", "GRADE": "Ôn theo lớp", "PRACTICE": "Luyện tập" },
-    "journeyStatus": { "ACTIVE": "Đang diễn ra", "COMPLETE": "Hoàn thành", "CANCEL": "Đã hủy", "DELETED": "Đã xoá" },
-    "sittingStatus": { "IN_PROGRESS": "Đang làm dở", "SUBMITTED": "Đã nộp", "DELETED": "Đã xoá" },
+    "types": {
+      "ASSESSMENT": "Đánh giá năng lực",
+      "GRADE": "Ôn theo lớp",
+      "PRACTICE": "Luyện tập"
+    },
+    "journeyStatus": {
+      "ACTIVE": "Đang diễn ra",
+      "COMPLETE": "Hoàn thành",
+      "CANCEL": "Đã hủy",
+      "DELETED": "Đã xoá"
+    },
+    "sittingStatus": {
+      "IN_PROGRESS": "Đang làm dở",
+      "SUBMITTED": "Đã nộp",
+      "DELETED": "Đã xoá"
+    },
     "verdict": { "passed": "Đạt", "failed": "Chưa đạt" },
     "kindergarten": "Mẫu giáo",
     "grade": "Lớp {{grade}}",
@@ -771,7 +784,11 @@
         "filterGrade": "Lọc theo lớp",
         "allGrades": "Mọi lớp",
         "filterVerified": "Lọc theo xác minh",
-        "verifiedOptions": { "all": "Tất cả", "no": "Chưa xác minh", "yes": "Đã xác minh" },
+        "verifiedOptions": {
+          "all": "Tất cả",
+          "no": "Chưa xác minh",
+          "yes": "Đã xác minh"
+        },
         "emptyTitle": "Kho đề chưa có bộ đề nào",
         "filterEmptyTitle": "Không có bộ đề nào khớp bộ lọc",
         "clearFilters": "Xoá bộ lọc",
