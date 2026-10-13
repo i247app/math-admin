@@ -274,33 +274,40 @@ req_extras? (cache tag), ai_title?, ai_short_text?, questions? (stored order, an
 - Codes: `EXAM_NOT_FOUND` 13700, `EXAM_MISSING_EXAM_ID` 13740, `EXAM_MISSING_IS_VERIFY` 13741,
   `EXAM_POOL_INVALID_QUESTIONS` 13742.
 
-### Exam prompts — `internal/application/dto/exam/exam_dto.go`, `internal/module/exam/validator.go`, `migrations/up/035_ma_exam_prompts.sql`
+### Prompts — `internal/application/dto/prompt/prompt_dto.go`, `internal/module/prompt/`, `internal/domain/prompt/catalog.go`
 
-The system prompt `/exams/generate` sends to the model, one row per grade (`ma_exam_prompts`, seeded). All routes 🛡️
-(`AdminOrApiKeyMiddleware`: ADMIN only, else `403`).
+The system prompt of every kind of LLM call (`ma_prompts`, seeded), its own module since the prompts left the exam
+aggregate (`/exams/prompts/*` and codes 13743–13746 are retired). All routes 🛡️ (`AdminOrApiKeyMiddleware`: ADMIN only,
+else `403`).
 
 | Route | Request | Response |
 |---|---|---|
-| `/exams/prompts/list` 🛡️ | `{}` | `{ exam_prompts: ExamPrompt[] }` — every grade, full text, lowest grade first. Not paginated. |
-| `/exams/prompts/detail` 🛡️ | `{ grade }` (0–5) | `{ exam_prompt }` — the dashboard does not use it (the list carries the text) |
-| `/exams/prompts/update` 🛡️ | `{ grade, system_prompt }` | `{ exam_prompt }` after the write |
+| `/prompts/list` 🛡️ | `{ prompt_code?, grade?, language? }` — every filter optional | `{ prompts: Prompt[] }` — full text, `prompt_code, grade, language` order. Not paginated (one row per scope). |
+| `/prompts/detail` 🛡️ | `{ prompt_id }` | `{ prompt }` — the dashboard does not use it (the list carries the text) |
+| `/prompts/update` 🛡️ | `{ prompt_id, system_prompt }` | `{ prompt }` after the write |
 
-`ExamPrompt`: `{ prompt_id, grade, system_prompt, prompt_version, modify_id? (admin uid of the last rewrite; absent on the
-seed and on API-key rewrites), modify_dt }`.
+`Prompt`: `{ prompt_id, prompt_code, grade: number|null, language: string|null, description: string|null, system_prompt,
+prompt_version, modify_id? (admin uid of the last rewrite; absent on the seed and on API-key rewrites), modify_dt }`.
 
-- The text is sent to the model verbatim — no placeholder is filled server-side; the question count and probe questions are
-  part of the text. The per-request brief (practice, level, curriculum) is still built in code.
-- `update` overwrites the row: **no history**. `prompt_version` + 1, and the version is the `-V<n>` segment of the exam cache
-  tag (`req_extras`), so every set generated from the older text of that grade is never served again — the next requests
-  generate (and pay for) new sets. No version check: the last save wins.
-- Validation (`ValidateUpdateExamPrompt`): non-blank (`EXAM_PROMPT_EMPTY` 13744), ≤ 50,000 characters (runes,
-  `EXAM_PROMPT_TOO_LONG` 13745), and the text must contain each of 12 quoted JSON keys the generation parser reads —
-  `"short_text"`, `"questions"`, `"question_number"`, `"question_type"`, `"question_name"`, `"answers"`, `"label"`, `"content"`,
-  `"right_answer_label"`, `"right_answer_content"`, `"question_topic"`, `"question_grade"` — else
-  `EXAM_PROMPT_MISSING_JSON_KEY` 13746, whose message does not say which (only `debug` does). The admin mirrors the list as
-  `EXAM_PROMPT_JSON_KEYS` (`src/features/exams/ExamPromptsApi.ts`); keep it in sync with `examPromptJSONKeys`.
-- `EXAM_PROMPT_NOT_FOUND` 13743: the grade has no row (generation for that grade fails too).
-- Grade errors: `EXAM_MISSING_GRADE`, `EXAM_INVALID_GRADE`.
+- **The catalog is code** (`catalog.go`): admins rewrite the text of existing rows, never create or delete one. Codes today:
+  `EXAM_ASSESSMENT`, `EXAM_GRADE`, `EXAM_PRACTICE` (one row per grade 0–5) and `EXAM_JOURNEY_REVIEW` (one row, no grade).
+  `grade` / `language` are `null` when the code does not vary by them.
+- The text is sent to the model verbatim — no placeholder is filled server-side. The per-request brief (practice, level,
+  curriculum) is still built in code as the user message.
+- `update` overwrites the row: **no history**. `prompt_version` + 1. For `EXAM_ASSESSMENT` / `EXAM_GRADE` the version is
+  the `-V<n>` segment of the exam cache tag (`req_extras`), so every set generated from the older text is never served
+  again — the next requests generate (and pay for) new sets. Practice rounds and journey reviews are not cached.
+  No version check: the last save wins.
+- Validation: `prompt_id` (`PROMPT_MISSING_ID` 14301, unknown → `PROMPT_NOT_FOUND` 14300), non-blank (`PROMPT_EMPTY` 14302),
+  ≤ 50,000 characters (runes, `PROMPT_TOO_LONG` 14303), and the text must contain each quoted JSON key the reply parser of
+  its code reads (`Spec.RequiredKeys`) — else `PROMPT_MISSING_JSON_KEY` 14304, whose message does not say which (only
+  `debug` does). The three exam-generation codes need `"short_text"`, `"questions"`, `"question_number"`, `"question_type"`,
+  `"question_name"`, `"answers"`, `"label"`, `"content"`, `"right_answer_label"`, `"right_answer_content"`,
+  `"question_topic"`, `"question_grade"`; `EXAM_JOURNEY_REVIEW` needs `"short"`, `"long"`; a code the catalog does not know is
+  not checked. The admin mirrors this in `src/features/prompts/PromptsApi.ts` — keep it in sync with `catalog.go`.
+  The admin also refuses an answer object (`{…}`) that names `"label"` without `"content"` or the reverse; the server
+  does not check that.
+- `PROMPT_NOT_FOUND` 14300 is also what an LLM call gets when its scope has no row (generation fails).
 
 ### Curriculum: programs, grades, semesters, schools — `internal/application/dto/{program,grade,semester,school}/`, `internal/module/{program,grade,semester,school}/`
 
@@ -447,7 +454,7 @@ Full route list: `grep -n 'reg("' internal/bootstrap/routes/routes.go` in math-s
 
 - **Admin gate exists but does not cover the admin's routes.** math-svr has `ADMIN` users and
   `AdminOrApiKeyMiddleware` (`internal/bootstrap/middleware/admin_required_middleware.go`), but it only
-  guards the ops routes of §6, `/users/admin/create`, `/exams/pools/*` (§4 Exam pool) and `/exams/prompts/*` (§4 Exam prompts). `/users/list|update|soft-delete|force-delete`,
+  guards the ops routes of §6, `/users/admin/create`, `/exams/pools/*` (§4 Exam pool) and `/prompts/*` (§4 Prompts). `/users/list|update|soft-delete|force-delete`,
   `/banners/*`, the curriculum writes (`/programs|grades|semesters|schools/*`) and `/roles/*` still use plain `authMiddleware`, so any OTP-verified user can call them. Hiding
   buttons in the UI is not security — switching those routes to the admin middleware belongs in math-svr.
 - **Device routes have no auth middleware** (except `/devices/force-delete`). `/devices/list|detail|update|revoke|soft-delete`

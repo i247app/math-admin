@@ -52,13 +52,14 @@ const examItems: NavItem[] = [
     to: '/exams',
     labelKey: 'nav.examSittings',
     icon: ClipboardListIcon,
-    // A child's work lives at /exams, /exams/journey, /exams/sitting — not the pool or the prompts.
-    isActive: (pathname) =>
-      pathname.startsWith('/exams') && !pathname.startsWith('/exams/pools') && !pathname.startsWith('/exams/prompts'),
+    // A child's work lives at /exams, /exams/journey, /exams/sitting — not the pool.
+    isActive: (pathname) => pathname.startsWith('/exams') && !pathname.startsWith('/exams/pools'),
   },
   { to: '/exams/pools', labelKey: 'nav.examPools', icon: ArchiveIcon },
-  { to: '/exams/prompts', labelKey: 'nav.examPrompts', icon: ScrollTextIcon },
 ]
+
+/** Admins only: every LLM system prompt (math-svr /prompts/*). */
+const promptsItem: NavItem = { to: '/prompts', labelKey: 'nav.prompts', icon: ScrollTextIcon }
 
 const curriculumItems: NavItem[] = [
   { to: '/curriculum/programs', labelKey: 'nav.curriculum.programs', icon: LibraryIcon },
@@ -84,19 +85,20 @@ const linkActive = 'bg-sidebar-primary text-sidebar-primary-foreground'
 
 export function Sidebar() {
   const { t } = useTranslation()
-  // The exams and system groups are admin-only: math-svr refuses everyone else with 403.
+  // The exams group, prompts and the system group are admin-only: math-svr refuses everyone else with 403.
   const isAdmin = useSessionUser().role === 'ADMIN'
+  const topLink = ({ to, labelKey, icon: Icon }: NavItem) => (
+    <NavLink key={to} to={to} className={({ isActive }) => cn(linkBase, 'h-11', isActive ? linkActive : linkIdle)}>
+      <Icon className="size-5" aria-hidden />
+      {t(labelKey)}
+    </NavLink>
+  )
 
   return (
     <aside className="bg-grid-paper hidden w-62 shrink-0 flex-col gap-8 bg-sidebar px-4 py-6 text-sidebar-foreground md:flex">
       <Logo className="px-2" />
       <nav aria-label={t('nav.main')} className="flex flex-col gap-1">
-        {navItems.map(({ to, labelKey, icon: Icon }) => (
-          <NavLink key={to} to={to} className={({ isActive }) => cn(linkBase, 'h-11', isActive ? linkActive : linkIdle)}>
-            <Icon className="size-5" aria-hidden />
-            {t(labelKey)}
-          </NavLink>
-        ))}
+        {navItems.map(topLink)}
         {isAdmin && (
           <NavGroup
             id="nav-exams"
@@ -106,6 +108,7 @@ export function Sidebar() {
             items={examItems}
           />
         )}
+        {isAdmin && topLink(promptsItem)}
         <NavGroup
           id="nav-curriculum"
           basePath="/curriculum"

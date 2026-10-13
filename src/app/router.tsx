@@ -14,7 +14,7 @@ import JourneyPage from './(dashboard)/exams/journey/page'
 import ExamsPage from './(dashboard)/exams/page'
 import ExamPoolDetailPage from './(dashboard)/exams/pools/detail/page'
 import ExamPoolsPage from './(dashboard)/exams/pools/page'
-import ExamPromptsPage from './(dashboard)/exams/prompts/page'
+import PromptsPage from './(dashboard)/prompts/page'
 import SittingPage from './(dashboard)/exams/sitting/page'
 import RolesPage from './(dashboard)/permissions/roles/page'
 import ProfilesPage from './(dashboard)/profiles/page'
@@ -46,7 +46,7 @@ export const router = createBrowserRouter([
       { path: '/banners', Component: BannersPage, handle: { titleKey: 'nav.banners' } satisfies RouteHandle },
       { path: '/devices', Component: DevicesPage, handle: { titleKey: 'nav.devices' } satisfies RouteHandle },
       {
-        // Admin-only exam screens: a child's work (list → journey → sitting), the question pool, the generation prompts.
+        // Admin-only exam screens: a child's work (list → journey → sitting) and the question pool.
         path: '/exams',
         handle: { titleKey: 'nav.exams' } satisfies RouteHandle,
         children: [
@@ -65,9 +65,10 @@ export const router = createBrowserRouter([
               },
             ],
           },
-          { path: 'prompts', Component: ExamPromptsPage, handle: { titleKey: 'nav.examPrompts' } satisfies RouteHandle },
         ],
       },
+      // Admin-only: every LLM system prompt (math-svr /prompts/*).
+      { path: '/prompts', Component: PromptsPage, handle: { titleKey: 'nav.prompts' } satisfies RouteHandle },
       {
         // Reference data: programs, grades, semesters, schools (one shared screen, see features/curriculum).
         path: '/curriculum',
