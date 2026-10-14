@@ -17,6 +17,7 @@
     "unknown": "Something went wrong. Please try again."
   },
   "nav": {
+    "openMenu": "Open menu",
     "main": "Main navigation",
     "breadcrumbRoot": "Admin",
     "users": "Users",

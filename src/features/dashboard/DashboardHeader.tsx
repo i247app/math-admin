@@ -7,6 +7,7 @@ import { LocaleSwitcher } from '@/components/LocaleSwitcher'
 import { UserAvatar } from '@/components/UserAvatar'
 import { Button } from '@/components/ui/button'
 import { logout } from '@/features/auth/AuthApi'
+import { MobileSidebar } from '@/features/dashboard/Sidebar'
 import type { RouteHandle } from '@/types/Route'
 import type { User } from '@/types/User'
 import { userDisplayName } from '@/utils/Helpers'
@@ -34,15 +35,18 @@ export function DashboardHeader({ user }: { user: User }) {
 
   return (
     <header className="flex h-16 items-center justify-between gap-4 border-b bg-card px-4 md:px-8">
-      <nav aria-label="breadcrumb" className="flex items-center gap-2 text-sm text-muted-foreground">
-        <span>{t('nav.breadcrumbRoot')}</span>
-        {titleKeys.map((key, index) => (
-          <Fragment key={key}>
-            <span aria-hidden>/</span>
-            <span className={index === titleKeys.length - 1 ? 'font-bold text-foreground' : undefined}>{t(key)}</span>
-          </Fragment>
-        ))}
-      </nav>
+      <div className="flex min-w-0 items-center gap-3">
+        <MobileSidebar />
+        <nav aria-label="breadcrumb" className="flex min-w-0 items-center gap-2 text-sm text-muted-foreground">
+          <span>{t('nav.breadcrumbRoot')}</span>
+          {titleKeys.map((key, index) => (
+            <Fragment key={key}>
+              <span aria-hidden>/</span>
+              <span className={index === titleKeys.length - 1 ? 'font-bold text-foreground' : undefined}>{t(key)}</span>
+            </Fragment>
+          ))}
+        </nav>
+      </div>
       <div className="flex items-center gap-3">
         <LocaleSwitcher />
         <div className="flex items-center gap-2">

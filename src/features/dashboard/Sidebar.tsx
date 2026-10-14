@@ -13,6 +13,7 @@ import {
   ImageIcon,
   KeyRoundIcon,
   LibraryIcon,
+  MenuIcon,
   ServerCogIcon,
   ShieldCheckIcon,
   ShieldIcon,
@@ -26,6 +27,8 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, NavLink, useLocation } from 'react-router'
 import { Logo } from '@/components/Logo'
+import { Button } from '@/components/ui/button'
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import { useSessionUser } from '@/features/auth/AuthApi'
 import type { TranslationKey } from '@/types/Route'
 import { AppConfig } from '@/utils/AppConfig'
@@ -83,7 +86,45 @@ const linkBase = 'flex items-center gap-3 rounded-lg px-3 font-bold transition-c
 const linkIdle = 'hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
 const linkActive = 'bg-sidebar-primary text-sidebar-primary-foreground'
 
+const panelClass = 'bg-grid-paper flex-col gap-8 bg-sidebar px-4 py-6 text-sidebar-foreground'
+
+/** Desktop sidebar (md and up); smaller screens use <MobileSidebar /> in the header. */
 export function Sidebar() {
+  return (
+    <aside className={cn(panelClass, 'hidden w-62 shrink-0 md:flex')}>
+      <SidebarBody />
+    </aside>
+  )
+}
+
+/** Menu button (below md) that slides the sidebar in from the left. */
+export function MobileSidebar() {
+  const { t } = useTranslation()
+  const [open, setOpen] = useState(false)
+
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
+        <Button variant="outline" size="icon" className="shrink-0 md:hidden" aria-label={t('nav.openMenu')}>
+          <MenuIcon />
+        </Button>
+      </SheetTrigger>
+      <SheetContent
+        side="left"
+        className={cn(panelClass, 'w-72 overflow-y-auto border-sidebar-border')}
+        // Close once a link is picked; group toggles are buttons and keep it open.
+        onClick={(event) => {
+          if ((event.target as HTMLElement).closest('a')) setOpen(false)
+        }}
+      >
+        <SheetTitle className="sr-only">{t('nav.main')}</SheetTitle>
+        <SidebarBody />
+      </SheetContent>
+    </Sheet>
+  )
+}
+
+function SidebarBody() {
   const { t } = useTranslation()
   // The exams group, prompts and the system group are admin-only: math-svr refuses everyone else with 403.
   const isAdmin = useSessionUser().role === 'ADMIN'
@@ -95,7 +136,7 @@ export function Sidebar() {
   )
 
   return (
-    <aside className="bg-grid-paper hidden w-62 shrink-0 flex-col gap-8 bg-sidebar px-4 py-6 text-sidebar-foreground md:flex">
+    <>
       <Logo className="px-2" />
       <nav aria-label={t('nav.main')} className="flex flex-col gap-1">
         {navItems.map(topLink)}
@@ -134,7 +175,7 @@ export function Sidebar() {
         )}
       </nav>
       <span className="mt-auto px-3 text-xs text-sidebar-foreground/80">math-admin {AppConfig.version}</span>
-    </aside>
+    </>
   )
 }
 

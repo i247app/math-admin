@@ -17,6 +17,7 @@
     "unknown": "Đã có lỗi xảy ra. Vui lòng thử lại."
   },
   "nav": {
+    "openMenu": "Mở menu",
     "main": "Điều hướng chính",
     "breadcrumbRoot": "Quản trị",
     "users": "Người dùng",
