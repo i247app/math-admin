@@ -175,7 +175,7 @@ export type ExamPool = {
 export type ListExamPoolsRequest = {
   exam_types?: ExamType[]
   grade?: number
-  /** Requested from math-svr; ignored by the server until it lands. */
+  /** true = verified_count > 0, false = 0, absent = both. */
   is_verified?: boolean
   page: number
   size: number
@@ -185,3 +185,10 @@ export type ListExamPoolsResponse = { exam_pools: ExamPool[] | null; pagination:
 
 /** detail, mark-verify and verify all answer with the set, questions included. */
 export type ExamPoolResponse = { exam_pool: ExamPool }
+
+/**
+ * /exams/pools/generate: one model call, one new unverified set. PRACTICE is refused (built from one
+ * child's mistakes); level is read for GRADE only. The admin never sends num_questions (ignored, always 10)
+ * nor semester/program (they go into the cache tag, and the app sends neither today).
+ */
+export type GenerateExamPoolRequest = { exam_type: JourneyType; grade: number; level?: number }

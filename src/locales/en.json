@@ -795,6 +795,21 @@
       "verified_one": "Verified · once",
       "verified_other": "Verified · {{count}} times",
       "unverified": "Not verified",
+      "generate": {
+        "open": "Generate with AI",
+        "title": "Generate an exam with AI",
+        "description": "The AI writes one 10-question set and adds it to the pool, not verified. Each run is one paid AI call and can take about a minute.",
+        "type": "Exam type",
+        "typeHint": "Practice rounds cannot be generated here: each is built from one child's mistakes.",
+        "grade": "Grade",
+        "pickGrade": "Pick a grade",
+        "level": "Level",
+        "pickLevel": "Pick a level",
+        "levelHint": "Required for grade review exams: the app always sends a level, so a set without one is never handed out.",
+        "submit": "Generate",
+        "generating": "The AI is writing the exam…",
+        "created": "Created set #{{id}} — review and verify it."
+      },
       "list": {
         "loadFailed": "Could not load the exam pool",
         "count_one": "{{count}} set",

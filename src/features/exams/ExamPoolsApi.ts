@@ -2,7 +2,14 @@
 import type { QueryClient } from '@tanstack/react-query'
 import { keepPreviousData, queryOptions } from '@tanstack/react-query'
 import { apiPost } from '@/libs/ApiClient'
-import type { ExamPool, ExamPoolResponse, ExamQuestion, ListExamPoolsRequest, ListExamPoolsResponse } from '@/types/Exam'
+import type {
+  ExamPool,
+  ExamPoolResponse,
+  ExamQuestion,
+  GenerateExamPoolRequest,
+  ListExamPoolsRequest,
+  ListExamPoolsResponse,
+} from '@/types/Exam'
 import { examsQueryKey } from './ExamsApi'
 
 const poolsQueryKey = [...examsQueryKey, 'pools'] as const
@@ -35,6 +42,11 @@ export async function markExamPoolVerify(examId: number, isVerify: boolean) {
 /** Replaces the whole stored set (same shape) and adds 1 to verified_count. */
 export async function verifyExamPool(examId: number, questions: ExamQuestion[]) {
   return (await apiPost<ExamPoolResponse>('/exams/pools/verify', { exam_id: examId, questions })).exam_pool
+}
+
+/** One model call (slow: tens of seconds); the new set joins the pool unverified and is handed to nobody. */
+export async function generateExamPool(request: GenerateExamPoolRequest) {
+  return (await apiPost<ExamPoolResponse>('/exams/pools/generate', request)).exam_pool
 }
 
 /** After a write: the response is the fresh set; lists may still show the old count. */

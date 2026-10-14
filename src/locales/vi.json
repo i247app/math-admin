@@ -777,6 +777,21 @@
       "description": "Bộ đề AI đã sinh và được phát lại cho trẻ. Mở một bộ để soát đáp án, sửa và xác minh.",
       "verified_other": "Đã xác minh · {{count}} lần",
       "unverified": "Chưa xác minh",
+      "generate": {
+        "open": "Tạo đề bằng AI",
+        "title": "Tạo đề bằng AI",
+        "description": "AI sinh một bộ 10 câu và thêm vào kho ở trạng thái chưa xác minh. Mỗi lần tạo tốn một lượt gọi AI và có thể mất tới khoảng 1 phút.",
+        "type": "Loại đề",
+        "typeHint": "Không tạo được đề Luyện tập: đề luyện tập được sinh riêng theo lỗi sai của từng trẻ.",
+        "grade": "Lớp",
+        "pickGrade": "Chọn lớp",
+        "level": "Mức",
+        "pickLevel": "Chọn mức",
+        "levelHint": "Bắt buộc với đề Ôn theo lớp: app luôn gửi mức, nên đề không có mức sẽ không bao giờ được phát cho trẻ.",
+        "submit": "Tạo đề",
+        "generating": "AI đang tạo đề…",
+        "created": "Đã tạo đề #{{id}} — hãy soát và xác minh."
+      },
       "list": {
         "loadFailed": "Không tải được kho đề",
         "count_other": "{{count}} bộ đề",

@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { SparklesIcon } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router'
 import { DataPagination } from '@/components/DataPagination'
@@ -10,7 +11,8 @@ import { TitleBar } from '@/features/dashboard/TitleBar'
 import { gradeLabel, positiveIntParam } from '@/features/exams/ExamHelpers'
 import { examPoolsListQueryOptions } from '@/features/exams/ExamPoolsApi'
 import { ExamPoolsTable } from '@/features/exams/ExamPoolsTable'
-import { EXAM_GRADES, EXAM_TYPES } from '@/types/Exam'
+import { GenerateExamPoolDialog } from '@/features/exams/GenerateExamPoolDialog'
+import { EXAM_GRADES, EXAM_TYPES, JOURNEY_TYPES } from '@/types/Exam'
 import { cn } from '@/utils/Helpers'
 
 const PAGE_SIZE = 20
@@ -27,6 +29,7 @@ export default function ExamPoolsPage() {
   const type = EXAM_TYPES.find((option) => option === params.get('type')) ?? null
   const grade = EXAM_GRADES.find((option) => String(option) === params.get('grade')) ?? null
   const verified = VERIFIED_OPTIONS.find((option) => option === params.get('verified')) ?? null
+  const [generateOpen, setGenerateOpen] = useState(false)
 
   const list = useQuery(
     examPoolsListQueryOptions({
@@ -75,7 +78,22 @@ export default function ExamPoolsPage() {
 
   return (
     <>
-      <TitleBar title={t('exams.pools.title')} description={t('exams.pools.description')} />
+      <TitleBar
+        title={t('exams.pools.title')}
+        description={t('exams.pools.description')}
+        actions={
+          <Button className="h-11 rounded-xl px-4.5" onClick={() => setGenerateOpen(true)}>
+            <SparklesIcon aria-hidden />
+            {t('exams.pools.generate.open')}
+          </Button>
+        }
+      />
+      <GenerateExamPoolDialog
+        open={generateOpen}
+        onClose={() => setGenerateOpen(false)}
+        // PRACTICE cannot be generated, so a PRACTICE filter pre-fills nothing.
+        defaults={{ type: JOURNEY_TYPES.find((option) => option === type) ?? null, grade }}
+      />
 
       {list.isError && !list.data ? (
         <LoadError

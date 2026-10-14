@@ -256,13 +256,19 @@ The AI-generated question sets (`ma_exam_pools`) that `/exams/generate` hands ou
 | `/exams/pools/detail` 🛡️ | `{ exam_id }` | `{ exam_pool }` with `questions` |
 | `/exams/pools/mark-verify` 🛡️ | `{ exam_id, is_verify }` — true: `verified_count` 0 → 1 (kept when already > 0); false: → 0 | `{ exam_pool }` with `questions` |
 | `/exams/pools/verify` 🛡️ | `{ exam_id, questions }` — the whole corrected set; replaces the stored one, `verified_count` + 1 | `{ exam_pool }` with `questions` |
-| `/exams/pools/generate` 🛡️ | `{ exam_type (not PRACTICE), grade, level?, num_questions?, semester?, program? }` | `{ exam_pool }` — not used by the dashboard yet |
+| `/exams/pools/generate` 🛡️ | `{ exam_type (not PRACTICE), grade, level?, num_questions?, semester?, program? }` | `{ exam_pool }` with `questions` — one synchronous model call (tens of seconds) |
 
 `ExamPool`: `{ exam_id, exam_type, grade, level?, num_questions (requested; the set can be shorter), semester?, program?,
 req_extras? (cache tag), ai_title?, ai_short_text?, questions? (stored order, answer key included), verified_count
 (0 = not verified), status?, create_dt }`.
 
-- `is_verified` is requested from math-svr and not there yet: until it lands the server ignores it.
+- `is_verified`: true = `verified_count > 0`, false = `= 0`, omitted = both.
+- `generate` (the dashboard's "Tạo đề bằng AI") stores one new unverified set and hands it to nobody. `num_questions` is
+  ignored (every exam is 10 questions). `level` is read for GRADE only (clamped to the grade). `level`, `semester` and
+  `program` go into the cache tag, so a set only serves children whose requests carry the same values: the app always
+  sends a level for GRADE and no semester/program, so the admin requires a level for GRADE and never sends the other two.
+  Errors: `EXAM_INVALID_EXAM_TYPE` 13708 (PRACTICE too), `EXAM_MISSING_GRADE`, `EXAM_INVALID_GRADE`, `EXAM_INVALID_LEVEL`,
+  `PROMPT_NOT_FOUND` 14300 (no prompt row for that type and grade), plus whatever the model call returns.
 - `verify` must keep the set's shape: same count, same `question_number`s, same answer labels per question,
   `right_answer_label` one of them, non-empty `question_name` — else `EXAM_POOL_INVALID_QUESTIONS` 13742. Everything
   else is stored as sent: the server does not recompute `right_answer_content` (the admin derives it from the chosen
