@@ -280,6 +280,44 @@ req_extras? (cache tag), ai_title?, ai_short_text?, questions? (stored order, an
 - Codes: `EXAM_NOT_FOUND` 13700, `EXAM_MISSING_EXAM_ID` 13740, `EXAM_MISSING_IS_VERIFY` 13741,
   `EXAM_POOL_INVALID_QUESTIONS` 13742.
 
+### Question bank — `internal/application/dto/question/question_dto.go`, `internal/module/question/`, `internal/domain/question/`
+
+Single questions (`ma_questions`, migration 036), **independent of the exam pool** (nothing refers to `ma_exam_pools`).
+All routes 🛡️ (`AdminOrApiKeyMiddleware`: ADMIN only, else `403`; the service also fails closed without the gate).
+
+| Route | Request | Response |
+|---|---|---|
+| `/questions/list` 🛡️ | `{ question_grade?, question_topic? (exact), question_tags? (any of), question_kinds?, question_statuses?, question_source?, is_verified?, page, size }` — OFFSET only, `size` capped at 100, newest first (`create_dt DESC, question_id DESC`) | `{ questions: Question[] \| null, pagination }` — answer key and explanation included |
+| `/questions/create` 🛡️ | `{ questions: QuestionInput[] }` — 1..100, **all or none** | `{ questions }` in request order |
+| `/questions/update` 🛡️ | `{ question_id, ...QuestionInput fields }` — absent = kept; `null` clears image/explanation/topic/level, `null` or `[]` clears options | `{ question }` |
+| `/questions/images/upload` 🛡️ | multipart, file part **`image`** (JPG/PNG/GIF/WebP, ≤ 5 MB; checked by extension, declared type and content; no SVG) | `{ image_key ("question-images/…"), image_url (presigned or null) }` |
+
+`Question`: `{ question_id, question_kind, question_text, question_image_key|null, question_image_url|null, options: {id, text,
+image_key?, image_url?}[] | null, correct_answer: {option_ids?} | {value?} | {values?}, explanation|null, question_grade (0–5),
+question_topic|null, question_level (0–9)|null, question_tags: string[], question_source ("AI"|"ADMIN"),
+question_status ("PENDING_REVIEW"|"APPROVED"|"REJECTED"|null), verified_count, create_id, create_dt, modify_id, modify_dt }`.
+
+- Kinds (`kind.go`, `rules.go`): `SINGLE_CHOICE` (2–10 options, exactly one `option_ids`), `MULTIPLE_CHOICE` (2–10, one or
+  more), `TRUE_FALSE` (no options, `correct_answer.value` boolean), `NUMERIC_INPUT` (no options, the child types a number;
+  `correct_answer.values`: 1–10 accepted numbers as strings — integer, decimal with `.` or `,`, or `a/b` (b ≠ 0), ≤ 32
+  characters, no `+`/exponent/inner spaces; no two equal as numbers, so `"0.5"` + `"1/2"` is refused. Stored canonical:
+  `"0,50"` → `"0.5"`, `"07"` → `"7"`, fractions kept unreduced. A typed answer is right when it equals any value as a
+  number — `internal/domain/question/numeric.go`). Option ids `^[a-z0-9_]{1,16}$`, unique, never change once
+  written (the key names options by id); an option needs text or an image key.
+- Limits (characters): text 2000, option text 500, explanation 5000, topic 255, ≤ 20 tags of ≤ 64. Grade required.
+  Image keys must sit under `question-images/` (i.e. come from the upload route). Text is trimmed; blank topic/explanation = none.
+- Create sets source `ADMIN`, status `PENDING_REVIEW`, `verified_count` 0. Update keeps all three: **no route changes the
+  review status or verified_count yet**, and there is no delete. A merged update must pass every create rule.
+- Duplicates: `question_hash` (kind, grade, normalised text, stem image, options as a set + which are correct, TF value) is
+  unique among live rows → `QUESTION_DUPLICATE`. Topic, tags, level, explanation, option order/ids don't count.
+- Errors name only the first issue in `mmessage`; every issue (by path, `questions[3].options[1].id`) is in `debug`.
+  The admin's batch page (`/questions/new`) reads only the `questions[N]` indexes from `debug` to mark those questions; it never shows `debug`.
+  Codes 144xx: `EMPTY_LIST` 14400, `INVALID` 14401, `TOO_MANY` 14402, `INVALID_KIND` 14403, `INVALID_OPTIONS` 14404,
+  `INVALID_ANSWER` 14405, `INVALID_IMAGE_KEY` 14406, `DUPLICATE` 14407, `INVALID_FILTER` 14408, `IMAGE_MISSING` 14409,
+  `IMAGE_INVALID_FILE` 14410, `IMAGE_UPLOAD_FAILED` 14411, `MISSING_ID` 14412, `NOT_FOUND` 14413, `NOTHING_TO_UPDATE` 14414.
+- Uploaded images are never deleted (a replaced or abandoned upload stays in S3).
+- The admin mirrors the rules in `src/features/questions/QuestionDraft.ts` — keep it in sync with `validator.go`.
+
 ### Prompts — `internal/application/dto/prompt/prompt_dto.go`, `internal/module/prompt/`, `internal/domain/prompt/catalog.go`
 
 The system prompt of every kind of LLM call (`ma_prompts`, seeded), its own module since the prompts left the exam
@@ -460,7 +498,7 @@ Full route list: `grep -n 'reg("' internal/bootstrap/routes/routes.go` in math-s
 
 - **Admin gate exists but does not cover the admin's routes.** math-svr has `ADMIN` users and
   `AdminOrApiKeyMiddleware` (`internal/bootstrap/middleware/admin_required_middleware.go`), but it only
-  guards the ops routes of §6, `/users/admin/create`, `/exams/pools/*` (§4 Exam pool) and `/prompts/*` (§4 Prompts). `/users/list|update|soft-delete|force-delete`,
+  guards the ops routes of §6, `/users/admin/create`, `/exams/pools/*` (§4 Exam pool), `/questions/*` (§4 Question bank) and `/prompts/*` (§4 Prompts). `/users/list|update|soft-delete|force-delete`,
   `/banners/*`, the curriculum writes (`/programs|grades|semesters|schools/*`) and `/roles/*` still use plain `authMiddleware`, so any OTP-verified user can call them. Hiding
   buttons in the UI is not security — switching those routes to the admin middleware belongs in math-svr.
 - **Device routes have no auth middleware** (except `/devices/force-delete`). `/devices/list|detail|update|revoke|soft-delete`

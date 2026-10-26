@@ -27,6 +27,7 @@
     "exams": "Bài kiểm tra",
     "examSittings": "Bài làm học sinh",
     "examPools": "Kho đề",
+    "questions": "Ngân hàng câu hỏi",
     "prompts": "Prompt AI",
     "curriculum": {
       "group": "Chương trình học",
@@ -49,7 +50,7 @@
   },
   "auth": {
     "heroTitle": "Quản lý người dùng và nội dung cho NUMI.",
-    "heroDescription": "Dành cho đội ngũ vận hành. Mọi thao tác đều tác động trực tiếp lên dữ liệu thật.",
+    "heroDescription": "Dành cho đội ngũ vận hành. Tất cả thao tác đều tác động trực tiếp lên dữ liệu thật.",
     "mascotAlt": "Cú Numi, linh vật của NUMI",
     "signIn": {
       "title": "Đăng nhập",
@@ -156,7 +157,7 @@
       "title": "Xoá vĩnh viễn người dùng?",
       "confirm": "Xoá vĩnh viễn",
       "done": "Đã xoá vĩnh viễn {{name}}.",
-      "description": "Tài khoản <strong>{{name}}</strong> (UID {{uid}}) cùng mọi dữ liệu liên quan sẽ bị xoá khỏi hệ thống. Thao tác này <warn>không thể hoàn tác</warn>. Nếu chỉ muốn ẩn tài khoản, hãy dùng Xoá mềm.",
+      "description": "Tài khoản <strong>{{name}}</strong> (UID {{uid}}) cùng Tất cả dữ liệu liên quan sẽ bị xoá khỏi hệ thống. Thao tác này <warn>không thể hoàn tác</warn>. Nếu chỉ muốn ẩn tài khoản, hãy dùng Xoá mềm.",
       "typeToConfirm": "Nhập <code>{{uid}}</code> để xác nhận"
     },
     "filter": {
@@ -205,9 +206,9 @@
       "search": "Tìm theo tên hoặc mã hồ sơ",
       "uid": "UID chủ",
       "role": "Lọc theo vai trò",
-      "allRoles": "Mọi vai trò",
+      "allRoles": "Tất cả vai trò",
       "status": "Lọc theo trạng thái",
-      "allStatuses": "Mọi trạng thái",
+      "allStatuses": "Tất cả trạng thái",
       "emptyTitle": "Không có hồ sơ nào khớp bộ lọc",
       "clear": "Xoá bộ lọc"
     },
@@ -270,7 +271,7 @@
       "title": "Xoá mềm hồ sơ?",
       "confirm": "Xoá mềm",
       "done": "Đã xoá mềm {{name}}.",
-      "description": "Hồ sơ <strong>{{name}}</strong> ({{code}}, UID {{uid}}) sẽ bị ẩn khỏi mọi danh sách. Hiện <warn>chưa có chức năng khôi phục</warn>."
+      "description": "Hồ sơ <strong>{{name}}</strong> ({{code}}, UID {{uid}}) sẽ bị ẩn khỏi Tất cả danh sách. Hiện <warn>chưa có chức năng khôi phục</warn>."
     },
     "forceDelete": {
       "title": "Xoá vĩnh viễn hồ sơ?",
@@ -370,7 +371,7 @@
       "title": "Xoá mềm?",
       "confirm": "Xoá mềm",
       "done": "Đã xoá mềm {{name}}.",
-      "description": "<strong>{{name}}</strong> (ID {{id}}) sẽ bị ẩn khỏi mọi danh sách và ứng dụng. Hiện <warn>chưa có chức năng khôi phục</warn>."
+      "description": "<strong>{{name}}</strong> (ID {{id}}) sẽ bị ẩn khỏi Tất cả danh sách và ứng dụng. Hiện <warn>chưa có chức năng khôi phục</warn>."
     },
     "forceDelete": {
       "title": "Xoá vĩnh viễn?",
@@ -397,7 +398,7 @@
     "filter": {
       "search": "Tìm theo mã hoặc tên",
       "status": "Lọc theo trạng thái",
-      "allStatuses": "Mọi trạng thái",
+      "allStatuses": "Tất cả trạng thái",
       "emptyTitle": "Không có vai trò nào khớp bộ lọc",
       "clear": "Xoá bộ lọc"
     },
@@ -442,7 +443,7 @@
       "title": "Xoá mềm vai trò?",
       "confirm": "Xoá mềm",
       "done": "Đã xoá mềm {{name}}.",
-      "description": "<strong>{{name}}</strong> ({{code}}) sẽ bị ẩn khỏi mọi danh sách và mã <strong>{{code}}</strong> được giải phóng để tạo lại. Hiện <warn>chưa có chức năng khôi phục</warn>."
+      "description": "<strong>{{name}}</strong> ({{code}}) sẽ bị ẩn khỏi Tất cả danh sách và mã <strong>{{code}}</strong> được giải phóng để tạo lại. Hiện <warn>chưa có chức năng khôi phục</warn>."
     },
     "forceDelete": {
       "title": "Xoá vĩnh viễn vai trò?",
@@ -479,7 +480,7 @@
     },
     "filter": {
       "label": "Lọc theo độ tin cậy",
-      "all": "Mọi thiết bị",
+      "all": "Tất cả thiết bị",
       "true": "Chỉ thiết bị tin cậy",
       "false": "Chỉ chưa tin cậy",
       "emptyTitle": "Không có thiết bị nào khớp bộ lọc",
@@ -581,6 +582,170 @@
     "confirmVersion": "Phiên bản: v{{from}} → v{{to}}.",
     "confirmCache": "Các bộ đề đã sinh cho {{name}} sẽ không được phát nữa; các lượt tạo đề tiếp theo sẽ để AI sinh bộ mới (tốn token)."
   },
+  "questions": {
+    "title": "Ngân hàng câu hỏi",
+    "description": "Từng câu hỏi lẻ, độc lập với kho đề. Câu mới tạo chờ duyệt.",
+    "create": "Thêm câu hỏi",
+    "loadFailed": "Không tải được ngân hàng câu hỏi",
+    "count": "{{count}} câu hỏi",
+    "emptyTitle": "Chưa có câu hỏi nào",
+    "filterEmptyTitle": "Không có câu hỏi khớp bộ lọc",
+    "open": "Mở câu hỏi #{{id}}",
+    "answerLabel": "Đáp án:",
+    "filterByTag": "Lọc theo thẻ {{tag}}",
+    "columns": {
+      "id": "ID",
+      "question": "Câu hỏi",
+      "kind": "Dạng",
+      "gradeLevel": "Lớp · Mức",
+      "topic": "Chủ đề · Thẻ",
+      "source": "Nguồn",
+      "status": "Trạng thái",
+      "verified": "Xác minh",
+      "modified": "Cập nhật"
+    },
+    "filters": {
+      "grade": "Lọc theo lớp",
+      "kind": "Lọc theo dạng",
+      "status": "Lọc theo trạng thái",
+      "source": "Lọc theo nguồn",
+      "verified": "Lọc theo xác minh",
+      "topic": "Chủ đề (khớp chính xác)",
+      "tag": "Thẻ",
+      "apply": "Lọc",
+      "clear": "Xoá bộ lọc",
+      "allGrades": "Tất cả lớp",
+      "allKinds": "Tất cả dạng",
+      "allStatuses": "Tất cả trạng thái",
+      "allSources": "Tất cả nguồn",
+      "verifiedOptions": {
+        "all": "Tất cả mức xác minh",
+        "no": "Chưa xác minh",
+        "yes": "Đã xác minh"
+      }
+    },
+    "kinds": {
+      "SINGLE_CHOICE": "Một đáp án",
+      "MULTIPLE_CHOICE": "Nhiều đáp án",
+      "TRUE_FALSE": "Đúng / Sai",
+      "NUMERIC_INPUT": "Nhập số"
+    },
+    "kindHints": {
+      "SINGLE_CHOICE": "2–10 phương án, đúng một phương án.",
+      "MULTIPLE_CHOICE": "2–10 phương án, có thể đúng nhiều phương án.",
+      "TRUE_FALSE": "Không có phương án; đáp án là Đúng hoặc Sai.",
+      "NUMERIC_INPUT": "Không có phương án; học sinh tự gõ đáp án là một số."
+    },
+    "statuses": {
+      "PENDING_REVIEW": "Chờ duyệt",
+      "APPROVED": "Đã duyệt",
+      "REJECTED": "Bị từ chối"
+    },
+    "sources": {
+      "AI": "AI",
+      "ADMIN": "Quản trị"
+    },
+    "trueFalse": {
+      "true": "Đúng",
+      "false": "Sai"
+    },
+    "image": {
+      "add": "Tải ảnh lên",
+      "replace": "Đổi ảnh",
+      "remove": "Bỏ ảnh",
+      "uploading": "Đang tải ảnh…",
+      "hint": "JPG, PNG, GIF hoặc WebP, tối đa 5 MB.",
+      "addLabel": "Thêm ảnh cho {{label}}",
+      "replaceLabel": "Đổi ảnh của {{label}}",
+      "removeLabel": "Bỏ ảnh của {{label}}",
+      "badType": "Chỉ nhận ảnh JPG, PNG, GIF hoặc WebP.",
+      "tooLarge": "Ảnh lớn hơn 5 MB."
+    },
+    "form": {
+      "editTitle": "Sửa câu hỏi #{{id}}",
+      "meta": "Tạo {{created}} · Sửa lần cuối {{modified}}",
+      "reviewNote": "Sửa nội dung không đổi trạng thái duyệt hay số lần xác minh.",
+      "sections": {
+        "question": "Câu hỏi",
+        "answer": "Đáp án",
+        "classify": "Phân loại"
+      },
+      "kind": "Dạng câu hỏi",
+      "text": "Nội dung câu hỏi",
+      "count": "{{n}} / {{max}} ký tự",
+      "image": "Ảnh minh hoạ",
+      "pickOne": "Chọn phương án đúng ở ô tròn bên trái.",
+      "pickMany": "Đánh dấu Tất cả phương án đúng.",
+      "pickTrueFalse": "Câu khẳng định này đúng hay sai?",
+      "option": "Phương án {{id}}",
+      "optionPlaceholder": "Nội dung phương án {{n}}",
+      "markCorrect": "Phương án {{id}} là đáp án đúng",
+      "removeOption": "Xoá phương án {{id}}",
+      "addOption": "Thêm phương án (tối đa {{max}})",
+      "grade": "Lớp",
+      "gradePlaceholder": "Chọn lớp",
+      "level": "Mức độ",
+      "levelHint": "0 là dễ nhất, 9 là khó nhất.",
+      "noLevel": "Chưa xếp mức",
+      "topic": "Chủ đề",
+      "tags": "Thẻ",
+      "tagsHint": "Phân cách bằng dấu phẩy, tối đa {{max}} thẻ.",
+      "explanation": "Lời giải",
+      "explanationHint": "Không bắt buộc. Giải thích vì sao đáp án đúng.",
+      "optional": "Không bắt buộc",
+      "create": "Thêm câu hỏi",
+      "save": "Lưu thay đổi",
+      "updated": "Đã lưu câu hỏi #{{id}}",
+      "errors": {
+        "textRequired": "Hãy nhập nội dung câu hỏi.",
+        "textTooLong": "Câu hỏi dài quá {{text}} ký tự.",
+        "optionEmpty": "Phương án cần có nội dung hoặc ảnh.",
+        "optionTooLong": "Phương án dài quá {{optionText}} ký tự.",
+        "tooFewOptions": "Cần ít nhất {{minOptions}} phương án.",
+        "answerSingle": "Hãy chọn đúng một phương án đúng.",
+        "answerMultiple": "Hãy đánh dấu ít nhất một phương án đúng.",
+        "answerTrueFalse": "Hãy chọn Đúng hoặc Sai.",
+        "gradeRequired": "Hãy chọn lớp.",
+        "topicTooLong": "Chủ đề dài quá {{topic}} ký tự.",
+        "explanationTooLong": "Lời giải dài quá {{explanation}} ký tự.",
+        "tooManyTags": "Tối đa {{tags}} thẻ.",
+        "tagTooLong": "Mỗi thẻ tối đa {{tagLength}} ký tự.",
+        "numbersRequired": "Hãy nhập ít nhất một đáp án.",
+        "tooManyNumbers": "Tối đa {{maxNumbers}} đáp án.",
+        "numberInvalid": "Không phải số hợp lệ: số nguyên, số thập phân (dấu . hoặc ,) hoặc phân số a/b, tối đa {{numberLength}} ký tự.",
+        "numberDuplicate": "Trùng giá trị với một đáp án phía trên."
+      },
+      "pickNumbers": "Các đáp án được chấp nhận. Học sinh gõ số nào bằng một trong các giá trị này là đúng (0,5 = 0.5 = 1/2).",
+      "number": "Đáp án chấp nhận {{n}}",
+      "numberPlaceholder": "VD: 12, 0,5 hoặc 1/2",
+      "removeNumber": "Xoá đáp án chấp nhận {{n}}",
+      "addNumber": "Thêm đáp án chấp nhận (tối đa {{max}})"
+    },
+    "new": {
+      "title": "Thêm câu hỏi",
+      "back": "Ngân hàng câu hỏi",
+      "description": "Soạn nhiều câu rồi lưu một lần (tối đa {{max}} câu). Hoặc lưu được hết, hoặc không câu nào.",
+      "listLabel": "Danh sách câu hỏi",
+      "add": "Thêm câu hỏi",
+      "full": "Đã đủ {{max}} câu",
+      "heading": "Câu {{number}} / {{total}}",
+      "duplicate": "Nhân bản",
+      "remove": "Xoá câu này",
+      "untitled": "Chưa có nội dung",
+      "needsFix": "Cần sửa",
+      "save_other": "Lưu {{count}} câu hỏi",
+      "created_other": "Đã thêm {{count}} câu hỏi (chờ duyệt)",
+      "fixFirst_other": "{{count}} câu cần sửa trước khi lưu.",
+      "rejectedHint_other": "{{count}} câu bị đánh dấu đỏ trong danh sách cần sửa; chưa câu nào được lưu.",
+      "rejectedHere": "Máy chủ từ chối câu này. Sửa theo thông báo phía trên rồi lưu lại.",
+      "removeTitle": "Xoá câu {{number}}?",
+      "removeDescription": "Nội dung đã soạn của câu này sẽ mất.",
+      "leaveTitle": "Rời trang khi chưa lưu?",
+      "leaveDescription_other": "{{count}} câu hỏi đang soạn sẽ mất.",
+      "leave": "Rời trang",
+      "slideLabel": "Câu {{number}}: {{text}}{{status}}"
+    }
+  },
   "exams": {
     "title": "Bài kiểm tra",
     "description": "Xem các hành trình làm bài, từng lượt làm và từng câu trả lời của một hồ sơ học sinh.",
@@ -600,7 +765,10 @@
       "SUBMITTED": "Đã nộp",
       "DELETED": "Đã xoá"
     },
-    "verdict": { "passed": "Đạt", "failed": "Chưa đạt" },
+    "verdict": {
+      "passed": "Đạt",
+      "failed": "Chưa đạt"
+    },
     "kindergarten": "Mẫu giáo",
     "grade": "Lớp {{grade}}",
     "level": "Mức {{level}}",
@@ -638,9 +806,9 @@
       "loadFailed": "Không tải được danh sách hành trình",
       "count_other": "{{count}} hành trình",
       "filterType": "Lọc theo loại",
-      "allTypes": "Mọi loại",
+      "allTypes": "Tất cả loại",
       "filterStatus": "Lọc theo trạng thái",
-      "allStatuses": "Mọi trạng thái",
+      "allStatuses": "Tất cả trạng thái",
       "emptyTitle": "Hồ sơ này chưa có hành trình nào",
       "filterEmptyTitle": "Không có hành trình nào khớp bộ lọc",
       "clearFilters": "Xoá bộ lọc",
@@ -691,7 +859,10 @@
       },
       "preview": {
         "title": "Lượt luyện tập tiếp theo sẽ…",
-        "modes": { "RETRY_WEAK": "Ôn lại chỗ yếu", "ADVANCE": "Nâng cao" },
+        "modes": {
+          "RETRY_WEAK": "Ôn lại chỗ yếu",
+          "ADVANCE": "Nâng cao"
+        },
         "weak": "Chủ đề yếu (sai / đã làm)",
         "noWeak": "Không có chủ đề yếu.",
         "strong": "Chủ đề vững",
@@ -756,7 +927,11 @@
     },
     "question": {
       "number": "Câu {{number}}",
-      "outcomes": { "correct": "Đúng", "wrong": "Sai", "skipped": "Bỏ qua" },
+      "outcomes": {
+        "correct": "Đúng",
+        "wrong": "Sai",
+        "skipped": "Bỏ qua"
+      },
       "types": {
         "ARITHMETIC": "Tính toán",
         "COUNT": "Đếm hình",
@@ -796,9 +971,9 @@
         "loadFailed": "Không tải được kho đề",
         "count_other": "{{count}} bộ đề",
         "filterType": "Lọc theo loại",
-        "allTypes": "Mọi loại",
+        "allTypes": "Tất cả loại",
         "filterGrade": "Lọc theo lớp",
-        "allGrades": "Mọi lớp",
+        "allGrades": "Tất cả lớp",
         "filterVerified": "Lọc theo xác minh",
         "verifiedOptions": {
           "all": "Tất cả",
@@ -920,7 +1095,7 @@
       "markUnsecure": {
         "action": "Bỏ xác thực phiên {{token}}",
         "title": "Bỏ xác thực phiên này?",
-        "description": "Phiên của <strong>{{account}}</strong> (UID {{uid}}, token <code>{{token}}</code>) vẫn được giữ, nhưng mọi chức năng cần đăng nhập sẽ từ chối nó cho tới khi người dùng đăng nhập lại (hoặc được đánh dấu đã xác thực lại).",
+        "description": "Phiên của <strong>{{account}}</strong> (UID {{uid}}, token <code>{{token}}</code>) vẫn được giữ, nhưng Tất cả chức năng cần đăng nhập sẽ từ chối nó cho tới khi người dùng đăng nhập lại (hoặc được đánh dấu đã xác thực lại).",
         "confirm": "Bỏ xác thực",
         "done": "Đã bỏ xác thực phiên {{token}}."
       },
@@ -940,14 +1115,14 @@
       "deleteUnsecure": {
         "button": "Xoá phiên chưa xác thực",
         "title": "Xoá phiên chưa xác thực?",
-        "description": "Mọi phiên chưa hoàn tất đăng nhập/OTP hoặc đã đăng xuất sẽ bị xoá. Phiên của bạn không bị ảnh hưởng.",
+        "description": "Tất cả phiên chưa hoàn tất đăng nhập/OTP hoặc đã đăng xuất sẽ bị xoá. Phiên của bạn không bị ảnh hưởng.",
         "confirm": "Xoá phiên",
         "done": "Đã xoá các phiên chưa xác thực."
       },
       "deleteAll": {
         "button": "Xoá tất cả phiên",
         "title": "Xoá tất cả phiên?",
-        "description": "Mọi người dùng sẽ bị đăng xuất, <warn>kể cả bạn</warn>: ngay sau đó bạn sẽ được chuyển về trang đăng nhập.",
+        "description": "Tất cả người dùng sẽ bị đăng xuất, <warn>kể cả bạn</warn>: ngay sau đó bạn sẽ được chuyển về trang đăng nhập.",
         "confirm": "Xoá tất cả",
         "done": "Đã xoá tất cả phiên. Vui lòng đăng nhập lại."
       }
@@ -971,7 +1146,7 @@
         "confirmTitle": "Tắt máy chủ?",
         "confirmDescription": "Toàn bộ ứng dụng NUMI và trang quản trị sẽ <warn>ngừng hoạt động</warn> cho tới khi có người bật lại server trên máy chủ.",
         "doneTitle": "Server đã nhận lệnh tắt",
-        "doneDescription": "Từ giờ mọi yêu cầu sẽ thất bại cho tới khi server được bật lại trên máy chủ."
+        "doneDescription": "Từ giờ Tất cả yêu cầu sẽ thất bại cho tới khi server được bật lại trên máy chủ."
       }
     },
     "data": {
@@ -1006,15 +1181,15 @@
         "button_other": "Xoá {{count}} bảng",
         "confirmTitle": "Xoá dữ liệu các bảng đã chọn?",
         "confirmDescription": "Toàn bộ dòng trong các bảng dưới đây sẽ bị xoá. Thao tác này <warn>không thể hoàn tác</warn>.",
-        "usersWarning": "Có bảng ma_users: mọi tài khoản sẽ bị xoá, kể cả tài khoản bạn đang dùng.",
+        "usersWarning": "Có bảng ma_users: Tất cả tài khoản sẽ bị xoá, kể cả tài khoản bạn đang dùng.",
         "confirm": "Xoá dữ liệu"
       },
       "clearAll": {
         "title": "Xoá toàn bộ dữ liệu",
-        "summary": "Xoá dữ liệu của mọi bảng ở trên, chỉ giữ lại những người dùng trong danh sách giữ lại (cùng toàn bộ dữ liệu của họ). Dữ liệu tham chiếu (chương trình, khối lớp, học kỳ, trường) và ngân hàng đề không bị xoá.",
+        "summary": "Xoá dữ liệu của Tất cả bảng ở trên, chỉ giữ lại những người dùng trong danh sách giữ lại (cùng toàn bộ dữ liệu của họ). Dữ liệu tham chiếu (chương trình, khối lớp, học kỳ, trường) và ngân hàng đề không bị xoá.",
         "button": "Xoá toàn bộ dữ liệu",
         "confirmTitle": "Xoá toàn bộ dữ liệu?",
-        "confirmDescription": "Mọi dữ liệu người dùng, lớp học, bài làm, thông báo, banner và tin nhắn sẽ bị xoá. Thao tác này <warn>không thể hoàn tác</warn>.",
+        "confirmDescription": "Tất cả dữ liệu người dùng, lớp học, bài làm, thông báo, banner và tin nhắn sẽ bị xoá. Thao tác này <warn>không thể hoàn tác</warn>.",
         "whitelistLabel": "UID được giữ lại",
         "whitelistHint": "Các UID cách nhau bởi dấu phẩy. Để trống để xoá tất cả.",
         "whitelistInvalid": "Chỉ nhập số UID, cách nhau bởi dấu phẩy.",

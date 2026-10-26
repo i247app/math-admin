@@ -15,6 +15,8 @@ import ExamsPage from './(dashboard)/exams/page'
 import ExamPoolDetailPage from './(dashboard)/exams/pools/detail/page'
 import ExamPoolsPage from './(dashboard)/exams/pools/page'
 import PromptsPage from './(dashboard)/prompts/page'
+import NewQuestionsPage from './(dashboard)/questions/new/page'
+import QuestionsPage from './(dashboard)/questions/page'
 import SittingPage from './(dashboard)/exams/sitting/page'
 import RolesPage from './(dashboard)/permissions/roles/page'
 import ProfilesPage from './(dashboard)/profiles/page'
@@ -69,6 +71,15 @@ export const router = createBrowserRouter([
       },
       // Admin-only: every LLM system prompt (math-svr /prompts/*).
       { path: '/prompts', Component: PromptsPage, handle: { titleKey: 'nav.prompts' } satisfies RouteHandle },
+      // Admin-only: the question bank (math-svr /questions/*), separate from the exam pool.
+      {
+        path: '/questions',
+        handle: { titleKey: 'nav.questions' } satisfies RouteHandle,
+        children: [
+          { index: true, Component: QuestionsPage },
+          { path: 'new', Component: NewQuestionsPage, handle: { titleKey: 'questions.new.title' } satisfies RouteHandle },
+        ],
+      },
       {
         // Reference data: programs, grades, semesters, schools (one shared screen, see features/curriculum).
         path: '/curriculum',

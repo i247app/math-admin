@@ -8,6 +8,7 @@ import {
   ClipboardCheckIcon,
   ClipboardListIcon,
   DatabaseIcon,
+  FileQuestionIcon,
   GraduationCapIcon,
   IdCardIcon,
   ImageIcon,
@@ -63,6 +64,9 @@ const examItems: NavItem[] = [
 
 /** Admins only: every LLM system prompt (math-svr /prompts/*). */
 const promptsItem: NavItem = { to: '/prompts', labelKey: 'nav.prompts', icon: ScrollTextIcon }
+
+/** Admins only: the question bank (math-svr /questions/*). */
+const questionsItem: NavItem = { to: '/questions', labelKey: 'nav.questions', icon: FileQuestionIcon }
 
 const curriculumItems: NavItem[] = [
   { to: '/curriculum/programs', labelKey: 'nav.curriculum.programs', icon: LibraryIcon },
@@ -126,7 +130,7 @@ export function MobileSidebar() {
 
 function SidebarBody() {
   const { t } = useTranslation()
-  // The exams group, prompts and the system group are admin-only: math-svr refuses everyone else with 403.
+  // The exams group, questions, prompts and the system group are admin-only: math-svr refuses everyone else with 403.
   const isAdmin = useSessionUser().role === 'ADMIN'
   const topLink = ({ to, labelKey, icon: Icon }: NavItem) => (
     <NavLink key={to} to={to} className={({ isActive }) => cn(linkBase, 'h-11', isActive ? linkActive : linkIdle)}>
@@ -149,6 +153,7 @@ function SidebarBody() {
             items={examItems}
           />
         )}
+        {isAdmin && topLink(questionsItem)}
         {isAdmin && topLink(promptsItem)}
         <NavGroup
           id="nav-curriculum"
