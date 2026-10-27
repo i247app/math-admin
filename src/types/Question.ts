@@ -1,6 +1,7 @@
 /**
- * Question bank (ma_questions) as the admin reads and writes it (docs/API-CONTRACT.md §4, Question bank).
- * Source: math-svr internal/application/dto/question/question_dto.go, internal/domain/question/.
+ * Question bank (ma_question_pools, routes /question-pools/*) as the admin reads and writes it
+ * (docs/API-CONTRACT.md §4, Question pool). Source: math-svr internal/application/dto/questionpool/
+ * question_pool_dto.go, internal/domain/questionpool/.
  * Independent of the exam pool: nothing here refers to ma_exam_pools.
  */
 import type { OffsetPagination } from '@/types/Api'
@@ -9,11 +10,11 @@ import type { OffsetPagination } from '@/types/Api'
 export const QUESTION_KINDS = ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'TRUE_FALSE', 'NUMERIC_INPUT'] as const
 export type QuestionKind = (typeof QUESTION_KINDS)[number]
 
-/** Review states. Admin-created questions start APPROVED (AI ones PENDING_REVIEW); /questions/mark-status changes them. */
+/** Review states. Admin-created questions start APPROVED (AI ones PENDING_REVIEW); /question-pools/mark-status changes them. */
 export const QUESTION_STATUSES = ['PENDING_REVIEW', 'APPROVED', 'REJECTED'] as const
 export type QuestionStatus = (typeof QUESTION_STATUSES)[number]
 
-/** Who wrote it: a model, or an admin (every /questions/create row is ADMIN). */
+/** Who wrote it: a model, or an admin (every /question-pools/create row is ADMIN). */
 export const QUESTION_SOURCES = ['AI', 'ADMIN'] as const
 export type QuestionSource = (typeof QUESTION_SOURCES)[number]
 
@@ -38,7 +39,7 @@ export type QuestionOption = {
 export type CorrectAnswer = { option_ids?: string[]; value?: boolean; values?: string[] }
 
 export type Question = {
-  question_id: number
+  question_pool_id: number
   question_kind: QuestionKind
   question_text: string
   question_image_key: string | null
@@ -64,7 +65,7 @@ export type Question = {
   modify_dt: string
 }
 
-/** What /questions/create takes per question and /questions/update takes beside question_id. */
+/** What /question-pools/create takes per question and /question-pools/update takes beside question_pool_id. */
 export type QuestionInput = {
   question_kind: QuestionKind
   question_text: string
@@ -92,7 +93,7 @@ export type ListQuestionsRequest = {
   size: number
 }
 
-export type ListQuestionsResponse = { questions: Question[] | null; pagination: OffsetPagination }
-export type CreateQuestionsResponse = { questions: Question[] }
-export type QuestionResponse = { question: Question }
+export type ListQuestionsResponse = { question_pools: Question[] | null; pagination: OffsetPagination }
+export type CreateQuestionsResponse = { question_pools: Question[] }
+export type QuestionResponse = { question_pool: Question }
 export type UploadQuestionImageResponse = { image_key: string; image_url: string | null }

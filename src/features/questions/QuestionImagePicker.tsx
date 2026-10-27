@@ -26,7 +26,7 @@ type QuestionImagePickerProps = {
 }
 
 /**
- * Uploads at once on pick (/questions/images/upload) and hands the key to the form; the
+ * Uploads at once on pick (/question-pools/images/upload) and hands the key to the form; the
  * question only uses it once saved. Removing an image only drops the key — the S3 object stays.
  */
 export function QuestionImagePicker({ imageKey, imageUrl, label, onChange, compact }: QuestionImagePickerProps) {

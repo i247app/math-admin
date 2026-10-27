@@ -45,7 +45,7 @@ function hasContent(draft: QuestionDraft) {
 }
 
 /**
- * Writes several questions and stores them in one /questions/create call (all or none).
+ * Writes several questions and stores them in one /question-pools/create call (all or none).
  * Left: the questions as slides, top to bottom; right: the selected one's editor.
  */
 export default function NewQuestionsPage() {

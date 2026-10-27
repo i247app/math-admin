@@ -1,6 +1,6 @@
 /**
  * The question editor's form state, its mapping to the wire shape, and the checks of
- * math-svr internal/module/question/validator.go + internal/domain/question/rules.go.
+ * math-svr internal/module/questionpool/validator.go + internal/domain/questionpool/rules.go.
  * The server re-checks everything; these only catch mistakes before the round trip.
  */
 import type { Question, QuestionInput, QuestionKind } from '@/types/Question'
@@ -15,7 +15,7 @@ export const QUESTION_LIMITS = {
   tagLength: 64,
   minOptions: 2,
   maxOptions: 10,
-  /** MaxNumericValues / MaxNumberLen in internal/domain/question/numeric.go. */
+  /** MaxNumericValues / MaxNumberLen in internal/domain/questionpool/numeric.go. */
   maxNumbers: 10,
   numberLength: 32,
 } as const

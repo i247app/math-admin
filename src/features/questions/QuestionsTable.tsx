@@ -63,7 +63,7 @@ export function QuestionsTable({ questions, onOpen, onTag, onDelete }: Questions
           ? questions.map((question) => {
               const tags = question.question_tags
               return (
-                <TableRow key={question.question_id} className="cursor-pointer" onClick={() => onOpen(question)}>
+                <TableRow key={question.question_pool_id} className="cursor-pointer" onClick={() => onOpen(question)}>
                   <TableCell className="pl-5 align-top">
                     <button
                       type="button"
@@ -71,10 +71,10 @@ export function QuestionsTable({ questions, onOpen, onTag, onDelete }: Questions
                         event.stopPropagation()
                         onOpen(question)
                       }}
-                      aria-label={t('questions.open', { id: question.question_id })}
+                      aria-label={t('questions.open', { id: question.question_pool_id })}
                       className="font-mono text-[13px] font-semibold text-primary underline-offset-4 hover:underline"
                     >
-                      #{question.question_id}
+                      #{question.question_pool_id}
                     </button>
                   </TableCell>
                   <TableCell className="min-w-80 max-w-[440px] align-top whitespace-normal">
@@ -146,13 +146,13 @@ export function QuestionsTable({ questions, onOpen, onTag, onDelete }: Questions
                     {/* The row opens the editor; these buttons must not. */}
                     <div className="flex justify-end gap-1" onClick={(event) => event.stopPropagation()}>
                       <RowAction
-                        label={t('questions.actions.softDelete', { id: question.question_id })}
+                        label={t('questions.actions.softDelete', { id: question.question_pool_id })}
                         onClick={() => onDelete('softDelete', question)}
                       >
                         <ArchiveIcon />
                       </RowAction>
                       <RowAction
-                        label={t('questions.actions.forceDelete', { id: question.question_id })}
+                        label={t('questions.actions.forceDelete', { id: question.question_pool_id })}
                         destructive
                         onClick={() => onDelete('forceDelete', question)}
                       >

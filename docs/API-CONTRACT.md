@@ -280,28 +280,31 @@ req_extras? (cache tag), ai_title?, ai_short_text?, questions? (stored order, an
 - Codes: `EXAM_NOT_FOUND` 13700, `EXAM_MISSING_EXAM_ID` 13740, `EXAM_MISSING_IS_VERIFY` 13741,
   `EXAM_POOL_INVALID_QUESTIONS` 13742.
 
-### Question bank — `internal/application/dto/question/question_dto.go`, `internal/module/question/`, `internal/domain/question/`
+### Question pool (the admin's question bank) — `internal/application/dto/questionpool/question_pool_dto.go`, `internal/module/questionpool/`, `internal/domain/questionpool/`
 
-Single questions (`ma_questions`, migration 036), **independent of the exam pool** (nothing refers to `ma_exam_pools`).
+Single questions (`ma_question_pools`, migration 036, renamed from `ma_questions` on 2026-10-27), **independent of the exam
+pool** (nothing refers to `ma_exam_pools`). The admin screen is still called "questions" (`/questions`, `src/features/questions/`);
+only the wire names changed. A new `ma_questions` table (migration 039, one row per AI-generated exam question) is schema
+only — no routes, unrelated to this bank; its codes will take 14500+.
 All routes 🛡️ (`AdminOrApiKeyMiddleware`: ADMIN only, else `403`; the service also fails closed without the gate).
 
 | Route | Request | Response |
 |---|---|---|
-| `/questions/list` 🛡️ | `{ question_grade?, question_topic? (exact), question_tags? (any of), question_kinds?, question_statuses?, question_source?, is_verified?, page, size }` — OFFSET only, `size` capped at 100, newest first (`create_dt DESC, question_id DESC`) | `{ questions: Question[] \| null, pagination }` — answer key and explanation included |
-| `/questions/create` 🛡️ | `{ questions: QuestionInput[] }` — 1..100, **all or none** | `{ questions }` in request order |
-| `/questions/update` 🛡️ | `{ question_id, ...QuestionInput fields }` — absent = kept; `null` clears image/explanation/topic/level, `null` or `[]` clears options | `{ question }` |
-| `/questions/mark-status` 🛡️ | `{ question_id, question_status: "PENDING_REVIEW"\|"APPROVED"\|"REJECTED" }` — any state to any state | `{ question }` |
-| `/questions/verify` 🛡️ | `{ question_id }` — `verified_count` + 1 (one atomic UPDATE, concurrent calls each count); nothing takes it back down | `{ question }` |
-| `/questions/soft-delete` 🛡️ | `{ question_id }` — status INACTIVE + `deleted_dt`; the row drops out of every read and its `question_hash` is free again (the same content can be created anew). `question_status` is kept. No restore endpoint | envelope only |
-| `/questions/force-delete` 🛡️ | `{ question_id }` — physical delete, live or already soft-deleted; **irreversible** | envelope only |
-| `/questions/images/upload` 🛡️ | multipart, file part **`image`** (JPG/PNG/GIF/WebP, ≤ 5 MB; checked by extension, declared type and content; no SVG) | `{ image_key ("question-images/…"), image_url (presigned or null) }` |
+| `/question-pools/list` 🛡️ | `{ question_grade?, question_topic? (exact), question_tags? (any of), question_kinds?, question_statuses?, question_source?, is_verified?, page, size }` — OFFSET only, `size` capped at 100, newest first (`create_dt DESC, question_pool_id DESC`) | `{ question_pools: Question[] \| null, pagination }` — answer key and explanation included |
+| `/question-pools/create` 🛡️ | `{ question_pools: QuestionInput[] }` — 1..100, **all or none** | `{ question_pools }` in request order |
+| `/question-pools/update` 🛡️ | `{ question_pool_id, ...QuestionInput fields }` — absent = kept; `null` clears image/explanation/topic/level, `null` or `[]` clears options | `{ question_pool }` |
+| `/question-pools/mark-status` 🛡️ | `{ question_pool_id, question_status: "PENDING_REVIEW"\|"APPROVED"\|"REJECTED" }` — any state to any state | `{ question_pool }` |
+| `/question-pools/verify` 🛡️ | `{ question_pool_id }` — `verified_count` + 1 (one atomic UPDATE, concurrent calls each count); nothing takes it back down | `{ question_pool }` |
+| `/question-pools/soft-delete` 🛡️ | `{ question_pool_id }` — status INACTIVE + `deleted_dt`; the row drops out of every read and its `question_hash` is free again (the same content can be created anew). `question_status` is kept. No restore endpoint | envelope only |
+| `/question-pools/force-delete` 🛡️ | `{ question_pool_id }` — physical delete, live or already soft-deleted; **irreversible** | envelope only |
+| `/question-pools/images/upload` 🛡️ | multipart, file part **`image`** (JPG/PNG/GIF/WebP, ≤ 5 MB; checked by extension, declared type and content; no SVG) | `{ image_key ("question-images/…"), image_url (presigned or null) }` |
 
-`Question`: `{ question_id, question_kind, question_text, question_image_key|null, question_image_url|null, options: {id, text,
+`Question`: `{ question_pool_id, question_kind, question_text, question_image_key|null, question_image_url|null, options: {id, text,
 image_key?, image_url?}[] | null, correct_answer: {option_ids?} | {value?} | {values?}, explanation|null, question_grade (0–5),
 question_topic|null, question_level (0–9)|null, question_tags: string[], question_source ("AI"|"ADMIN"),
 question_status ("PENDING_REVIEW"|"APPROVED"|"REJECTED"|null), verified_count, create_id, create_dt, modify_id, modify_dt }`.
 
-- Kinds (`kind.go`, `rules.go`): `SINGLE_CHOICE` (2–10 options, exactly one `option_ids`), `MULTIPLE_CHOICE` (2–10, one or
+- Kinds (`kind.go`, `rules.go` in `internal/domain/questionpool/`): `SINGLE_CHOICE` (2–10 options, exactly one `option_ids`), `MULTIPLE_CHOICE` (2–10, one or
   more), `TRUE_FALSE` (no options, `correct_answer.value` boolean), `NUMERIC_INPUT` (no options, the child types a number;
   `correct_answer.values`: 1–10 accepted numbers as strings — integer, decimal with `.` or `,`, or `a/b` (b ≠ 0), ≤ 32
   characters, no `+`/exponent/inner spaces; no two equal as numbers, so `"0.5"` + `"1/2"` is refused. Stored canonical:
@@ -316,9 +319,9 @@ question_status ("PENDING_REVIEW"|"APPROVED"|"REJECTED"|null), verified_count, c
   stay in S3 after either delete (`delete_question_command.go`); an unknown id → `QUESTION_NOT_FOUND`. A merged update must pass every create rule.
 - Duplicates: `question_hash` (kind, grade, normalised text, stem image, options as a set + which are correct, TF value) is
   unique among live rows → `QUESTION_DUPLICATE`. Topic, tags, level, explanation, option order/ids don't count.
-- Errors name only the first issue in `mmessage`; every issue (by path, `questions[3].options[1].id`) is in `debug`.
-  The admin's batch page (`/questions/new`) reads only the `questions[N]` indexes from `debug` to mark those questions; it never shows `debug`.
-  Codes 144xx: `EMPTY_LIST` 14400, `INVALID` 14401, `TOO_MANY` 14402, `INVALID_KIND` 14403, `INVALID_OPTIONS` 14404,
+- Errors name only the first issue in `mmessage`; every issue (by path, `question_pools[3].options[1].id`) is in `debug`.
+  The admin's batch page (`/question-pools/new`) reads only the `question_pools[N]` indexes from `debug` to mark those questions; it never shows `debug`.
+  Codes 144xx (`QUESTION_POOL_*`, numbers unchanged by the rename): `EMPTY_LIST` 14400, `INVALID` 14401, `TOO_MANY` 14402, `INVALID_KIND` 14403, `INVALID_OPTIONS` 14404,
   `INVALID_ANSWER` 14405, `INVALID_IMAGE_KEY` 14406, `DUPLICATE` 14407, `INVALID_FILTER` 14408, `IMAGE_MISSING` 14409,
   `IMAGE_INVALID_FILE` 14410, `IMAGE_UPLOAD_FAILED` 14411, `MISSING_ID` 14412, `NOT_FOUND` 14413, `NOTHING_TO_UPDATE` 14414, `INVALID_STATUS` 14415.
 - Uploaded images are never deleted (a replaced or abandoned upload stays in S3).
@@ -504,7 +507,7 @@ Full route list: `grep -n 'reg("' internal/bootstrap/routes/routes.go` in math-s
 
 - **Admin gate exists but does not cover the admin's routes.** math-svr has `ADMIN` users and
   `AdminOrApiKeyMiddleware` (`internal/bootstrap/middleware/admin_required_middleware.go`), but it only
-  guards the ops routes of §6, `/users/admin/create`, `/exams/pools/*` (§4 Exam pool), `/questions/*` (§4 Question bank) and `/prompts/*` (§4 Prompts). `/users/list|update|soft-delete|force-delete`,
+  guards the ops routes of §6, `/users/admin/create`, `/exams/pools/*` (§4 Exam pool), `/question-pools/*` (§4 Question pool) and `/prompts/*` (§4 Prompts). `/users/list|update|soft-delete|force-delete`,
   `/banners/*`, the curriculum writes (`/programs|grades|semesters|schools/*`) and `/roles/*` still use plain `authMiddleware`, so any OTP-verified user can call them. Hiding
   buttons in the UI is not security — switching those routes to the admin middleware belongs in math-svr.
 - **Device routes have no auth middleware** (except `/devices/force-delete`). `/devices/list|detail|update|revoke|soft-delete`

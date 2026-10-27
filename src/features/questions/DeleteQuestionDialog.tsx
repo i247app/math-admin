@@ -35,7 +35,7 @@ export function DeleteQuestionDialog({ target, onClose }: DeleteQuestionDialogPr
   return (
     <AlertDialog open={target !== null} onOpenChange={(open) => !open && onClose()}>
       <AlertDialogContent className="gap-5 rounded-2xl p-7 sm:max-w-[480px]">
-        {target && <DeleteBody key={`${target.kind}-${target.question.question_id}`} {...target} onClose={onClose} />}
+        {target && <DeleteBody key={`${target.kind}-${target.question.question_pool_id}`} {...target} onClose={onClose} />}
       </AlertDialogContent>
     </AlertDialog>
   )
@@ -46,7 +46,7 @@ function DeleteBody({ kind, question, onClose }: { kind: QuestionDeleteKind; que
   const queryClient = useQueryClient()
   const [typed, setTyped] = useState('')
   const isForce = kind === 'forceDelete'
-  const id = question.question_id
+  const id = question.question_pool_id
 
   const remove = useMutation({
     mutationFn: () => (isForce ? forceDeleteQuestion(id) : softDeleteQuestion(id)),

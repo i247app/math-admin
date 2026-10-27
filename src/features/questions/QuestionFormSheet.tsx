@@ -37,7 +37,7 @@ export function QuestionFormSheet({ question, onClose }: QuestionFormSheetProps)
     <Sheet open={question !== null} onOpenChange={(open) => !open && onClose()}>
       <SheetContent className="flex w-full flex-col gap-0 p-0 sm:max-w-[680px]">
         {/* Keyed so the form starts fresh for every question. */}
-        {question && <QuestionForm key={question.question_id} question={question} onClose={onClose} />}
+        {question && <QuestionForm key={question.question_pool_id} question={question} onClose={onClose} />}
       </SheetContent>
     </Sheet>
   )
@@ -53,11 +53,11 @@ function QuestionForm({ question, onClose }: { question: Question; onClose: () =
   const uploading = useIsMutating({ mutationKey: questionImageUploadKey }) > 0
 
   const save = useMutation({
-    mutationFn: (input: QuestionInput) => updateQuestion(question.question_id, input),
+    mutationFn: (input: QuestionInput) => updateQuestion(question.question_pool_id, input),
     meta: { silentError: true },
     onSuccess: (saved) => {
       void queryClient.invalidateQueries({ queryKey: questionsQueryKey })
-      toast.success(t('questions.form.updated', { id: saved.question_id }))
+      toast.success(t('questions.form.updated', { id: saved.question_pool_id }))
       onClose()
     },
   })
@@ -78,7 +78,7 @@ function QuestionForm({ question, onClose }: { question: Question; onClose: () =
   return (
     <form onSubmit={handleSubmit} noValidate className="flex min-h-0 flex-1 flex-col">
       <SheetHeader className="border-b px-6 py-5">
-        <SheetTitle className="text-xl font-bold">{t('questions.form.editTitle', { id: question.question_id })}</SheetTitle>
+        <SheetTitle className="text-xl font-bold">{t('questions.form.editTitle', { id: question.question_pool_id })}</SheetTitle>
         <SheetDescription className="sr-only">{t('questions.description')}</SheetDescription>
       </SheetHeader>
 
@@ -107,8 +107,8 @@ function QuestionForm({ question, onClose }: { question: Question; onClose: () =
 }
 
 /**
- * Review state and verify count, saved at once by their own routes (/questions/mark-status,
- * /questions/verify) — apart from the content form, whose Save never touches them. Keeps the
+ * Review state and verify count, saved at once by their own routes (/question-pools/mark-status,
+ * /question-pools/verify) — apart from the content form, whose Save never touches them. Keeps the
  * returned row, since the sheet's question prop is the list row it was opened from.
  */
 function QuestionReview({ question }: { question: Question }) {
@@ -123,20 +123,20 @@ function QuestionReview({ question }: { question: Question }) {
   }
 
   const mark = useMutation({
-    mutationFn: (status: QuestionStatus) => markQuestionStatus(question.question_id, status),
+    mutationFn: (status: QuestionStatus) => markQuestionStatus(question.question_pool_id, status),
     onSuccess: (next) => {
       saved(next)
       const status = next.question_status ? t(`questions.statuses.${next.question_status}`) : '—'
-      toast.success(t('questions.review.marked', { id: next.question_id, status }))
+      toast.success(t('questions.review.marked', { id: next.question_pool_id, status }))
     },
   })
   const verify = useMutation({
-    mutationFn: () => verifyQuestion(question.question_id),
+    mutationFn: () => verifyQuestion(question.question_pool_id),
     meta: { silentError: true },
     onSuccess: (next) => {
       saved(next)
       setConfirmVerify(false)
-      toast.success(t('questions.review.verified', { id: next.question_id, count: next.verified_count }))
+      toast.success(t('questions.review.verified', { id: next.question_pool_id, count: next.verified_count }))
     },
   })
   const busy = mark.isPending || verify.isPending
@@ -198,7 +198,7 @@ function QuestionReview({ question }: { question: Question }) {
           setConfirmVerify(false)
           verify.reset()
         }}
-        title={t('questions.review.verifyTitle', { id: current.question_id })}
+        title={t('questions.review.verifyTitle', { id: current.question_pool_id })}
         description={t('questions.review.verifyDescription', { count: current.verified_count })}
         confirmLabel={t('questions.review.verify')}
         pendingLabel={t('common.saving')}

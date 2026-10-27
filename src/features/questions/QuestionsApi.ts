@@ -1,4 +1,4 @@
-/** /questions/* calls of the question bank (docs/API-CONTRACT.md §4, Question bank). ADMIN sessions only. */
+/** /question-pools/* calls of the question bank (docs/API-CONTRACT.md §4, Question bank). ADMIN sessions only. */
 import { keepPreviousData, queryOptions } from '@tanstack/react-query'
 import { ApiError, apiPost, apiPostMultipart } from '@/libs/ApiClient'
 import type {
@@ -19,29 +19,29 @@ export function questionsListQueryOptions(request: ListQuestionsRequest) {
     queryKey: [...questionsQueryKey, 'list', request],
     queryFn: async ({ signal }) => {
       // Newest first; answer key and explanation included (admin-only route).
-      const res = await apiPost<ListQuestionsResponse>('/questions/list', request, { signal })
-      return { questions: res.questions ?? [], pagination: res.pagination }
+      const res = await apiPost<ListQuestionsResponse>('/question-pools/list', request, { signal })
+      return { questions: res.question_pools ?? [], pagination: res.pagination }
     },
     placeholderData: keepPreviousData,
   })
 }
 
-/** MaxQuestionsPerCreate in internal/module/question/validator.go. */
+/** MaxQuestionPoolsPerCreate in internal/module/questionpool/validator.go. */
 export const MAX_QUESTIONS_PER_CREATE = 100
 
 /** Stores every question or none; the response lists them in request order. */
 export async function createQuestions(inputs: QuestionInput[]) {
-  return (await apiPost<CreateQuestionsResponse>('/questions/create', { questions: inputs })).questions
+  return (await apiPost<CreateQuestionsResponse>('/question-pools/create', { question_pools: inputs })).question_pools
 }
 
 /**
  * Which questions of a refused create the server named. mmessage names only the first
- * issue; every issue's path (`questions[3].options[1].id`, `questions[5] repeats questions[2]`)
+ * issue; every issue's path (`question_pools[3].options[1].id`, `question_pools[5] repeats question_pools[2]`)
  * is in debug. Only the indexes are read, to mark those questions — debug is never shown.
  */
 export function rejectedIndexes(error: unknown): number[] {
   if (!(error instanceof ApiError) || !error.debug) return []
-  return [...new Set([...error.debug.matchAll(/questions\[(\d+)\]/g)].map((match) => Number(match[1])))]
+  return [...new Set([...error.debug.matchAll(/question_pools\[(\d+)\]/g)].map((match) => Number(match[1])))]
 }
 
 /**
@@ -49,10 +49,10 @@ export function rejectedIndexes(error: unknown): number[] {
  * status and verified_count are not editable here (see markQuestionStatus, verifyQuestion).
  */
 export async function updateQuestion(questionId: number, input: QuestionInput) {
-  return (await apiPost<QuestionResponse>('/questions/update', { question_id: questionId, ...input })).question
+  return (await apiPost<QuestionResponse>('/question-pools/update', { question_pool_id: questionId, ...input })).question_pool
 }
 
-/** MaxImageBytes in internal/module/question/image.go. */
+/** MaxImageBytes in internal/module/questionpool/image.go. */
 export const QUESTION_IMAGE_MAX_BYTES = 5 << 20
 /** imageTypes in image.go; checked by extension, declared type and content. No SVG. */
 export const QUESTION_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
@@ -62,26 +62,26 @@ export const questionImageUploadKey = [...questionsQueryKey, 'upload'] as const
 
 /** Stores the file under question-images/ and returns its key. Nothing deletes an unused upload. */
 export async function uploadQuestionImage(file: File) {
-  return apiPostMultipart<UploadQuestionImageResponse>('/questions/images/upload', { image: file })
+  return apiPostMultipart<UploadQuestionImageResponse>('/question-pools/images/upload', { image: file })
 }
 
 /** Sets the review state only (content and verified_count stay); any state to any state. */
 export async function markQuestionStatus(questionId: number, status: QuestionStatus) {
-  return (await apiPost<QuestionResponse>('/questions/mark-status', { question_id: questionId, question_status: status }))
-    .question
+  return (await apiPost<QuestionResponse>('/question-pools/mark-status', { question_pool_id: questionId, question_status: status }))
+    .question_pool
 }
 
 /** verified_count + 1, nothing else changes. No route takes it back down. */
 export async function verifyQuestion(questionId: number) {
-  return (await apiPost<QuestionResponse>('/questions/verify', { question_id: questionId })).question
+  return (await apiPost<QuestionResponse>('/question-pools/verify', { question_pool_id: questionId })).question_pool
 }
 
 /** Hides the question (the row stays, its content can be created again). No restore route. */
 export async function softDeleteQuestion(questionId: number) {
-  await apiPost('/questions/soft-delete', { question_id: questionId })
+  await apiPost('/question-pools/soft-delete', { question_pool_id: questionId })
 }
 
 /** Deletes the row for good, live or soft-deleted. Uploaded images stay in S3 either way. */
 export async function forceDeleteQuestion(questionId: number) {
-  await apiPost('/questions/force-delete', { question_id: questionId })
+  await apiPost('/question-pools/force-delete', { question_pool_id: questionId })
 }
