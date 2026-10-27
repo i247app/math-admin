@@ -44,7 +44,7 @@ export function QuestionEditor({ draft, errors, onPatch: patch, autoFocus }: Que
   return (
     <>
       <Section title={t('questions.form.sections.question')}>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-3">
           <FormField id="grade" label={t('questions.form.grade')} error={errorText(errors?.grade)}>
             <Select
               value={draft.grade === null ? '' : String(draft.grade)}
@@ -75,6 +75,24 @@ export function QuestionEditor({ draft, errors, onPatch: patch, autoFocus }: Que
                 {QUESTION_LEVELS.map((level) => (
                   <SelectItem key={level} value={String(level)}>
                     {t('exams.level', { level })}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </FormField>
+          <FormField id="subLevel" label={t('questions.form.subLevel')} hint={t('questions.form.subLevelHint')}>
+            <Select
+              value={draft.subLevel === null ? NO_LEVEL : String(draft.subLevel)}
+              onValueChange={(value) => patch((d) => ({ ...d, subLevel: value === NO_LEVEL ? null : Number(value) }))}
+            >
+              <SelectTrigger id="subLevel" aria-describedby="subLevel-hint" className="h-11 w-full rounded-xl">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={NO_LEVEL}>{t('questions.form.noLevel')}</SelectItem>
+                {QUESTION_LEVELS.map((level) => (
+                  <SelectItem key={level} value={String(level)}>
+                    {t('questions.subLevelValue', { level })}
                   </SelectItem>
                 ))}
               </SelectContent>

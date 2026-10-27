@@ -52,6 +52,8 @@ export type Question = {
   question_grade: number
   question_topic: string | null
   question_level: number | null
+  /** 0..9 inside question_level, null = not rated; the server does not tie it to question_level. */
+  question_sub_level: number | null
   question_tags: string[]
   question_source: QuestionSource
   question_status: QuestionStatus | null
@@ -76,6 +78,8 @@ export type QuestionInput = {
   question_grade: number
   question_topic: string | null
   question_level: number | null
+  /** 0..9 inside question_level, null = not rated; the server does not tie it to question_level. */
+  question_sub_level: number | null
   question_tags: string[]
 }
 

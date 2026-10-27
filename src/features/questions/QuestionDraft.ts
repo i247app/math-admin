@@ -37,6 +37,7 @@ export type QuestionDraft = {
   numbers: string[]
   grade: number | null
   level: number | null
+  subLevel: number | null
   topic: string
   /** Comma-separated in the form. */
   tags: string
@@ -76,6 +77,7 @@ export function emptyDraft(defaults: { grade?: number | null } = {}): QuestionDr
     numbers: [''],
     grade: defaults.grade ?? null,
     level: null,
+    subLevel: null,
     topic: '',
     tags: '',
     explanation: '',
@@ -99,6 +101,7 @@ export function draftOf(question: Question): QuestionDraft {
     numbers: question.correct_answer.values?.length ? question.correct_answer.values : [''],
     grade: question.question_grade,
     level: question.question_level,
+    subLevel: question.question_sub_level,
     topic: question.question_topic ?? '',
     tags: question.question_tags.join(', '),
     explanation: question.explanation ?? '',
@@ -176,6 +179,7 @@ export function toInput(draft: QuestionDraft): QuestionInput {
     question_grade: draft.grade ?? 0,
     question_topic: blankToNull(draft.topic),
     question_level: draft.level,
+    question_sub_level: draft.subLevel,
     question_tags: parseTags(draft.tags),
   }
 }

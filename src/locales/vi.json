@@ -592,6 +592,7 @@
     "filterEmptyTitle": "Không có câu hỏi khớp bộ lọc",
     "open": "Mở câu hỏi #{{id}}",
     "answerLabel": "Đáp án:",
+    "subLevelValue": "Mức con {{level}}",
     "filterByTag": "Lọc theo thẻ {{tag}}",
     "columns": {
       "id": "ID",
@@ -687,6 +688,8 @@
       "gradePlaceholder": "Chọn lớp",
       "level": "Mức độ",
       "levelHint": "0 là dễ nhất, 9 là khó nhất.",
+      "subLevel": "Mức con",
+      "subLevelHint": "0 là dễ nhất, 9 là khó nhất, trong cùng mức độ.",
       "noLevel": "Chưa xếp mức",
       "topic": "Chủ đề",
       "tags": "Thẻ",

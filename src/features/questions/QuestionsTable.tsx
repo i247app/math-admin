@@ -101,6 +101,11 @@ export function QuestionsTable({ questions, onOpen, onTag, onDelete }: Questions
                   </TableCell>
                   <TableCell className="align-top text-sm">
                     {gradeLevelLabel(t, question.question_grade, question.question_level ?? undefined)}
+                    {question.question_sub_level !== null && (
+                      <span className="block text-muted-foreground">
+                        {t('questions.subLevelValue', { level: question.question_sub_level })}
+                      </span>
+                    )}
                   </TableCell>
                   <TableCell className="align-top whitespace-normal">
                     <div className="flex flex-col gap-1.5">

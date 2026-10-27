@@ -292,7 +292,7 @@ All routes 🛡️ (`AdminOrApiKeyMiddleware`: ADMIN only, else `403`; the servi
 |---|---|---|
 | `/question-pools/list` 🛡️ | `{ question_grade?, question_topic? (exact), question_tags? (any of), question_kinds?, question_statuses?, question_source?, is_verified?, page, size }` — OFFSET only, `size` capped at 100, newest first (`create_dt DESC, question_pool_id DESC`) | `{ question_pools: Question[] \| null, pagination }` — answer key and explanation included |
 | `/question-pools/create` 🛡️ | `{ question_pools: QuestionInput[] }` — 1..100, **all or none** | `{ question_pools }` in request order |
-| `/question-pools/update` 🛡️ | `{ question_pool_id, ...QuestionInput fields }` — absent = kept; `null` clears image/explanation/topic/level, `null` or `[]` clears options | `{ question_pool }` |
+| `/question-pools/update` 🛡️ | `{ question_pool_id, ...QuestionInput fields }` — absent = kept; `null` clears image/explanation/topic/level/sub level, `null` or `[]` clears options | `{ question_pool }` |
 | `/question-pools/mark-status` 🛡️ | `{ question_pool_id, question_status: "PENDING_REVIEW"\|"APPROVED"\|"REJECTED" }` — any state to any state | `{ question_pool }` |
 | `/question-pools/verify` 🛡️ | `{ question_pool_id }` — `verified_count` + 1 (one atomic UPDATE, concurrent calls each count); nothing takes it back down | `{ question_pool }` |
 | `/question-pools/soft-delete` 🛡️ | `{ question_pool_id }` — status INACTIVE + `deleted_dt`; the row drops out of every read and its `question_hash` is free again (the same content can be created anew). `question_status` is kept. No restore endpoint | envelope only |
@@ -303,7 +303,7 @@ All routes 🛡️ (`AdminOrApiKeyMiddleware`: ADMIN only, else `403`; the servi
 
 `Question`: `{ question_pool_id, question_kind, question_text, question_image_key|null, question_image_url|null, options: {id, text,
 image_key?, image_url?}[] | null, correct_answer: {option_ids?} | {value?} | {values?}, explanation|null, question_grade (0–5),
-question_topic|null, question_level (0–9)|null, question_tags: string[], question_source ("AI"|"ADMIN"),
+question_topic|null, question_level (0–9)|null, question_sub_level (0–9)|null, question_tags: string[], question_source ("AI"|"ADMIN"),
 question_status ("PENDING_REVIEW"|"APPROVED"|"REJECTED"|null), verified_count, create_id, create_dt, modify_id, modify_dt }`.
 
 - Kinds (`kind.go`, `rules.go` in `internal/domain/questionpool/`): `SINGLE_CHOICE` (2–10 options, exactly one `option_ids`), `MULTIPLE_CHOICE` (2–10, one or
@@ -319,6 +319,8 @@ question_status ("PENDING_REVIEW"|"APPROVED"|"REJECTED"|null), verified_count, c
   start `PENDING_REVIEW`), `verified_count` 0. Update keeps all three; only `mark-status` / `verify`
   (`review_question_command.go`) change them, and they touch nothing else (content, hash). Both stamp `modify_id`. Images
   stay in S3 after either delete (`delete_question_command.go`); an unknown id → `QUESTION_NOT_FOUND`. A merged update must pass every create rule.
+- `question_sub_level` (added 2026-10-27, `sql/prod/2026-10-27_add_question_sub_level_to_ma_question_pools.sql`): 0–9 or null,
+  checked on its own (it may be set without `question_level`); not a list filter, not in the hash.
 - Duplicates: `question_hash` (kind, grade, normalised text, stem image, options as a set + which are correct, TF value) is
   unique among live rows → `QUESTION_DUPLICATE`. Topic, tags, level, explanation, option order/ids don't count.
 - Errors name only the first issue in `mmessage`; every issue (by path, `question_pools[3].options[1].id`) is in `debug`.

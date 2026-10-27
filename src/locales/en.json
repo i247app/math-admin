@@ -597,6 +597,7 @@
     "filterEmptyTitle": "No questions match these filters",
     "open": "Open question #{{id}}",
     "answerLabel": "Answer:",
+    "subLevelValue": "Sub level {{level}}",
     "filterByTag": "Filter by tag {{tag}}",
     "columns": {
       "id": "ID",
@@ -692,6 +693,8 @@
       "gradePlaceholder": "Pick a grade",
       "level": "Level",
       "levelHint": "0 is the easiest, 9 the hardest.",
+      "subLevel": "Sub level",
+      "subLevelHint": "0 is the easiest, 9 the hardest, within the level.",
       "noLevel": "Not rated",
       "topic": "Topic",
       "tags": "Tags",
