@@ -3,6 +3,7 @@ import { keepPreviousData, queryOptions } from '@tanstack/react-query'
 import { ApiError, apiPost, apiPostMultipart } from '@/libs/ApiClient'
 import type {
   CreateQuestionsResponse,
+  ImportQuestionsResponse,
   ListQuestionsRequest,
   ListQuestionsResponse,
   QuestionInput,
@@ -84,4 +85,21 @@ export async function softDeleteQuestion(questionId: number) {
 /** Deletes the row for good, live or soft-deleted. Uploaded images stay in S3 either way. */
 export async function forceDeleteQuestion(questionId: number) {
   await apiPost('/question-pools/force-delete', { question_pool_id: questionId })
+}
+
+/** MaxImportFileBytes / MaxImportQuestions in internal/module/questionpool/import.go. */
+export const IMPORT_FILE_MAX_BYTES = 10 << 20
+export const MAX_IMPORT_QUESTIONS = 2000
+
+/**
+ * Checks a .json file (an array of create items) the way import-file would; writes nothing.
+ * Invalid questions are a success: they are in the report. File-level problems throw.
+ */
+export async function validateQuestionFile(file: File) {
+  return (await apiPostMultipart<ImportQuestionsResponse>('/question-pools/validate-file', { file })).report
+}
+
+/** Stores every valid, new question of the file in one transaction, or none when any is invalid. Duplicates are skipped. */
+export async function importQuestionFile(file: File) {
+  return (await apiPostMultipart<ImportQuestionsResponse>('/question-pools/import-file', { file })).report
 }

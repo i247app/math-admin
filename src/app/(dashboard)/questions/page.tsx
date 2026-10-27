@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { PlusIcon, SearchIcon } from 'lucide-react'
+import { FileUpIcon, PlusIcon, SearchIcon } from 'lucide-react'
 import type { FormEvent } from 'react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -13,6 +13,7 @@ import { TitleBar } from '@/features/dashboard/TitleBar'
 import { gradeLabel, positiveIntParam } from '@/features/exams/ExamHelpers'
 import type { QuestionDeleteKind } from '@/features/questions/DeleteQuestionDialog'
 import { DeleteQuestionDialog } from '@/features/questions/DeleteQuestionDialog'
+import { ImportQuestionsDialog } from '@/features/questions/ImportQuestionsDialog'
 import { QuestionFormSheet } from '@/features/questions/QuestionFormSheet'
 import { questionsListQueryOptions } from '@/features/questions/QuestionsApi'
 import { QuestionsTable } from '@/features/questions/QuestionsTable'
@@ -41,6 +42,7 @@ export default function QuestionsPage() {
   const topic = params.get('topic')?.trim() || null
   const tag = params.get('tag')?.trim() || null
   const [editing, setEditing] = useState<Question | null>(null)
+  const [importing, setImporting] = useState(false)
   const [deleting, setDeleting] = useState<{ kind: QuestionDeleteKind; question: Question } | null>(null)
   // The grade filter pre-fills the first new question.
   const newPath = grade === null ? '/questions/new' : `/questions/new?grade=${grade}`
@@ -130,16 +132,23 @@ export default function QuestionsPage() {
         title={t('questions.title')}
         description={t('questions.description')}
         actions={
-          <Button asChild className="h-11 rounded-xl px-4.5">
-            <Link to={newPath}>
-              <PlusIcon aria-hidden />
-              {t('questions.create')}
-            </Link>
-          </Button>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" className="h-11 rounded-xl px-4.5" onClick={() => setImporting(true)}>
+              <FileUpIcon aria-hidden />
+              {t('questions.import.open')}
+            </Button>
+            <Button asChild className="h-11 rounded-xl px-4.5">
+              <Link to={newPath}>
+                <PlusIcon aria-hidden />
+                {t('questions.create')}
+              </Link>
+            </Button>
+          </div>
         }
       />
       <QuestionFormSheet question={editing} onClose={() => setEditing(null)} />
       <DeleteQuestionDialog target={deleting} onClose={() => setDeleting(null)} />
+      <ImportQuestionsDialog open={importing} onClose={() => setImporting(false)} />
 
       {list.isError && !list.data ? (
         <LoadError

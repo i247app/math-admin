@@ -97,3 +97,31 @@ export type ListQuestionsResponse = { question_pools: Question[] | null; paginat
 export type CreateQuestionsResponse = { question_pools: Question[] }
 export type QuestionResponse = { question_pool: Question }
 export type UploadQuestionImageResponse = { image_key: string; image_url: string | null }
+
+/** One broken rule of the file's question at `index` (0-based); `message` starts with its path ("[3].options[0].id: …"). */
+export type ImportQuestionError = { index: number; code: number; message: string }
+
+/** A valid question that is not imported: it repeats the file's question `duplicate_of` (IN_FILE) or a live row (IN_POOL). */
+export type ImportQuestionDuplicate = { index: number; reason: 'IN_FILE' | 'IN_POOL'; duplicate_of?: number }
+
+/**
+ * What /question-pools/validate-file and /import-file found (ImportQuestionPoolsReport in
+ * internal/application/dto/questionpool/). `errors` holds at most 200 issues (`errors_truncated`);
+ * `imported_count` and `question_pool_ids` are filled by import-file only.
+ */
+export type ImportQuestionsReport = {
+  file_name: string
+  total: number
+  valid_count: number
+  invalid_count: number
+  duplicate_in_file_count: number
+  duplicate_in_pool_count: number
+  importable_count: number
+  imported_count: number
+  errors: ImportQuestionError[]
+  errors_truncated: boolean
+  duplicates: ImportQuestionDuplicate[]
+  question_pool_ids: number[]
+}
+
+export type ImportQuestionsResponse = { report: ImportQuestionsReport }

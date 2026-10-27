@@ -786,6 +786,38 @@
       "leaveDescription_other": "The {{count}} questions you are writing will be lost.",
       "leave": "Leave",
       "slideLabel": "Question {{number}}: {{text}}{{status}}"
+    },
+    "import": {
+      "open": "Import file",
+      "title": "Import questions from a file",
+      "description": "Pick a .json file holding an array of questions (the create format), up to 2,000 questions and 10 MB. The file is checked first; nothing is saved until you press Import.",
+      "pick": "Choose a .json file",
+      "pickHint": "Pick another file to check it again.",
+      "validating": "Checking the file…",
+      "notJson": "Only .json files are accepted.",
+      "tooLarge": "The file is over 10 MB.",
+      "stats": {
+        "total": "Questions",
+        "valid": "Valid",
+        "invalid": "Invalid",
+        "duplicateInFile": "Repeated in file",
+        "duplicateInPool": "Already in the bank",
+        "importable": "Will be imported",
+        "imported": "Imported"
+      },
+      "errorsTitle": "Errors to fix",
+      "errorsTruncated": "Showing the first {{count}} errors only.",
+      "fixFirst": "Any invalid question refuses the whole file — fix the file and pick it again.",
+      "duplicatesTitle": "Duplicates (skipped)",
+      "duplicateInFile": "[{{index}}] repeats [{{of}}] in the file",
+      "duplicateInPool": "[{{index}}] is already in the question bank",
+      "nothingNew": "No new question to import.",
+      "confirm_one": "Import {{count}} question",
+      "confirm_other": "Import {{count}} questions",
+      "importing": "Importing…",
+      "done_one": "Imported {{count}} question.",
+      "done_other": "Imported {{count}} questions.",
+      "close": "Close"
     }
   },
   "exams": {

@@ -298,6 +298,8 @@ All routes 🛡️ (`AdminOrApiKeyMiddleware`: ADMIN only, else `403`; the servi
 | `/question-pools/soft-delete` 🛡️ | `{ question_pool_id }` — status INACTIVE + `deleted_dt`; the row drops out of every read and its `question_hash` is free again (the same content can be created anew). `question_status` is kept. No restore endpoint | envelope only |
 | `/question-pools/force-delete` 🛡️ | `{ question_pool_id }` — physical delete, live or already soft-deleted; **irreversible** | envelope only |
 | `/question-pools/images/upload` 🛡️ | multipart, file part **`image`** (JPG/PNG/GIF/WebP, ≤ 5 MB; checked by extension, declared type and content; no SVG) | `{ image_key ("question-images/…"), image_url (presigned or null) }` |
+| `/question-pools/validate-file` 🛡️ | multipart, file part **`file`**: a `.json` array of create items, ≤ 10 MB, 1..2000 elements. Writes nothing | `{ report }` |
+| `/question-pools/import-file` 🛡️ | same body | `{ report }` — stores every valid, new question in one transaction; any invalid one refuses the file (`IMPORT_INVALID`) |
 
 `Question`: `{ question_pool_id, question_kind, question_text, question_image_key|null, question_image_url|null, options: {id, text,
 image_key?, image_url?}[] | null, correct_answer: {option_ids?} | {value?} | {values?}, explanation|null, question_grade (0–5),
@@ -323,8 +325,18 @@ question_status ("PENDING_REVIEW"|"APPROVED"|"REJECTED"|null), verified_count, c
   The admin's batch page (`/question-pools/new`) reads only the `question_pools[N]` indexes from `debug` to mark those questions; it never shows `debug`.
   Codes 144xx (`QUESTION_POOL_*`, numbers unchanged by the rename): `EMPTY_LIST` 14400, `INVALID` 14401, `TOO_MANY` 14402, `INVALID_KIND` 14403, `INVALID_OPTIONS` 14404,
   `INVALID_ANSWER` 14405, `INVALID_IMAGE_KEY` 14406, `DUPLICATE` 14407, `INVALID_FILTER` 14408, `IMAGE_MISSING` 14409,
-  `IMAGE_INVALID_FILE` 14410, `IMAGE_UPLOAD_FAILED` 14411, `MISSING_ID` 14412, `NOT_FOUND` 14413, `NOTHING_TO_UPDATE` 14414, `INVALID_STATUS` 14415.
+  `IMAGE_INVALID_FILE` 14410, `IMAGE_UPLOAD_FAILED` 14411, `MISSING_ID` 14412, `NOT_FOUND` 14413, `NOTHING_TO_UPDATE` 14414, `INVALID_STATUS` 14415, `IMPORT_FILE_MISSING` 14416,
+  `IMPORT_FILE_INVALID` 14417 (not `.json` / not a JSON array), `IMPORT_FILE_TOO_LARGE` 14418, `IMPORT_INVALID` 14419.
 - Uploaded images are never deleted (a replaced or abandoned upload stays in S3).
+- File import (`internal/module/questionpool/import.go`): each element is checked with the create rules (unknown fields
+  such as `question_source` are an issue of that element, not a file error); an invalid question is a **success** of
+  validate-file — `report.errors[]` (`{index (0-based), code, message "[3].options[0].id: …"}`, first 200, `errors_truncated`)
+  and `invalid_count`. Duplicates are skipped, never refused: `duplicates[]` `{index, reason "IN_FILE" (repeats
+  `duplicate_of`, the first one is kept) | "IN_POOL" (a live row holds it)}`. Report counts: `total, valid_count,
+  invalid_count, duplicate_in_file_count, duplicate_in_pool_count, importable_count`; import-file adds `imported_count`
+  and `question_pool_ids` (file order). Imported rows get the create defaults (ADMIN, APPROVED). Empty file →
+  `EMPTY_LIST` 14400, > 2000 → `TOO_MANY` 14402. The admin's "Nhập file" dialog validates on pick and offers Import
+  only when `invalid_count` is 0 (`src/features/questions/ImportQuestionsDialog.tsx`).
 - The admin mirrors the rules in `src/features/questions/QuestionDraft.ts` — keep it in sync with `validator.go`.
 
 ### Prompts — `internal/application/dto/prompt/prompt_dto.go`, `internal/module/prompt/`, `internal/domain/prompt/catalog.go`

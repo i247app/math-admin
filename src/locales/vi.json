@@ -775,6 +775,36 @@
       "leaveDescription_other": "{{count}} câu hỏi đang soạn sẽ mất.",
       "leave": "Rời trang",
       "slideLabel": "Câu {{number}}: {{text}}{{status}}"
+    },
+    "import": {
+      "open": "Nhập file",
+      "title": "Nhập câu hỏi từ file",
+      "description": "Chọn một file .json chứa mảng câu hỏi (cùng định dạng khi tạo câu hỏi), tối đa 2.000 câu và 10 MB. File được kiểm tra trước, chưa lưu gì cho đến khi bạn bấm Nhập.",
+      "pick": "Chọn file .json",
+      "pickHint": "Chọn lại file khác để kiểm tra lại.",
+      "validating": "Đang kiểm tra file…",
+      "notJson": "Chỉ nhận file .json.",
+      "tooLarge": "File vượt quá 10 MB.",
+      "stats": {
+        "total": "Tổng số câu",
+        "valid": "Hợp lệ",
+        "invalid": "Không hợp lệ",
+        "duplicateInFile": "Trùng trong file",
+        "duplicateInPool": "Đã có trong ngân hàng",
+        "importable": "Sẽ được nhập",
+        "imported": "Đã nhập"
+      },
+      "errorsTitle": "Lỗi cần sửa",
+      "errorsTruncated": "Chỉ hiển thị {{count}} lỗi đầu tiên.",
+      "fixFirst": "Có câu không hợp lệ thì cả file bị từ chối — hãy sửa file rồi chọn lại.",
+      "duplicatesTitle": "Câu trùng (sẽ bỏ qua)",
+      "duplicateInFile": "[{{index}}] trùng với [{{of}}] trong file",
+      "duplicateInPool": "[{{index}}] đã có trong ngân hàng câu hỏi",
+      "nothingNew": "Không có câu hỏi mới nào để nhập.",
+      "importing": "Đang nhập…",
+      "close": "Đóng",
+      "confirm_other": "Nhập {{count}} câu hỏi",
+      "done_other": "Đã nhập {{count}} câu hỏi."
     }
   },
   "exams": {
