@@ -602,7 +602,8 @@
       "source": "Nguồn",
       "status": "Trạng thái",
       "verified": "Xác minh",
-      "modified": "Cập nhật"
+      "modified": "Cập nhật",
+      "actions": "Thao tác"
     },
     "filters": {
       "grade": "Lọc theo lớp",
@@ -720,6 +721,36 @@
       "numberPlaceholder": "VD: 12, 0,5 hoặc 1/2",
       "removeNumber": "Xoá đáp án chấp nhận {{n}}",
       "addNumber": "Thêm đáp án chấp nhận (tối đa {{max}})"
+    },
+    "review": {
+      "status": "Trạng thái duyệt",
+      "set": {
+        "PENDING_REVIEW": "Chờ duyệt",
+        "APPROVED": "Duyệt",
+        "REJECTED": "Từ chối"
+      },
+      "marked": "Câu hỏi #{{id}}: {{status}}",
+      "verify": "Xác minh (+1)",
+      "verifyTitle": "Xác minh câu hỏi #{{id}}?",
+      "verifyDescription": "Ghi nhận bạn đã kiểm tra câu hỏi này: số lần xác minh tăng từ {{count}} lên 1 đơn vị. Không thể giảm lại.",
+      "verified_other": "Đã xác minh câu hỏi #{{id}} ({{count}} lần)"
+    },
+    "actions": {
+      "softDelete": "Xoá mềm câu hỏi #{{id}}",
+      "forceDelete": "Xoá vĩnh viễn câu hỏi #{{id}}"
+    },
+    "softDelete": {
+      "title": "Xoá mềm câu hỏi #{{id}}?",
+      "confirm": "Xoá mềm",
+      "done": "Đã xoá mềm câu hỏi #{{id}}.",
+      "description": "Câu hỏi <strong>#{{id}}</strong> sẽ bị ẩn khỏi danh sách, và nội dung này có thể được tạo lại. Hiện <warn>chưa có chức năng khôi phục</warn>."
+    },
+    "forceDelete": {
+      "title": "Xoá vĩnh viễn câu hỏi #{{id}}?",
+      "confirm": "Xoá vĩnh viễn",
+      "done": "Đã xoá vĩnh viễn câu hỏi #{{id}}.",
+      "description": "Câu hỏi <strong>#{{id}}</strong> sẽ bị xoá khỏi cơ sở dữ liệu. Thao tác này <warn>không thể hoàn tác</warn>. Nếu chỉ muốn ẩn, hãy dùng Xoá mềm.",
+      "typeToConfirm": "Nhập <code>{{id}}</code> để xác nhận"
     },
     "new": {
       "title": "Thêm câu hỏi",

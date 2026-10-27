@@ -7,6 +7,7 @@ import type {
   ListQuestionsResponse,
   QuestionInput,
   QuestionResponse,
+  QuestionStatus,
   UploadQuestionImageResponse,
 } from '@/types/Question'
 
@@ -45,7 +46,7 @@ export function rejectedIndexes(error: unknown): number[] {
 
 /**
  * Sends every editable field: an absent field would be kept, null clears it. Source,
- * status and verified_count are not editable here.
+ * status and verified_count are not editable here (see markQuestionStatus, verifyQuestion).
  */
 export async function updateQuestion(questionId: number, input: QuestionInput) {
   return (await apiPost<QuestionResponse>('/questions/update', { question_id: questionId, ...input })).question
@@ -62,4 +63,25 @@ export const questionImageUploadKey = [...questionsQueryKey, 'upload'] as const
 /** Stores the file under question-images/ and returns its key. Nothing deletes an unused upload. */
 export async function uploadQuestionImage(file: File) {
   return apiPostMultipart<UploadQuestionImageResponse>('/questions/images/upload', { image: file })
+}
+
+/** Sets the review state only (content and verified_count stay); any state to any state. */
+export async function markQuestionStatus(questionId: number, status: QuestionStatus) {
+  return (await apiPost<QuestionResponse>('/questions/mark-status', { question_id: questionId, question_status: status }))
+    .question
+}
+
+/** verified_count + 1, nothing else changes. No route takes it back down. */
+export async function verifyQuestion(questionId: number) {
+  return (await apiPost<QuestionResponse>('/questions/verify', { question_id: questionId })).question
+}
+
+/** Hides the question (the row stays, its content can be created again). No restore route. */
+export async function softDeleteQuestion(questionId: number) {
+  await apiPost('/questions/soft-delete', { question_id: questionId })
+}
+
+/** Deletes the row for good, live or soft-deleted. Uploaded images stay in S3 either way. */
+export async function forceDeleteQuestion(questionId: number) {
+  await apiPost('/questions/force-delete', { question_id: questionId })
 }

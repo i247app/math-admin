@@ -1,11 +1,13 @@
-import { CheckIcon } from 'lucide-react'
+import { ArchiveIcon, CheckIcon, Trash2Icon } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { RowAction } from '@/components/RowAction'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { VerifiedPill } from '@/features/exams/ExamBadges'
 import { gradeLevelLabel } from '@/features/exams/ExamHelpers'
 import type { Question } from '@/types/Question'
 import { formatServerTime } from '@/utils/Helpers'
+import type { QuestionDeleteKind } from './DeleteQuestionDialog'
 import { QuestionKindBadge, QuestionSourcePill, QuestionStatusPill } from './QuestionBadges'
 
 const MAX_TAGS_SHOWN = 3
@@ -32,15 +34,16 @@ type QuestionsTableProps = {
   onOpen: (question: Question) => void
   /** Clicking a tag chip filters the list by it. */
   onTag: (tag: string) => void
+  onDelete: (kind: QuestionDeleteKind, question: Question) => void
 }
 
 /** The bank, newest first; a row opens the editor (the list carries every field). */
-export function QuestionsTable({ questions, onOpen, onTag }: QuestionsTableProps) {
+export function QuestionsTable({ questions, onOpen, onTag, onDelete }: QuestionsTableProps) {
   const { t, i18n } = useTranslation()
   const answerSummary = useAnswerSummary()
 
   return (
-    <Table className="min-w-[1280px]">
+    <Table className="min-w-[1380px]">
       <TableHeader className="bg-muted/50">
         <TableRow>
           <TableHead className="w-20 pl-5">{t('questions.columns.id')}</TableHead>
@@ -51,7 +54,8 @@ export function QuestionsTable({ questions, onOpen, onTag }: QuestionsTableProps
           <TableHead className="w-24">{t('questions.columns.source')}</TableHead>
           <TableHead className="w-32">{t('questions.columns.status')}</TableHead>
           <TableHead className="w-36">{t('questions.columns.verified')}</TableHead>
-          <TableHead className="w-36 pr-5">{t('questions.columns.modified')}</TableHead>
+          <TableHead className="w-36">{t('questions.columns.modified')}</TableHead>
+          <TableHead className="w-24 pr-5 text-right">{t('questions.columns.actions')}</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -135,8 +139,26 @@ export function QuestionsTable({ questions, onOpen, onTag }: QuestionsTableProps
                   <TableCell className="align-top">
                     <VerifiedPill count={question.verified_count} />
                   </TableCell>
-                  <TableCell className="pr-5 align-top text-sm text-muted-foreground">
+                  <TableCell className="align-top text-sm text-muted-foreground">
                     {formatServerTime(question.modify_dt, i18n.language)}
+                  </TableCell>
+                  <TableCell className="pr-5 align-top">
+                    {/* The row opens the editor; these buttons must not. */}
+                    <div className="flex justify-end gap-1" onClick={(event) => event.stopPropagation()}>
+                      <RowAction
+                        label={t('questions.actions.softDelete', { id: question.question_id })}
+                        onClick={() => onDelete('softDelete', question)}
+                      >
+                        <ArchiveIcon />
+                      </RowAction>
+                      <RowAction
+                        label={t('questions.actions.forceDelete', { id: question.question_id })}
+                        destructive
+                        onClick={() => onDelete('forceDelete', question)}
+                      >
+                        <Trash2Icon />
+                      </RowAction>
+                    </div>
                   </TableCell>
                 </TableRow>
               )
@@ -167,8 +189,11 @@ export function QuestionsTable({ questions, onOpen, onTag }: QuestionsTableProps
                 <TableCell>
                   <Skeleton className="h-5 w-24 rounded-full" />
                 </TableCell>
-                <TableCell className="pr-5">
+                <TableCell>
                   <Skeleton className="h-3 w-24" />
+                </TableCell>
+                <TableCell className="pr-5">
+                  <Skeleton className="ml-auto h-8 w-16" />
                 </TableCell>
               </TableRow>
             ))}

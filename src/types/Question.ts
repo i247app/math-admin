@@ -9,7 +9,7 @@ import type { OffsetPagination } from '@/types/Api'
 export const QUESTION_KINDS = ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'TRUE_FALSE', 'NUMERIC_INPUT'] as const
 export type QuestionKind = (typeof QUESTION_KINDS)[number]
 
-/** Review states. Set by the server (create = PENDING_REVIEW); no route changes them yet. */
+/** Review states. Admin-created questions start APPROVED (AI ones PENDING_REVIEW); /questions/mark-status changes them. */
 export const QUESTION_STATUSES = ['PENDING_REVIEW', 'APPROVED', 'REJECTED'] as const
 export type QuestionStatus = (typeof QUESTION_STATUSES)[number]
 

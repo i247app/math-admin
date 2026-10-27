@@ -607,7 +607,8 @@
       "source": "Source",
       "status": "Status",
       "verified": "Verification",
-      "modified": "Updated"
+      "modified": "Updated",
+      "actions": "Actions"
     },
     "filters": {
       "grade": "Filter by grade",
@@ -725,6 +726,37 @@
       "numberPlaceholder": "e.g. 12, 0.5 or 1/2",
       "removeNumber": "Remove accepted answer {{n}}",
       "addNumber": "Add accepted answer (up to {{max}})"
+    },
+    "review": {
+      "status": "Review state",
+      "set": {
+        "PENDING_REVIEW": "Pending",
+        "APPROVED": "Approve",
+        "REJECTED": "Reject"
+      },
+      "marked": "Question #{{id}}: {{status}}",
+      "verify": "Verify (+1)",
+      "verifyTitle": "Verify question #{{id}}?",
+      "verifyDescription": "Records that you checked this question: the verify count goes up by one from {{count}}. It cannot be lowered again.",
+      "verified_one": "Verified question #{{id}} ({{count}} time)",
+      "verified_other": "Verified question #{{id}} ({{count}} times)"
+    },
+    "actions": {
+      "softDelete": "Soft-delete question #{{id}}",
+      "forceDelete": "Permanently delete question #{{id}}"
+    },
+    "softDelete": {
+      "title": "Soft-delete question #{{id}}?",
+      "confirm": "Soft-delete",
+      "done": "Soft-deleted question #{{id}}.",
+      "description": "Question <strong>#{{id}}</strong> will be hidden from every list, and its content can be created again. There is <warn>no restore yet</warn>."
+    },
+    "forceDelete": {
+      "title": "Permanently delete question #{{id}}?",
+      "confirm": "Delete permanently",
+      "done": "Permanently deleted question #{{id}}.",
+      "description": "Question <strong>#{{id}}</strong> will be removed from the database. This <warn>cannot be undone</warn>. To only hide it, use Soft-delete.",
+      "typeToConfirm": "Type <code>{{id}}</code> to confirm"
     },
     "new": {
       "title": "Add questions",

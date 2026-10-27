@@ -11,6 +11,8 @@ import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { TitleBar } from '@/features/dashboard/TitleBar'
 import { gradeLabel, positiveIntParam } from '@/features/exams/ExamHelpers'
+import type { QuestionDeleteKind } from '@/features/questions/DeleteQuestionDialog'
+import { DeleteQuestionDialog } from '@/features/questions/DeleteQuestionDialog'
 import { QuestionFormSheet } from '@/features/questions/QuestionFormSheet'
 import { questionsListQueryOptions } from '@/features/questions/QuestionsApi'
 import { QuestionsTable } from '@/features/questions/QuestionsTable'
@@ -39,6 +41,7 @@ export default function QuestionsPage() {
   const topic = params.get('topic')?.trim() || null
   const tag = params.get('tag')?.trim() || null
   const [editing, setEditing] = useState<Question | null>(null)
+  const [deleting, setDeleting] = useState<{ kind: QuestionDeleteKind; question: Question } | null>(null)
   // The grade filter pre-fills the first new question.
   const newPath = grade === null ? '/questions/new' : `/questions/new?grade=${grade}`
 
@@ -136,6 +139,7 @@ export default function QuestionsPage() {
         }
       />
       <QuestionFormSheet question={editing} onClose={() => setEditing(null)} />
+      <DeleteQuestionDialog target={deleting} onClose={() => setDeleting(null)} />
 
       {list.isError && !list.data ? (
         <LoadError
@@ -211,7 +215,9 @@ export default function QuestionsPage() {
               className={cn('overflow-x-auto transition-opacity', list.isPlaceholderData && 'opacity-60')}
               aria-busy={list.isFetching}
             >
-              <QuestionsTable questions={rows} onOpen={setEditing} onTag={(value) => update({ tag: value })} />
+              <QuestionsTable questions={rows} onOpen={setEditing} onTag={(value) => update({ tag: value })}
+                onDelete={(kind, question) => setDeleting({ kind, question })}
+              />
             </div>
           )}
 

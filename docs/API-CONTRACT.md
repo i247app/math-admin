@@ -290,6 +290,10 @@ All routes 🛡️ (`AdminOrApiKeyMiddleware`: ADMIN only, else `403`; the servi
 | `/questions/list` 🛡️ | `{ question_grade?, question_topic? (exact), question_tags? (any of), question_kinds?, question_statuses?, question_source?, is_verified?, page, size }` — OFFSET only, `size` capped at 100, newest first (`create_dt DESC, question_id DESC`) | `{ questions: Question[] \| null, pagination }` — answer key and explanation included |
 | `/questions/create` 🛡️ | `{ questions: QuestionInput[] }` — 1..100, **all or none** | `{ questions }` in request order |
 | `/questions/update` 🛡️ | `{ question_id, ...QuestionInput fields }` — absent = kept; `null` clears image/explanation/topic/level, `null` or `[]` clears options | `{ question }` |
+| `/questions/mark-status` 🛡️ | `{ question_id, question_status: "PENDING_REVIEW"\|"APPROVED"\|"REJECTED" }` — any state to any state | `{ question }` |
+| `/questions/verify` 🛡️ | `{ question_id }` — `verified_count` + 1 (one atomic UPDATE, concurrent calls each count); nothing takes it back down | `{ question }` |
+| `/questions/soft-delete` 🛡️ | `{ question_id }` — status INACTIVE + `deleted_dt`; the row drops out of every read and its `question_hash` is free again (the same content can be created anew). `question_status` is kept. No restore endpoint | envelope only |
+| `/questions/force-delete` 🛡️ | `{ question_id }` — physical delete, live or already soft-deleted; **irreversible** | envelope only |
 | `/questions/images/upload` 🛡️ | multipart, file part **`image`** (JPG/PNG/GIF/WebP, ≤ 5 MB; checked by extension, declared type and content; no SVG) | `{ image_key ("question-images/…"), image_url (presigned or null) }` |
 
 `Question`: `{ question_id, question_kind, question_text, question_image_key|null, question_image_url|null, options: {id, text,
@@ -306,15 +310,17 @@ question_status ("PENDING_REVIEW"|"APPROVED"|"REJECTED"|null), verified_count, c
   written (the key names options by id); an option needs text or an image key.
 - Limits (characters): text 2000, option text 500, explanation 5000, topic 255, ≤ 20 tags of ≤ 64. Grade required.
   Image keys must sit under `question-images/` (i.e. come from the upload route). Text is trimmed; blank topic/explanation = none.
-- Create sets source `ADMIN`, status `PENDING_REVIEW`, `verified_count` 0. Update keeps all three: **no route changes the
-  review status or verified_count yet**, and there is no delete. A merged update must pass every create rule.
+- Create sets source `ADMIN`, status `APPROVED` (`Source.InitialStatus`: an admin's own question needs no review; AI rows
+  start `PENDING_REVIEW`), `verified_count` 0. Update keeps all three; only `mark-status` / `verify`
+  (`review_question_command.go`) change them, and they touch nothing else (content, hash). Both stamp `modify_id`. Images
+  stay in S3 after either delete (`delete_question_command.go`); an unknown id → `QUESTION_NOT_FOUND`. A merged update must pass every create rule.
 - Duplicates: `question_hash` (kind, grade, normalised text, stem image, options as a set + which are correct, TF value) is
   unique among live rows → `QUESTION_DUPLICATE`. Topic, tags, level, explanation, option order/ids don't count.
 - Errors name only the first issue in `mmessage`; every issue (by path, `questions[3].options[1].id`) is in `debug`.
   The admin's batch page (`/questions/new`) reads only the `questions[N]` indexes from `debug` to mark those questions; it never shows `debug`.
   Codes 144xx: `EMPTY_LIST` 14400, `INVALID` 14401, `TOO_MANY` 14402, `INVALID_KIND` 14403, `INVALID_OPTIONS` 14404,
   `INVALID_ANSWER` 14405, `INVALID_IMAGE_KEY` 14406, `DUPLICATE` 14407, `INVALID_FILTER` 14408, `IMAGE_MISSING` 14409,
-  `IMAGE_INVALID_FILE` 14410, `IMAGE_UPLOAD_FAILED` 14411, `MISSING_ID` 14412, `NOT_FOUND` 14413, `NOTHING_TO_UPDATE` 14414.
+  `IMAGE_INVALID_FILE` 14410, `IMAGE_UPLOAD_FAILED` 14411, `MISSING_ID` 14412, `NOT_FOUND` 14413, `NOTHING_TO_UPDATE` 14414, `INVALID_STATUS` 14415.
 - Uploaded images are never deleted (a replaced or abandoned upload stays in S3).
 - The admin mirrors the rules in `src/features/questions/QuestionDraft.ts` — keep it in sync with `validator.go`.
 
