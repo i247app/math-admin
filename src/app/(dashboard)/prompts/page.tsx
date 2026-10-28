@@ -17,6 +17,7 @@ import { gradeLabel, positiveIntParam } from "@/features/exams/ExamHelpers";
 import { MetaRow } from "@/features/exams/StatTiles";
 import {
   brokenAnswerObjects,
+  OPTION_KEYS,
   isCachedPromptCode,
   knownPromptCode,
   missingPromptKeys,
@@ -84,7 +85,7 @@ export default function PromptsPage() {
   const keys = requiredKeysOf(prompt?.prompt_code ?? "");
   const missing = missingPromptKeys(text, keys);
   // The answer-object check only means something for prompts whose output has answers.
-  const broken = keys.includes('"label"') ? brokenAnswerObjects(text) : [];
+  const broken = keys.includes(OPTION_KEYS[0]) ? brokenAnswerObjects(text) : [];
   const canSave =
     dirty &&
     text.trim() !== "" &&

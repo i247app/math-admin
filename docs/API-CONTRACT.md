@@ -369,13 +369,13 @@ prompt_version, modify_id? (admin uid of the last rewrite; absent on the seed an
   ≤ 50,000 characters (runes, `PROMPT_TOO_LONG` 14303), and the text must contain each quoted JSON key the reply parser of
   its code reads (`Spec.RequiredKeys`) — else `PROMPT_MISSING_JSON_KEY` 14304, whose message does not say which (only
   `debug` does). The three exam-generation codes need `"short_text"`, `"questions"`, `"question_number"`, `"question_kind"`,
-  `"render_type"`, `"question_text"`, `"options"`, `"label"`, `"text"`, `"right_answer_labels"`, `"right_answer_text"`,
+  `"render_type"`, `"question_text"`, `"options"`, `"id"`, `"text"`, `"right_option_ids"`, `"right_answer_text"`,
   `"question_topic"`, `"question_grade"` (the `ExamQuestion` / `ExamOption` vocabulary of `dto/exam/question.go`, branch
   `rogue-v2`, 2026-10-28); `EXAM_REVIEW` needs `"short"`, `"long"`; a code the catalog does not know is not checked. The
   admin mirrors this in `src/features/prompts/PromptsApi.ts` — keep it in sync with `catalog.go`.
-  The admin also refuses an option object (`{…}`) that names `"label"` without `"text"` or the reverse; the server
+  The admin also refuses an option object (`{…}`) that names `"id"` without `"text"` or the reverse; the server
   does not check that.
-- The older keys (`question_type`, `question_name`, `answers`, `content`, `right_answer_label`, `right_answer_content`)
+- The older keys (`question_type`, `question_name`, `answers[{label, content}]`, `right_answer_label(s)`, `right_answer_content`)
   have no reader: a set the model writes under them fails `CheckSet`, so a prompt still written that way breaks
   generation until it is rewritten.
 - `PROMPT_NOT_FOUND` 14300 is also what an LLM call gets when its scope has no row (generation fails).

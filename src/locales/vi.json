@@ -574,7 +574,7 @@
     "keysTitle": "Khóa JSON bắt buộc",
     "keysOk": "Prompt nêu đủ {{n}} khóa JSON mà máy chủ cần để đọc kết quả.",
     "keysMissing": "Thiếu {{n}} khóa JSON — máy chủ sẽ từ chối lưu. Khóa phải nằm trong dấu ngoặc kép, đúng như trong phần cấu trúc kết quả.",
-    "brokenAnswers": "{{n}} đối tượng lựa chọn (options) thiếu khóa \"label\" hoặc \"text\". Mỗi lựa chọn phải có cả hai, nếu không AI có thể trả về lựa chọn thiếu nhãn hoặc nội dung.",
+    "brokenAnswers": "{{n}} đối tượng lựa chọn (options) thiếu khóa \"id\" hoặc \"text\". Mỗi lựa chọn phải có cả hai, nếu không AI có thể trả về lựa chọn thiếu id hoặc nội dung.",
     "present": "có",
     "absent": "thiếu",
     "confirmTitle": "Lưu prompt {{name}}?",

@@ -49,9 +49,9 @@ const EXAM_GENERATION_KEYS = [
   '"render_type"',
   '"question_text"',
   '"options"',
-  '"label"',
+  '"id"',
   '"text"',
-  '"right_answer_labels"',
+  '"right_option_ids"',
   '"right_answer_text"',
   '"question_topic"',
   '"question_grade"',
@@ -78,15 +78,19 @@ export function missingPromptKeys(text: string, keys: readonly string[]) {
   return keys.filter((key) => !text.includes(key));
 }
 
+/** The two keys of every option object ({"id": …, "text": …}). */
+export const OPTION_KEYS = ['"id"', '"text"'] as const;
+
 /**
- * Option objects with a key deleted: innermost {…} blocks that name "label" or "text" but not both.
+ * Option objects with a key deleted: innermost {…} blocks that name "id" or "text" but not both.
  * Stricter than math-svr, which only checks each key appears somewhere — the four example options
  * (A–D) keep a key "present" after it is removed from one of them, and the model copies the example.
- * "short_text", "question_text" and "right_answer_labels" never match: the quote must open the key.
+ * "short_text", "question_text" and "right_option_ids" never match: the quote must open the key.
  */
 export function brokenAnswerObjects(text: string) {
+  const [idKey, textKey] = OPTION_KEYS;
   return (text.match(/\{[^{}]*\}/g) ?? []).filter(
-    (block) => block.includes('"label"') !== block.includes('"text"'),
+    (block) => block.includes(idKey) !== block.includes(textKey),
   );
 }
 
