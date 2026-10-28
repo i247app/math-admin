@@ -40,7 +40,7 @@ export function knownPromptCode(code: string): PromptCode | undefined {
   return PROMPT_CODES.find((option) => option === code);
 }
 
-/** The keys aiquestion.ParseGenerationOf reads from a generated exam (dto/exam ExamQuestion, ExamOption). */
+/** The keys aiquestion.ParseGenerationOf reads from a generated exam (dto/exam ExamQuestion, ExamOption, ExamCorrectAnswer). */
 const EXAM_GENERATION_KEYS = [
   '"short_text"',
   '"questions"',
@@ -51,7 +51,8 @@ const EXAM_GENERATION_KEYS = [
   '"options"',
   '"id"',
   '"text"',
-  '"right_option_ids"',
+  '"correct_answer"',
+  '"option_ids"',
   '"right_answer_text"',
   '"question_topic"',
   '"question_grade"',
@@ -85,7 +86,7 @@ export const OPTION_KEYS = ['"id"', '"text"'] as const;
  * Option objects with a key deleted: innermost {…} blocks that name "id" or "text" but not both.
  * Stricter than math-svr, which only checks each key appears somewhere — the four example options
  * (A–D) keep a key "present" after it is removed from one of them, and the model copies the example.
- * "short_text", "question_text" and "right_option_ids" never match: the quote must open the key.
+ * "short_text", "question_text" and "option_ids" never match: the quote must open the key.
  */
 export function brokenAnswerObjects(text: string) {
   const [idKey, textKey] = OPTION_KEYS;
