@@ -40,18 +40,19 @@ export function knownPromptCode(code: string): PromptCode | undefined {
   return PROMPT_CODES.find((option) => option === code);
 }
 
-/** The keys question.ParseGenerationOf reads from a generated exam. */
+/** The keys aiquestion.ParseGenerationOf reads from a generated exam (dto/exam ExamQuestion, ExamOption). */
 const EXAM_GENERATION_KEYS = [
   '"short_text"',
   '"questions"',
   '"question_number"',
-  '"question_type"',
-  '"question_name"',
-  '"answers"',
+  '"question_kind"',
+  '"render_type"',
+  '"question_text"',
+  '"options"',
   '"label"',
-  '"content"',
-  '"right_answer_label"',
-  '"right_answer_content"',
+  '"text"',
+  '"right_answer_labels"',
+  '"right_answer_text"',
   '"question_topic"',
   '"question_grade"',
 ];
@@ -78,13 +79,14 @@ export function missingPromptKeys(text: string, keys: readonly string[]) {
 }
 
 /**
- * Answer objects with a key deleted: innermost {…} blocks that name "label" or "content" but not both.
- * Stricter than math-svr, which only checks each key appears somewhere — the four example answers
+ * Option objects with a key deleted: innermost {…} blocks that name "label" or "text" but not both.
+ * Stricter than math-svr, which only checks each key appears somewhere — the four example options
  * (A–D) keep a key "present" after it is removed from one of them, and the model copies the example.
+ * "short_text", "question_text" and "right_answer_labels" never match: the quote must open the key.
  */
 export function brokenAnswerObjects(text: string) {
   return (text.match(/\{[^{}]*\}/g) ?? []).filter(
-    (block) => block.includes('"label"') !== block.includes('"content"'),
+    (block) => block.includes('"label"') !== block.includes('"text"'),
   );
 }
 
