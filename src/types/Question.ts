@@ -85,6 +85,8 @@ export type QuestionInput = {
 
 export type ListQuestionsRequest = {
   question_grade?: number
+  question_level?: number
+  question_sub_level?: number
   /** Exact match. */
   question_topic?: string
   /** Matches a question holding at least one of them. */

@@ -608,6 +608,8 @@
     },
     "filters": {
       "grade": "Lọc theo lớp",
+      "level": "Lọc theo mức độ",
+      "subLevel": "Lọc theo mức con",
       "kind": "Lọc theo dạng",
       "status": "Lọc theo trạng thái",
       "source": "Lọc theo nguồn",
@@ -617,6 +619,8 @@
       "apply": "Lọc",
       "clear": "Xoá bộ lọc",
       "allGrades": "Tất cả lớp",
+      "allLevels": "Tất cả mức độ",
+      "allSubLevels": "Tất cả mức con",
       "allKinds": "Tất cả dạng",
       "allStatuses": "Tất cả trạng thái",
       "allSources": "Tất cả nguồn",

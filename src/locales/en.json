@@ -613,6 +613,8 @@
     },
     "filters": {
       "grade": "Filter by grade",
+      "level": "Filter by level",
+      "subLevel": "Filter by sub level",
       "kind": "Filter by kind",
       "status": "Filter by status",
       "source": "Filter by source",
@@ -622,6 +624,8 @@
       "apply": "Filter",
       "clear": "Clear filters",
       "allGrades": "All grades",
+      "allLevels": "All levels",
+      "allSubLevels": "All sub levels",
       "allKinds": "All kinds",
       "allStatuses": "All statuses",
       "allSources": "All sources",

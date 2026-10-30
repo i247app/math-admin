@@ -18,14 +18,14 @@ import { QuestionFormSheet } from '@/features/questions/QuestionFormSheet'
 import { questionsListQueryOptions } from '@/features/questions/QuestionsApi'
 import { QuestionsTable } from '@/features/questions/QuestionsTable'
 import type { Question } from '@/types/Question'
-import { QUESTION_GRADES, QUESTION_KINDS, QUESTION_SOURCES, QUESTION_STATUSES } from '@/types/Question'
+import { QUESTION_GRADES, QUESTION_KINDS, QUESTION_LEVELS, QUESTION_SOURCES, QUESTION_STATUSES } from '@/types/Question'
 import { cn } from '@/utils/Helpers'
 
 const PAGE_SIZE = 20
 const ALL = 'all'
 const VERIFIED_OPTIONS = ['no', 'yes'] as const
 /** URL params cleared by "Xoá bộ lọc". */
-const FILTER_PARAMS = ['grade', 'kind', 'status', 'source', 'verified', 'topic', 'tag'] as const
+const FILTER_PARAMS = ['grade', 'level', 'subLevel', 'kind', 'status', 'source', 'verified', 'topic', 'tag'] as const
 
 /** The question bank (math-svr /questions/*), newest first. Admin only. */
 export default function QuestionsPage() {
@@ -35,6 +35,8 @@ export default function QuestionsPage() {
   const [params, setParams] = useSearchParams()
   const page = positiveIntParam(params.get('page')) ?? 1
   const grade = QUESTION_GRADES.find((option) => String(option) === params.get('grade')) ?? null
+  const level = QUESTION_LEVELS.find((option) => String(option) === params.get('level')) ?? null
+  const subLevel = QUESTION_LEVELS.find((option) => String(option) === params.get('subLevel')) ?? null
   const kind = QUESTION_KINDS.find((option) => option === params.get('kind')) ?? null
   const status = QUESTION_STATUSES.find((option) => option === params.get('status')) ?? null
   const source = QUESTION_SOURCES.find((option) => option === params.get('source')) ?? null
@@ -50,6 +52,8 @@ export default function QuestionsPage() {
   const list = useQuery(
     questionsListQueryOptions({
       question_grade: grade ?? undefined,
+      question_level: level ?? undefined,
+      question_sub_level: subLevel ?? undefined,
       question_kinds: kind ? [kind] : undefined,
       question_statuses: status ? [status] : undefined,
       question_source: source ?? undefined,
@@ -188,6 +192,8 @@ export default function QuestionsPage() {
             </div>
             <div className="flex flex-wrap items-center gap-2">
               {filterSelect('grade', grade, QUESTION_GRADES, t('questions.filters.allGrades'), (g) => gradeLabel(t, g), 'w-32')}
+              {filterSelect('level', level, QUESTION_LEVELS, t('questions.filters.allLevels'), (l) => t('exams.level', { level: l }), 'w-32')}
+              {filterSelect('subLevel', subLevel, QUESTION_LEVELS, t('questions.filters.allSubLevels'), (l) => t('questions.subLevelValue', { level: l }), 'w-36')}
               {filterSelect('kind', kind, QUESTION_KINDS, t('questions.filters.allKinds'), (k) => t(`questions.kinds.${k}`), 'w-40')}
               {filterSelect('status', status, QUESTION_STATUSES, t('questions.filters.allStatuses'), (s) => t(`questions.statuses.${s}`), 'w-40')}
               {filterSelect('source', source, QUESTION_SOURCES, t('questions.filters.allSources'), (s) => t(`questions.sources.${s}`), 'w-36')}

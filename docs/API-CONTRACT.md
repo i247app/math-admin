@@ -290,7 +290,7 @@ All routes 🛡️ (`AdminOrApiKeyMiddleware`: ADMIN only, else `403`; the servi
 
 | Route | Request | Response |
 |---|---|---|
-| `/question-pools/list` 🛡️ | `{ question_grade?, question_topic? (exact), question_tags? (any of), question_kinds?, question_statuses?, question_source?, is_verified?, page, size }` — OFFSET only, `size` capped at 100, newest first (`create_dt DESC, question_pool_id DESC`) | `{ question_pools: Question[] \| null, pagination }` — answer key and explanation included |
+| `/question-pools/list` 🛡️ | `{ question_grade?, question_level? (0–9), question_sub_level? (0–9), question_topic? (exact), question_tags? (any of), question_kinds?, question_statuses?, question_source?, is_verified?, page, size }` — OFFSET only, `size` capped at 100, newest first (`create_dt DESC, question_pool_id DESC`) | `{ question_pools: Question[] \| null, pagination }` — answer key and explanation included |
 | `/question-pools/create` 🛡️ | `{ question_pools: QuestionInput[] }` — 1..100, **all or none** | `{ question_pools }` in request order |
 | `/question-pools/update` 🛡️ | `{ question_pool_id, ...QuestionInput fields }` — absent = kept; `null` clears image/explanation/topic/level/sub level, `null` or `[]` clears options | `{ question_pool }` |
 | `/question-pools/mark-status` 🛡️ | `{ question_pool_id, question_status: "PENDING_REVIEW"\|"APPROVED"\|"REJECTED" }` — any state to any state | `{ question_pool }` |
@@ -320,7 +320,7 @@ question_status ("PENDING_REVIEW"|"APPROVED"|"REJECTED"|null), verified_count, c
   (`review_question_command.go`) change them, and they touch nothing else (content, hash). Both stamp `modify_id`. Images
   stay in S3 after either delete (`delete_question_command.go`); an unknown id → `QUESTION_NOT_FOUND`. A merged update must pass every create rule.
 - `question_sub_level` (added 2026-10-27, `sql/prod/2026-10-27_add_question_sub_level_to_ma_question_pools.sql`): 0–9 or null,
-  checked on its own (it may be set without `question_level`); not a list filter, not in the hash.
+  checked on its own (it may be set without `question_level`); a list filter like `question_level`, not in the hash.
 - Duplicates: `question_hash` (kind, grade, normalised text, stem image, options as a set + which are correct, TF value) is
   unique among live rows → `QUESTION_DUPLICATE`. Topic, tags, level, explanation, option order/ids don't count.
 - Errors name only the first issue in `mmessage`; every issue (by path, `question_pools[3].options[1].id`) is in `debug`.
